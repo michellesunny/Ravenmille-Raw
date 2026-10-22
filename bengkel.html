@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bengkel &amp; Inspektor – Ravenmille</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,800;0,900;1,800;1,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ravenmille.css">
+</head>
+<body>
+<div class="ravenmille-services min-h-screen bg-[#FDFBF7] text-slate-900 pb-16 halftone-bg">
+
+  <!-- Header Navigation -->
+  <header class="sticky top-0 z-40 bg-[#FDFBF7]/95 backdrop-blur-md border-b-2 border-[#162447] shadow-sm mb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-[#162447] rounded-xl border-2 border-[#162447] shadow-[2px_2px_0px_#94A3B8] flex items-center justify-center text-amber-400 font-black text-2xl">R</div>
+        <span class="font-black text-xl tracking-tight text-[#162447] uppercase hidden sm:inline">RAVENMILLE</span>
+      </a>
+      <nav class="flex items-center gap-2 overflow-x-auto">
+        <a href="kalkulator.html" class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Kalkulator</a>
+        <a href="risiko.html" class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Risiko</a>
+        <a href="komparasi.html" class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Komparasi</a>
+        <a href="masalah.html" class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Masalah</a>
+        <a href="bengkel.html" class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl bg-[#162447] text-white border-2 border-[#162447] shadow-[2px_2px_0px_#94A3B8]">Bengkel</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+    <!-- Header Banner: Tanpa tombol 100% independen & Nama Menu Diperpendek (Sesuai Permintaan) -->
+    <div class="bg-white border-2 border-[#162447] rounded-2xl p-6 sm:p-8 shadow-[6px_6px_0px_#162447] flex flex-col gap-5">
+      <div class="space-y-2">
+        <h1 class="text-2xl sm:text-4xl font-black italic text-[#162447] uppercase tracking-tight">
+          DAFTAR BENGKEL & SEWA INSPEKTOR
+        </h1>
+        <p class="text-base sm:text-lg text-slate-700 max-w-4xl leading-relaxed font-semibold">
+          Temukan bengkel spesialis rekanan terpercaya di kota Anda, serta sewa inspektor profesional bersertifikasi untuk memeriksa kondisi fisik dan teknis mobil bekas langsung ke showroom atau lokasi penjual via WhatsApp.
+        </p>
+      </div>
+
+      <!-- Sub-Tabs Switcher & Quick Search Controls -->
+      <div class="pt-4 border-t-2 border-slate-100 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+        
+        <!-- Main 2-Way Tab Switcher (Nama diperpendek agar tidak tumpang tindih) -->
+        <div class="inline-flex p-1.5 rounded-xl border-2 border-[#162447] bg-[#FAF8F2] shadow-[3px_3px_0px_#162447] shrink-0">
+          <button type="button" id="tab-btn-inspectors" onclick="setSubTab('inspectors')" class="px-5 py-2.5 rounded-lg text-sm sm:text-base font-black uppercase tracking-wider transition-all bg-[#162447] text-white shadow-xs">
+            👨‍🔧 Inspektor (8)
+          </button>
+          <button type="button" id="tab-btn-workshops" onclick="setSubTab('workshops')" class="px-5 py-2.5 rounded-lg text-sm sm:text-base font-black uppercase tracking-wider transition-all text-slate-700 hover:text-[#162447]">
+            🔧 Bengkel (8)
+          </button>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="relative flex-1 max-w-md">
+          <input 
+            type="text" 
+            id="service-search" 
+            oninput="renderServices()" 
+            placeholder="Cari nama, kota (Semarang, Jakarta), keahlian (CVT, sasis)..." 
+            class="w-full pl-4 pr-4 py-3 text-sm sm:text-base font-semibold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447] bg-white focus:bg-blue-50/20"
+          >
+        </div>
+      </div>
+
+      <!-- City Filter Pills -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+        <span class="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-600 shrink-0 mr-1">Kota:</span>
+        <div id="city-pills" class="flex items-center gap-2">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Notice Header -->
+    <div class="bg-[#FAF8F2] border-2 border-[#162447] rounded-xl p-5 sm:p-6 shadow-[3px_3px_0px_#162447] text-base sm:text-lg font-semibold text-slate-800 leading-relaxed">
+      <strong class="text-[#162447] font-black uppercase">Inspeksi Pihak Ketiga:</strong>
+      Semua teknisi inspektor dan bengkel di bawah ini beroperasi mandiri tanpa afiliasi showroom mobil bekas. Klik tombol WhatsApp untuk reservasi tanggal dan konsultasi langsung.
+    </div>
+
+    <!-- Grid Kartu Inspektor / Bengkel -->
+    <div id="cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Injected via JS -->
+    </div>
+
+  </main>
+</div>
+
+<script>
+  const CITIES = ['Semua Kota', 'Jakarta', 'Surabaya', 'Bandung', 'Semarang', 'Yogyakarta', 'Tangerang', 'Bekasi', 'Bali'];
+
+  const INSPECTORS = [
+    {
+      id: 'insp-1',
+      name: 'Hendro Wibowo, S.T.',
+      title: 'Senior Master Vehicle Inspector',
+      city: 'Semarang',
+      province: 'Jawa Tengah',
+      phone: '6281234567801',
+      rating: 4.95,
+      inspections: 840,
+      specialties: ['Struktur Sasis & Bekas Banjir Rob', 'Kelistrikan ECU Modern', 'Diagnosa Transmisi AT/CVT'],
+      tools: 'Digital Paint Depth Gauge, Launch X431 OBD Scanner, Borescope Kamera Mesin',
+      price1: 'Rp 350.000',
+      price2: 'Rp 550.000',
+      availability: 'Setiap Hari (Area Semarang & Jateng)'
+    },
+    {
+      id: 'insp-2',
+      name: 'Rian Hidayat',
+      title: 'Independent Diagnostic & CVT Specialist',
+      city: 'Jakarta',
+      province: 'DKI Jakarta',
+      phone: '6281234567802',
+      rating: 4.9,
+      inspections: 620,
+      specialties: ['Transmisi CVT Honda/Nissan', 'Kelistrikan Komputer ECU', 'Inspeksi LCGC & Compact MPV'],
+      tools: 'Launch X431 Pro Scanner, Digital Paint Meter, Compression Tester',
+      price1: 'Rp 350.000',
+      price2: 'Rp 550.000',
+      availability: 'Setiap Hari (Area Jabodetabek)'
+    },
+    {
+      id: 'insp-3',
+      name: 'Agus Pratama, A.Md.T.',
+      title: 'Body Structure & Undercarriage Inspector',
+      city: 'Surabaya',
+      province: 'Jawa Timur',
+      phone: '6281234567803',
+      rating: 4.88,
+      inspections: 390,
+      specialties: ['Inspeksi Kaki-kaki & Rack Steer', 'Mobil Diesel Ladder Frame', 'Chassis Alignment'],
+      tools: 'Fender Paint Depth Gauge, OBD2 Live Data Monitor, Thermal Camera',
+      price1: 'Rp 300.000',
+      price2: 'Rp 475.000',
+      availability: 'Senin - Sabtu (Surabaya & Sidoarjo)'
+    },
+    {
+      id: 'insp-4',
+      name: 'Doni Saputra',
+      title: 'Inspector & Automotive Appraiser',
+      city: 'Bandung',
+      province: 'Jawa Barat',
+      phone: '6281234567804',
+      rating: 4.92,
+      inspections: 510,
+      specialties: ['Cek Fisik Mobil Bekas Pasca Laka', 'Mesin Turbocharger & Hybrid', 'Odometer Rollback Detection'],
+      tools: 'Thickness Meter Coating, Foxwell NT680 OBD Scanner, Battery Health Tester',
+      price1: 'Rp 325.000',
+      price2: 'Rp 500.000',
+      availability: 'Setiap Hari (Bandung Raya & Cimahi)'
+    },
+    {
+      id: 'insp-5',
+      name: 'Bambang Triyono',
+      title: 'Independent Technical Assessor',
+      city: 'Yogyakarta',
+      province: 'DI Yogyakarta',
+      phone: '6281234567805',
+      rating: 4.94,
+      inspections: 430,
+      specialties: ['Mobil Keluarga MPV & SUV', 'Transmisi Manual & Matik Konvensional', 'Cek Bebas Karat Kolong'],
+      tools: 'Micro-inspection Camera, Sound Level Meter, Paint Thickness Tester',
+      price1: 'Rp 300.000',
+      price2: 'Rp 450.000',
+      availability: 'Setiap Hari (Jogja, Sleman, Bantul)'
+    }
+  ];
+
+  const WORKSHOPS = [
+    {
+      id: 'ws-1',
+      name: 'Bengkel Spesialis Dokter Mobil Semarang',
+      category: 'Spesialis Tune Up, AC & Kaki-kaki',
+      city: 'Semarang',
+      address: 'Jl. Pamularsih Raya No. 45, Semarang Barat, Jawa Tengah',
+      hours: '08:00 - 17:00 (Buka Setiap Hari)',
+      phone: '6281234567811',
+      maps: 'https://maps.google.com/?q=Semarang',
+      rating: 4.9,
+      reviews: 310,
+      warranty: 'Garansi Servis 30 Hari / 1.000 km',
+      services: ['Tune Up Injeksi', 'Overhaul Kaki-kaki', 'Kuras Oli Mesin & Transmisi', 'Scan Komputer OBD2'],
+      brands: ['Toyota', 'Honda', 'Mitsubishi', 'Daihatsu', 'Suzuki']
+    },
+    {
+      id: 'ws-2',
+      name: 'Karya Prima Matic Transmisi Jakarta',
+      category: 'Spesialis Transmisi Otomatis (AT / CVT / DCT)',
+      city: 'Jakarta',
+      address: 'Jl. Fatmawati Raya No. 88, Cilandak, Jakarta Selatan',
+      hours: 'Senin - Sabtu: 08:30 - 17:00',
+      phone: '6281234567812',
+      maps: 'https://maps.google.com/?q=Jakarta',
+      rating: 4.92,
+      reviews: 420,
+      warranty: 'Garansi Overhaul Transmisi 6 Bulan',
+      services: ['Flushing Matik Otomatis', 'Overhaul CVT & Valve Body', 'Kalibrasi TCM'],
+      brands: ['Honda', 'Nissan', 'Toyota', 'Mitsubishi', 'Mazda']
+    }
+  ];
+
+  let currentSubTab = 'inspectors';
+  let selectedCity = 'Semua Kota';
+
+  function setSubTab(tab) {
+    currentSubTab = tab;
+    const btnInsp = document.getElementById('tab-btn-inspectors');
+    const btnWs = document.getElementById('tab-btn-workshops');
+    if (tab === 'inspectors') {
+      btnInsp.className = 'px-5 py-2.5 rounded-lg text-sm sm:text-base font-black uppercase tracking-wider transition-all bg-[#162447] text-white shadow-xs';
+      btnWs.className = 'px-5 py-2.5 rounded-lg text-sm sm:text-base font-black uppercase tracking-wider transition-all text-slate-700 hover:text-[#162447]';
+    } else {
+      btnWs.className = 'px-5 py-2.5 rounded-lg text-sm sm:text-base font-black uppercase tracking-wider transition-all bg-[#162447] text-white shadow-xs';
+      btnInsp.className = 'px-5 py-2.5 rounded-lg text-sm sm:text-base font-black uppercase tracking-wider transition-all text-slate-700 hover:text-[#162447]';
+    }
+    renderServices();
+  }
+
+  function setCity(c) {
+    selectedCity = c;
+    renderCityPills();
+    renderServices();
+  }
+
+  function renderCityPills() {
+    const container = document.getElementById('city-pills');
+    container.innerHTML = '';
+    CITIES.forEach(c => {
+      const isSel = selectedCity === c;
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.onclick = () => setCity(c);
+      btn.className = `px-4 py-2 rounded-lg text-xs sm:text-sm font-black uppercase tracking-wider transition-all whitespace-nowrap cursor-pointer ${
+        isSel ? 'bg-[#162447] text-white border-2 border-[#162447] shadow-[2px_2px_0px_#94A3B8]' : 'bg-white border-2 border-slate-300 text-slate-700 hover:border-[#162447]'
+      }`;
+      btn.textContent = c;
+      container.appendChild(btn);
+    });
+  }
+
+  function renderServices() {
+    const query = document.getElementById('service-search').value.toLowerCase();
+    const container = document.getElementById('cards-container');
+    container.innerHTML = '';
+
+    if (currentSubTab === 'inspectors') {
+      const filtered = INSPECTORS.filter(i => {
+        const matchCity = selectedCity === 'Semua Kota' || i.city.toLowerCase() === selectedCity.toLowerCase();
+        const matchQuery = !query || i.name.toLowerCase().includes(query) || i.city.toLowerCase().includes(query) || i.specialties.some(s => s.toLowerCase().includes(query));
+        return matchCity && matchQuery;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="col-span-full p-8 text-center bg-white rounded-xl border-2 border-[#162447] font-bold text-slate-600">Tidak ada inspektor yang cocok.</div>';
+        return;
+      }
+
+      filtered.forEach(item => {
+        const waText = encodeURIComponent(`Halo ${item.name}, saya mendapatkan rekomendasi kontak Anda melalui platform Ravenmille.\n\nSaya berencana menyewa jasa inspeksi mobil bekas di area ${item.city}. Apakah Anda tersedia? Terima kasih!`);
+        const waLink = `https://wa.me/${item.phone}?text=${waText}`;
+
+        const card = document.createElement('div');
+        card.className = 'bg-white border-2 border-[#162447] rounded-2xl p-6 sm:p-7 shadow-[5px_5px_0px_#162447] hover:shadow-[7px_7px_0px_#162447] transition-all flex flex-col justify-between';
+        card.innerHTML = `
+          <div class="space-y-4">
+            <div>
+              <span class="text-xs sm:text-sm font-black uppercase text-amber-800 bg-amber-100 px-3 py-1 rounded-md border border-amber-300">INSPEKTUR TERAKREDITASI</span>
+              <h3 class="text-xl sm:text-2xl font-black text-[#162447] uppercase leading-tight mt-2">${item.name}</h3>
+              <p class="text-sm sm:text-base font-extrabold text-slate-600 mt-0.5">${item.title}</p>
+            </div>
+
+            <!-- Nama Daerah Memanjang dari Kiri ke Kanan (1 Baris) & Rating di Bawah Tanpa Tulisan 'Cek' (Sesuai Permintaan) -->
+            <div class="py-2.5 px-3.5 sm:py-3 sm:px-4 bg-[#FAF8F2] rounded-xl border border-slate-200 space-y-1.5">
+              <div class="flex items-center gap-1.5 text-slate-900 font-black text-sm sm:text-base whitespace-nowrap overflow-hidden">
+                <span>📍</span>
+                <span class="truncate">${item.city}, ${item.province}</span>
+              </div>
+              <div class="flex items-center gap-1.5 text-amber-600 font-black text-xs sm:text-sm pt-1 border-t border-slate-200/60">
+                <span>★</span>
+                <span>${item.rating}</span>
+                <span class="text-slate-500 font-bold">(${item.inspections}+)</span>
+              </div>
+            </div>
+
+            <!-- Keahlian -->
+            <div>
+              <span class="text-sm sm:text-base font-black uppercase tracking-wider text-slate-800 block mb-1.5">Keahlian Khusus:</span>
+              <div class="flex flex-wrap gap-1.5">
+                ${item.specialties.map(s => `<span class="text-xs sm:text-sm font-bold text-slate-800 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200">✓ ${s}</span>`).join('')}
+              </div>
+            </div>
+
+            <!-- Alat Ukur -->
+            <div class="pt-2 border-t border-slate-100 text-xs sm:text-sm text-slate-700">
+              <span class="font-black text-[#162447] block mb-0.5">Alat Ukur Utama:</span>
+              <p class="text-slate-600 font-medium">${item.tools}</p>
+            </div>
+
+            <!-- Estimasi Biaya Sewa: Rpxxx.xxx - (enter) baru Rp xxx.xxx (Sesuai Permintaan) -->
+            <div class="pt-3 border-t border-slate-100 flex items-start justify-between gap-3">
+              <div>
+                <span class="text-xs sm:text-sm uppercase font-black text-slate-500 block leading-none mb-1.5">Estimasi Biaya Sewa</span>
+                <div class="text-base sm:text-lg font-black text-[#162447] leading-tight">
+                  <div>${item.price1} -</div>
+                  <div>${item.price2}</div>
+                </div>
+              </div>
+              <div class="text-right">
+                <span class="text-xs sm:text-sm uppercase font-black text-slate-500 block leading-none mb-1.5">Ketersediaan</span>
+                <span class="text-xs sm:text-sm font-black text-emerald-800 block leading-tight">${item.availability}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tombol Sewa via WA -->
+          <div class="mt-6 pt-3 border-t-2 border-slate-100">
+            <a href="${waLink}" target="_blank" rel="noopener noreferrer" class="w-full flex items-center justify-center gap-2 py-4 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black uppercase text-base sm:text-lg tracking-wider border-2 border-emerald-800 shadow-[3px_3px_0px_#064e3b] transition-all">
+              <span>💬 Sewa via WhatsApp</span>
+            </a>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    } else {
+      // Bengkel
+      const filtered = WORKSHOPS.filter(w => {
+        const matchCity = selectedCity === 'Semua Kota' || w.city.toLowerCase() === selectedCity.toLowerCase();
+        const matchQuery = !query || w.name.toLowerCase().includes(query) || w.city.toLowerCase().includes(query) || w.services.some(s => s.toLowerCase().includes(query));
+        return matchCity && matchQuery;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="col-span-full p-8 text-center bg-white rounded-xl border-2 border-[#162447] font-bold text-slate-600">Tidak ada bengkel yang cocok.</div>';
+        return;
+      }
+
+      filtered.forEach(w => {
+        const waText = encodeURIComponent(`Halo Admin ${w.name}, saya melihat rekomendasi bengkel Anda melalui Ravenmille.\n\nSaya ingin konsultasi servis mobil saya. Terima kasih!`);
+        const waLink = `https://wa.me/${w.phone}?text=${waText}`;
+
+        const card = document.createElement('div');
+        card.className = 'bg-white border-2 border-[#162447] rounded-2xl p-6 sm:p-7 shadow-[5px_5px_0px_#162447] hover:shadow-[7px_7px_0px_#162447] transition-all flex flex-col justify-between';
+        card.innerHTML = `
+          <div class="space-y-4">
+            <div>
+              <span class="text-xs sm:text-sm font-black uppercase text-blue-800 bg-blue-50 px-3 py-1 rounded-md border border-blue-200">${w.category}</span>
+              <h3 class="text-xl sm:text-2xl font-black text-[#162447] uppercase leading-snug mt-2">${w.name}</h3>
+            </div>
+
+            <div class="space-y-1.5 text-sm sm:text-base text-slate-700">
+              <p class="font-medium">📍 ${w.address}</p>
+              <p class="font-bold text-slate-600">⏰ ${w.hours}</p>
+            </div>
+
+            <div class="bg-emerald-50 text-emerald-950 border border-emerald-300 p-3 rounded-xl text-xs sm:text-sm font-extrabold">
+              ✓ ${w.warranty}
+            </div>
+
+            <div>
+              <span class="text-sm font-black uppercase text-slate-800 block mb-1">Layanan Unggulan:</span>
+              <div class="flex flex-wrap gap-1.5">
+                ${w.services.map(s => `<span class="text-xs sm:text-sm font-bold bg-[#FAF8F2] px-2.5 py-1 rounded-md border border-slate-200">• ${s}</span>`).join('')}
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-3 border-t-2 border-slate-100 grid grid-cols-2 gap-3">
+            <a href="${waLink}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-1.5 py-3.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black uppercase text-xs sm:text-sm border-2 border-emerald-800 shadow-[2px_2px_0px_#064e3b]">
+              <span>💬 WhatsApp</span>
+            </a>
+            <a href="${w.maps}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-1.5 py-3.5 px-3 rounded-xl bg-white hover:bg-[#FAF8F2] text-[#162447] font-black uppercase text-xs sm:text-sm border-2 border-[#162447] shadow-[2px_2px_0px_#162447]">
+              <span>🗺️ Maps</span>
+            </a>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    renderCityPills();
+    renderServices();
+  });
+</script>
+
+</body>
+</html>

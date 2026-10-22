@@ -1,0 +1,19 @@
+SITUS STATIS RAVENMILLE (gratis, tampilan sama persis)
+
+Cara tercepat (tanpa akun, 1 menit):
+1. Buka https://app.netlify.com/drop
+2. Tarik seluruh isi folder ini (atau zip-nya) ke halaman itu.
+3. Anda langsung dapat alamat web gratis. Selesai.
+
+Alternatif: GitHub Pages atau Cloudflare Pages (gratis).
+
+Struktur: index.html (landing), kalkulator.html, risiko.html, komparasi.html,
+hasil-komparasi.html, masalah.html, bengkel.html, ravenmille.css.
+Semua menu & tombol sudah saling terhubung.
+
+
+FILE JAVASCRIPT
+- ravenmille.js sudah disertakan dan ditautkan pada halaman kalkulator, analisis risiko, komparasi, hasil komparasi, dan beranda.
+- Untuk menguji fungsi JavaScript, ekstrak ZIP lalu buka halaman melalui local web server/browser yang mengizinkan JavaScript.
+- Catatan: mengunggah HTML/JS ini ke WordPress.com Free sebagai blok HTML tidak otomatis menjalankan script; platform dapat menyaring tag script. File ZIP ini menggabungkan file situs statis, bukan menginstalnya ke WordPress.
+- Angka depresiasi dan bunga di kalkulator merupakan asumsi simulasi, bukan penawaran pembiayaan atau data pasar aktual.

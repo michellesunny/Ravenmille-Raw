@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kalkulator TCO – Ravenmille</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,800;0,900;1,800;1,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ravenmille.css">
+</head>
+<body>
+<div class="ravenmille-calc min-h-screen bg-[#FDFBF7] text-slate-900 pb-16 halftone-bg">
+
+  <!-- Top Navigation Bar -->
+  <header class="sticky top-0 z-40 bg-[#FDFBF7]/95 backdrop-blur-md border-b-2 border-[#162447] shadow-sm mb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-[#162447] rounded-xl border-2 border-[#162447] shadow-[2px_2px_0px_#94A3B8] flex items-center justify-center text-amber-400 font-black text-2xl">
+          R
+        </div>
+        <span class="font-black text-xl tracking-tight text-[#162447] uppercase hidden sm:inline">RAVENMILLE</span>
+      </a>
+
+      <!-- Menu Navigasi -->
+      <nav class="flex items-center gap-2 overflow-x-auto">
+        <a href="kalkulator.html" class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl bg-[#162447] text-white border-2 border-[#162447] shadow-[2px_2px_0px_#94A3B8]">Kalkulator</a>
+        <a href="risiko.html" class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Risiko</a>
+        <a href="komparasi.html" class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Komparasi</a>
+        <a href="masalah.html" class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Masalah</a>
+        <a href="bengkel.html" class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Bengkel</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+    <!-- STEP 1: Pilih Preset Mobil Populer atau Kustom -->
+    <section id="step1-section" class="bg-white border-2 border-[#162447] rounded-2xl p-6 sm:p-8 shadow-[6px_6px_0px_#162447]">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <div>
+          <span class="px-3 py-1 bg-amber-100 text-amber-900 border border-amber-300 rounded-lg text-xs font-black uppercase tracking-wider">LANGKAH 1 DARI 2</span>
+          <h2 class="text-2xl sm:text-3xl font-black text-[#162447] uppercase mt-2">PILIH PRESET MOBIL ATAU INPUT KUSTOM</h2>
+          <p class="text-sm sm:text-base text-slate-600 font-medium">Gunakan profil acuan mobil populer Indonesia atau masukkan data kendaraan Anda sendiri.</p>
+        </div>
+        <button type="button" onclick="selectPreset('custom')" class="px-5 py-3 rounded-xl bg-white hover:bg-slate-50 border-2 border-[#162447] text-xs sm:text-sm font-black uppercase tracking-wider shadow-[3px_3px_0px_#162447] shrink-0">
+          + Input Data Bebas
+        </button>
+      </div>
+
+      <!-- Presets Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        
+        <!-- Preset 1 -->
+        <div class="border-2 border-[#162447] rounded-xl p-5 bg-[#FAF8F2] shadow-[3px_3px_0px_#162447] flex flex-col justify-between">
+          <div>
+            <span class="text-xs font-black px-2.5 py-0.5 rounded bg-blue-100 text-blue-900 border border-blue-300">LMPV POPULER</span>
+            <h3 class="text-lg font-black text-[#162447] uppercase mt-2">Toyota Avanza 1.5 G CVT</h3>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">Rp 275.000.000 · 13.5 km/liter</p>
+          </div>
+          <button type="button" onclick="selectPreset('avanza')" class="mt-4 w-full py-2.5 bg-[#162447] text-white font-black text-xs sm:text-sm uppercase rounded-lg hover:bg-[#1E3E62] transition-colors">
+            Pilih Unit Ini →
+          </button>
+        </div>
+
+        <!-- Preset 2 -->
+        <div class="border-2 border-[#162447] rounded-xl p-5 bg-[#FAF8F2] shadow-[3px_3px_0px_#162447] flex flex-col justify-between">
+          <div>
+            <span class="text-xs font-black px-2.5 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-300">CITY CAR</span>
+            <h3 class="text-lg font-black text-[#162447] uppercase mt-2">Honda Brio Satya E CVT</h3>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">Rp 198.000.000 · 16.5 km/liter</p>
+          </div>
+          <button type="button" onclick="selectPreset('brio')" class="mt-4 w-full py-2.5 bg-[#162447] text-white font-black text-xs sm:text-sm uppercase rounded-lg hover:bg-[#1E3E62] transition-colors">
+            Pilih Unit Ini →
+          </button>
+        </div>
+
+        <!-- Preset 3 -->
+        <div class="border-2 border-[#162447] rounded-xl p-5 bg-[#FAF8F2] shadow-[3px_3px_0px_#162447] flex flex-col justify-between">
+          <div>
+            <span class="text-xs font-black px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-900 border border-emerald-300">CROSSOVER LMPV</span>
+            <h3 class="text-lg font-black text-[#162447] uppercase mt-2">Mitsubishi Xpander Ultimate</h3>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">Rp 315.000.000 · 12.8 km/liter</p>
+          </div>
+          <button type="button" onclick="selectPreset('xpander')" class="mt-4 w-full py-2.5 bg-[#162447] text-white font-black text-xs sm:text-sm uppercase rounded-lg hover:bg-[#1E3E62] transition-colors">
+            Pilih Unit Ini →
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- STEP 2: Header Panjang Penuh & Pemilih Periode di Bawahnya (Sesuai Permintaan) -->
+    <section id="step2-section" class="bg-white border-2 border-[#162447] rounded-2xl p-6 sm:p-8 shadow-[6px_6px_0px_#162447] flex flex-col gap-5">
+      
+      <!-- Judul Membentang Panjang dari Kanan ke Kiri -->
+      <div class="w-full">
+        <span class="px-3 py-1 bg-amber-100 text-amber-900 border border-amber-300 rounded-lg text-xs font-black uppercase tracking-wider">LANGKAH 2 DARI 2</span>
+        <h2 id="step2-title" class="text-2xl sm:text-4xl font-black text-[#162447] uppercase tracking-tight mt-2">
+          PARAMETER KENDARAAN: TOYOTA AVANZA 1.5 G CVT
+        </h2>
+        <p class="text-sm sm:text-base text-slate-700 font-medium leading-relaxed mt-1 max-w-4xl">
+          Lengkapi profil kendaraan, skema pembiayaan tunai atau kredit, konsumsi bahan bakar, dan estimasi pemakaian tahunan untuk menghitung total biaya kepemilikan (TCO).
+        </p>
+      </div>
+
+      <!-- Pemilih Periode Proyeksi Berada di Bawah Penjelasan -->
+      <div class="pt-4 border-t-2 border-slate-100 flex flex-wrap items-center justify-between gap-4 bg-[#FAF8F2] p-4 rounded-xl border border-slate-200">
+        <span class="text-xs sm:text-sm font-black uppercase text-[#162447] tracking-wider flex items-center gap-2">
+          <span>📅</span> Periode Proyeksi Kepemilikan:
+        </span>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="setPeriod(1)" class="period-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-black uppercase border-2 border-[#162447] bg-white text-[#162447]" data-period="1">1 Tahun</button>
+          <button type="button" onclick="setPeriod(3)" class="period-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-black uppercase border-2 border-[#162447] bg-[#162447] text-white shadow-[2px_2px_0px_#94A3B8]" data-period="3">3 Tahun</button>
+          <button type="button" onclick="setPeriod(5)" class="period-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-black uppercase border-2 border-[#162447] bg-white text-[#162447]" data-period="5">5 Tahun</button>
+        </div>
+      </div>
+
+      <!-- Form Parameter Grid -->
+      <form id="tco-form" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
+        
+        <div>
+          <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1.5">Harga Beli Kendaraan (Rp)</label>
+          <input type="number" id="inp-price" value="275000000" class="w-full p-3 text-sm sm:text-base font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447] focus:bg-blue-50/20">
+        </div>
+
+        <div>
+          <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1.5">Metode Pembayaran</label>
+          <select id="inp-method" onchange="toggleCreditInputs()" class="w-full p-3 text-sm sm:text-base font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447] bg-white">
+            <option value="kredit">Kredit Leasing</option>
+            <option value="tunai">Tunai Keras (Cash)</option>
+          </select>
+        </div>
+
+        <div id="col-dp">
+          <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1.5">Uang Muka / DP (%)</label>
+          <input type="number" id="inp-dp" value="20" class="w-full p-3 text-sm sm:text-base font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+        </div>
+
+        <div>
+          <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1.5">Konsumsi BBM (km/liter)</label>
+          <input type="number" step="0.1" id="inp-fuel-eff" value="13.5" class="w-full p-3 text-sm sm:text-base font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+        </div>
+
+        <div>
+          <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1.5">Harga Bahan Bakar per Liter (Rp)</label>
+          <input type="number" id="inp-fuel-price" value="13300" class="w-full p-3 text-sm sm:text-base font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+        </div>
+
+        <div>
+          <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1.5">Jarak Tempuh Tahunan (km/tahun)</label>
+          <input type="number" id="inp-km-year" value="15000" class="w-full p-3 text-sm sm:text-base font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+        </div>
+
+        <div>
+          <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1.5">Estimasi Servis Rutin per Tahun (Rp)</label>
+          <input type="number" id="inp-service" value="3500000" class="w-full p-3 text-sm sm:text-base font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+        </div>
+
+        <div>
+          <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1.5">Premi Asuransi per Tahun (Rp)</label>
+          <input type="number" id="inp-insurance" value="4800000" class="w-full p-3 text-sm sm:text-base font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+        </div>
+
+        <div>
+          <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1.5">Pajak Kendaraan (PKB) per Tahun (Rp)</label>
+          <input type="number" id="inp-tax" value="4200000" class="w-full p-3 text-sm sm:text-base font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+        </div>
+
+        <!-- Tombol "Analisis Data" (Sesuai Permintaan) -->
+        <div class="col-span-full pt-4">
+          <button type="button" onclick="calculateTCO()" class="w-full py-4 px-6 rounded-xl bg-amber-400 hover:bg-amber-300 text-[#162447] font-black uppercase text-base sm:text-lg tracking-wider border-2 border-[#162447] shadow-[4px_4px_0px_#162447] hover:-translate-y-0.5 transition-all">
+            Analisis Data →
+          </button>
+        </div>
+
+      </form>
+    </section>
+
+    <!-- HASIL KALKULASI TCO RIIL -->
+    <section id="results-section" class="bg-[#162447] text-white border-2 border-[#0F1D38] rounded-2xl p-6 sm:p-8 shadow-[6px_6px_0px_#94A3B8]">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-white/10">
+        <div>
+          <span class="text-xs sm:text-sm font-black uppercase text-amber-300 tracking-wider">RINGKASAN BIAYA RIIL</span>
+          <h3 class="text-2xl sm:text-4xl font-black uppercase tracking-tight mt-1">HASIL KALKULASI TCO</h3>
+        </div>
+        <button type="button" onclick="window.print()" class="px-5 py-2.5 rounded-xl bg-white text-[#162447] font-black text-xs sm:text-sm uppercase shadow-[3px_3px_0px_#94A3B8] self-start md:self-center">
+          🖨️ Cetak PDF
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 my-8">
+        <div class="p-5 bg-white/5 rounded-xl border border-white/10">
+          <span class="text-xs uppercase font-bold text-blue-200">TOTAL BIAYA TCO</span>
+          <div id="res-total" class="text-2xl sm:text-3xl font-black text-amber-400 mt-2">Rp 0</div>
+          <span class="text-xs text-blue-300">Akumulasi sesuai periode</span>
+        </div>
+
+        <div class="p-5 bg-white/5 rounded-xl border border-white/10">
+          <span class="text-xs uppercase font-bold text-blue-200">BIAYA PER BULAN</span>
+          <div id="res-monthly" class="text-2xl sm:text-3xl font-black text-white mt-2">Rp 0</div>
+          <span class="text-xs text-blue-300">Beban pengeluaran bulanan</span>
+        </div>
+
+        <div class="p-5 bg-white/5 rounded-xl border border-white/10">
+          <span class="text-xs uppercase font-bold text-blue-200">BIAYA PER KILOMETER</span>
+          <div id="res-perkm" class="text-2xl sm:text-3xl font-black text-white mt-2">Rp 0</div>
+          <span class="text-xs text-blue-300">Biaya setiap km mobil berjalan</span>
+        </div>
+
+        <div class="p-5 bg-white/5 rounded-xl border border-white/10">
+          <span class="text-xs uppercase font-bold text-blue-200">DEPRESIASI NILAI</span>
+          <div id="res-depreciation" class="text-2xl sm:text-3xl font-black text-rose-400 mt-2">Rp 0</div>
+          <span class="text-xs text-blue-300">Penurunan harga jual kembali</span>
+        </div>
+      </div>
+
+      <!-- Breakdown Rincian Biaya -->
+      <div class="space-y-3 pt-4 border-t border-white/10">
+        <h4 class="text-sm font-black uppercase text-amber-300">RINCIAN ALOKASI BIAYA:</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs sm:text-sm">
+          <div class="p-3 rounded-lg bg-white/5">⛽ Total Bensin: <strong id="res-fuel" class="block text-base text-white mt-1">Rp 0</strong></div>
+          <div class="p-3 rounded-lg bg-white/5">🔧 Total Servis: <strong id="res-service" class="block text-base text-white mt-1">Rp 0</strong></div>
+          <div class="p-3 rounded-lg bg-white/5">📑 Total Pajak: <strong id="res-tax" class="block text-base text-white mt-1">Rp 0</strong></div>
+          <div class="p-3 rounded-lg bg-white/5">🛡️ Total Asuransi: <strong id="res-insurance" class="block text-base text-white mt-1">Rp 0</strong></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- Kalkulator JS Logic -->
+<script>
+  let currentPeriodYears = 3;
+  let vehicleName = 'Toyota Avanza 1.5 G CVT';
+
+  const PRESETS = {
+    avanza: { name: 'Toyota Avanza 1.5 G CVT', price: 275000000, fuelEff: 13.5, fuelPrice: 13300, kmYear: 15000, service: 3500000, insurance: 4800000, tax: 4200000 },
+    brio: { name: 'Honda Brio Satya E CVT', price: 198000000, fuelEff: 16.5, fuelPrice: 13300, kmYear: 14000, service: 2800000, insurance: 3900000, tax: 3100000 },
+    xpander: { name: 'Mitsubishi Xpander Ultimate', price: 315000000, fuelEff: 12.8, fuelPrice: 13300, kmYear: 15000, service: 4100000, insurance: 5500000, tax: 4800000 },
+    custom: { name: 'Kendaraan Kustom Anda', price: 250000000, fuelEff: 14.0, fuelPrice: 13300, kmYear: 15000, service: 3000000, insurance: 4000000, tax: 3500000 }
+  };
+
+  function formatIDR(val) {
+    return 'Rp ' + Math.round(val).toLocaleString('id-ID');
+  }
+
+  function selectPreset(key) {
+    const data = PRESETS[key] || PRESETS.custom;
+    vehicleName = data.name;
+    document.getElementById('step2-title').textContent = 'PARAMETER KENDARAAN: ' + data.name.toUpperCase();
+    document.getElementById('inp-price').value = data.price;
+    document.getElementById('inp-fuel-eff').value = data.fuelEff;
+    document.getElementById('inp-fuel-price').value = data.fuelPrice;
+    document.getElementById('inp-km-year').value = data.kmYear;
+    document.getElementById('inp-service').value = data.service;
+    document.getElementById('inp-insurance').value = data.insurance;
+    document.getElementById('inp-tax').value = data.tax;
+    
+    // Smooth scroll to step 2
+    document.getElementById('step2-section').scrollIntoView({ behavior: 'smooth' });
+    calculateTCO();
+  }
+
+  function setPeriod(years) {
+    currentPeriodYears = years;
+    document.querySelectorAll('.period-btn').forEach(btn => {
+      const p = parseInt(btn.getAttribute('data-period'));
+      if (p === years) {
+        btn.className = 'period-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-black uppercase border-2 border-[#162447] bg-[#162447] text-white shadow-[2px_2px_0px_#94A3B8]';
+      } else {
+        btn.className = 'period-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-black uppercase border-2 border-[#162447] bg-white text-[#162447]';
+      }
+    });
+    calculateTCO();
+  }
+
+  function toggleCreditInputs() {
+    const isCredit = document.getElementById('inp-method').value === 'kredit';
+    document.getElementById('col-dp').style.display = isCredit ? 'block' : 'none';
+  }
+
+  function calculateTCO() {
+    const price = parseFloat(document.getElementById('inp-price').value) || 0;
+    const fuelEff = parseFloat(document.getElementById('inp-fuel-eff').value) || 12;
+    const fuelPrice = parseFloat(document.getElementById('inp-fuel-price').value) || 13300;
+    const kmYear = parseFloat(document.getElementById('inp-km-year').value) || 15000;
+    const serviceYear = parseFloat(document.getElementById('inp-service').value) || 0;
+    const insuranceYear = parseFloat(document.getElementById('inp-insurance').value) || 0;
+    const taxYear = parseFloat(document.getElementById('inp-tax').value) || 0;
+
+    // Depresiasi estimasi: 15% thn 1, 10% thn berikutnya
+    let depRate = 0.15;
+    if (currentPeriodYears === 3) depRate = 0.32;
+    if (currentPeriodYears === 5) depRate = 0.46;
+    const totalDepreciation = price * depRate;
+
+    // BBM
+    const litersPerYear = kmYear / (fuelEff || 1);
+    const fuelCostYear = litersPerYear * fuelPrice;
+    const totalFuel = fuelCostYear * currentPeriodYears;
+
+    // Operasional
+    const totalService = serviceYear * currentPeriodYears;
+    const totalInsurance = insuranceYear * currentPeriodYears;
+    const totalTax = taxYear * currentPeriodYears;
+
+    // Total TCO
+    const totalTCO = totalDepreciation + totalFuel + totalService + totalInsurance + totalTax;
+    const totalMonths = currentPeriodYears * 12;
+    const monthlyCost = totalTCO / totalMonths;
+    const totalKm = kmYear * currentPeriodYears;
+    const costPerKm = totalTCO / (totalKm || 1);
+
+    // Update UI
+    document.getElementById('res-total').textContent = formatIDR(totalTCO);
+    document.getElementById('res-monthly').textContent = formatIDR(monthlyCost);
+    document.getElementById('res-perkm').textContent = formatIDR(costPerKm);
+    document.getElementById('res-depreciation').textContent = formatIDR(totalDepreciation);
+
+    document.getElementById('res-fuel').textContent = formatIDR(totalFuel);
+    document.getElementById('res-service').textContent = formatIDR(totalService);
+    document.getElementById('res-tax').textContent = formatIDR(totalTax);
+    document.getElementById('res-insurance').textContent = formatIDR(totalInsurance);
+  }
+
+  // Jalankan kalkulasi awal saat halaman dimuat
+  window.addEventListener('DOMContentLoaded', () => {
+    calculateTCO();
+  });
+</script>
+
+
+<script src="ravenmille.js"></script>
+</body>
+</html>

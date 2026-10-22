@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Basis Data Masalah Mobil – Ravenmille</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,800;0,900;1,800;1,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ravenmille.css">
+</head>
+<body>
+<div class="ravenmille-issues min-h-screen bg-[#FDFBF7] text-slate-900 pb-16 halftone-bg">
+
+  <!-- Header Navigation -->
+  <header class="sticky top-0 z-40 bg-[#FDFBF7]/95 backdrop-blur-md border-b-2 border-[#162447] shadow-sm mb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-[#162447] rounded-xl border-2 border-[#162447] shadow-[2px_2px_0px_#94A3B8] flex items-center justify-center text-amber-400 font-black text-2xl">R</div>
+        <span class="font-black text-xl tracking-tight text-[#162447] uppercase hidden sm:inline">RAVENMILLE</span>
+      </a>
+      <nav class="flex items-center gap-2 overflow-x-auto">
+        <a href="kalkulator.html" class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Kalkulator</a>
+        <a href="risiko.html" class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Risiko</a>
+        <a href="komparasi.html" class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Komparasi</a>
+        <a href="masalah.html" class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl bg-[#162447] text-white border-2 border-[#162447] shadow-[2px_2px_0px_#94A3B8]">Masalah</a>
+        <a href="bengkel.html" class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Bengkel</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+    <!-- Header Banner: Searchbar ditaruh di bawah deskripsi (Sesuai Permintaan) -->
+    <div class="bg-white border-2 border-[#162447] rounded-2xl p-6 sm:p-8 shadow-[6px_6px_0px_#162447] flex flex-col gap-5">
+      <div>
+        <span class="inline-block px-3 py-1 bg-purple-100 text-purple-900 border border-purple-300 rounded-lg text-xs font-black uppercase tracking-wider mb-2">
+          RELIABILITY DATABASE
+        </span>
+        <h1 class="text-2xl sm:text-4xl font-black italic text-[#162447] uppercase tracking-tight">
+          BASIS DATA MASALAH POPULER & BIAYA PERBAIKAN
+        </h1>
+        <p class="text-sm sm:text-base text-slate-700 max-w-4xl leading-relaxed font-medium mt-1">
+          Kompilasi riil penyakit langganan mobil di Indonesia berdasarkan pengalaman mekanik spesialis, titik kilometer rawan, gejala awal, dan kisaran estimasi biaya penggantian suku cadang.
+        </p>
+      </div>
+
+      <!-- Searchbar Tepat di Bawah Deskripsi -->
+      <div class="pt-2">
+        <input 
+          type="text" 
+          id="issues-search" 
+          oninput="filterIssues()" 
+          placeholder="Cari berdasarkan model (Avanza, Xpander, Brio) atau nama masalah (rack steer, CVT, fuel pump)..." 
+          class="w-full p-3.5 text-sm sm:text-base font-semibold border-2 border-[#162447] rounded-xl shadow-[3px_3px_0px_#162447] focus:bg-blue-50/20 bg-white"
+        >
+      </div>
+
+      <!-- Brand Filter Tabs -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+        <button type="button" onclick="setBrandFilter('all')" class="brand-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-black uppercase border-2 border-[#162447] bg-[#162447] text-white shadow-[2px_2px_0px_#94A3B8]" data-b="all">Semua Merek</button>
+        <button type="button" onclick="setBrandFilter('Toyota')" class="brand-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-black uppercase border-2 border-slate-300 bg-white text-slate-700" data-b="Toyota">Toyota</button>
+        <button type="button" onclick="setBrandFilter('Mitsubishi')" class="brand-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-black uppercase border-2 border-slate-300 bg-white text-slate-700" data-b="Mitsubishi">Mitsubishi</button>
+        <button type="button" onclick="setBrandFilter('Honda')" class="brand-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-black uppercase border-2 border-slate-300 bg-white text-slate-700" data-b="Honda">Honda</button>
+        <button type="button" onclick="setBrandFilter('Daihatsu')" class="brand-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-black uppercase border-2 border-slate-300 bg-white text-slate-700" data-b="Daihatsu">Daihatsu</button>
+      </div>
+    </div>
+
+    <!-- Layout Dua Kolom: Kiri Daftar Mobil, Kanan Panel Biru Tua Rincian Masalah (Sesuai Permintaan agar tidak terpotong) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Sisi Kiri: Daftar Model Kendaraan (Responsive, tidak terpotong) -->
+      <div class="lg:col-span-5 bg-white border-2 border-[#162447] rounded-2xl p-6 shadow-[6px_6px_0px_#162447] space-y-3">
+        <h3 class="text-sm font-black uppercase text-[#162447] tracking-wider mb-2">PILIH MODEL KENDARAAN:</h3>
+        <div id="vehicle-list" class="space-y-2.5 max-h-[600px] overflow-y-auto pr-1">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+
+      <!-- Sisi Kanan: Panel Detail Masalah dengan Background Biru Tua (#162447) agar Kontras & Jelas -->
+      <div class="lg:col-span-7 bg-[#162447] text-white border-2 border-[#0F1D38] rounded-2xl p-6 sm:p-8 shadow-[6px_6px_0px_#94A3B8] space-y-6">
+        <div class="border-b border-white/10 pb-4">
+          <span class="text-xs font-black text-amber-300 uppercase tracking-wider">DIAGNOSIS BENGKEL SPESIALIS</span>
+          <h2 id="detail-title" class="text-2xl sm:text-3xl font-black uppercase mt-1">TOYOTA AVANZA (GEN 2 & 3)</h2>
+          <p id="detail-count" class="text-xs sm:text-sm text-blue-200 mt-1">Ditemukan 3 masalah umum tercatat</p>
+        </div>
+
+        <div id="issues-list" class="space-y-4">
+          <!-- Injected via JS -->
+        </div>
+
+        <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+          <span class="text-xs text-blue-200">Butuh pengecekan langsung ke lokasi?</span>
+          <a href="bengkel.html" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs sm:text-sm uppercase rounded-xl transition-all">
+            Kontak Bengkel / Sewa Inspektor →
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+
+<script>
+  const ISSUES_DATA = [
+    {
+      id: 'avanza',
+      name: 'Toyota Avanza 1.3 / 1.5 (Gen 2 & 3)',
+      brand: 'Toyota',
+      issues: [
+        {
+          name: 'Bushing Rack Steer Aus (Bunyi Gluduk di Jalan Keriting)',
+          km: '40.000 - 70.000 km',
+          cost: 'Rp 650.000 - Rp 1.800.000',
+          symptom: 'Setir bergetar dan terdengar bunyi ketukan logam saat melewati jalan rusak atau paving block.',
+          solution: 'Ganti bushing rack steer teflon khusus di bengkel spesialis tanpa perlu ganti satu set rack komplit.'
+        },
+        {
+          name: 'Extra Fan Radiator Mati / Lemah',
+          km: '80.000 - 110.000 km',
+          cost: 'Rp 450.000 - Rp 950.000',
+          symptom: 'AC tiba-tiba tidak dingin saat macet panjang, suhu mesin naik cepat.',
+          solution: 'Ganti motor fan orisinil Denso agar temperatur mesin tidak sampai overheat melengkungkan cylinder head.'
+        }
+      ]
+    },
+    {
+      id: 'xpander',
+      name: 'Mitsubishi Xpander / Cross (2017-2024)',
+      brand: 'Mitsubishi',
+      issues: [
+        {
+          name: 'Impeller Fuel Pump Bermasalah (Recall Resmi)',
+          km: '20.000 - 60.000 km',
+          cost: 'Gratis di Beres (Recall) / Rp 1.500.000 luar garansi',
+          symptom: 'Mesin tiba-tiba brebet, mati mendadak saat kecepatan rendah, sulit distarter.',
+          solution: 'Pastikan cek riwayat servis bengkel resmi apakah sudah dilakukan recall pergantian pompa bahan bakar.'
+        },
+        {
+          name: 'Shock Absorber Belakang Bocor Rembes Oli',
+          km: '30.000 - 50.000 km',
+          cost: 'Rp 800.000 - Rp 1.400.000 (Sepasang)',
+          symptom: 'Bodi belakang mengayun berlebih saat bawa muatan penuh, terlihat rembesan debu basah di tabung shock.',
+          solution: 'Ganti shockbreaker belakang versi perbaikan OEM atau aftermarket heavy-duty.'
+        }
+      ]
+    },
+    {
+      id: 'brio',
+      name: 'Honda Brio Satya & RS (2014-2024)',
+      brand: 'Honda',
+      issues: [
+        {
+          name: 'Engine Mounting Kanan Aus / Amblas',
+          km: '50.000 - 80.000 km',
+          cost: 'Rp 750.000 - Rp 1.300.000',
+          symptom: 'Getaran mesin masuk keras ke kabin terutama saat posisi transmisi D sambil menginjak rem.',
+          solution: 'Ganti engine mounting hydraulic orisinil Honda untuk meredam getaran kembali halus.'
+        },
+        {
+          name: 'Motor Kipas Radiator (Cooling Fan) Melemah',
+          km: '60.000 - 90.000 km',
+          cost: 'Rp 600.000 - Rp 1.100.000',
+          symptom: 'Indikator suhu berkedip merah saat macet siang terik, hembusan AC berkurang dinginnya.',
+          solution: 'Segera ganti motor fan jangan ditunda agar terhindar dari radiator jebol.'
+        }
+      ]
+    },
+    {
+      id: 'calya',
+      name: 'Toyota Calya / Daihatsu Sigra (2016-2024)',
+      brand: 'Daihatsu',
+      issues: [
+        {
+          name: 'Per Belakang Ambles Muatan Penuh',
+          km: '10.000 - 30.000 km',
+          cost: 'Rp 350.000 - Rp 700.000',
+          symptom: 'Ban belakang mentok fender dan suspensi keras mentok saat diisi 7 penumpang.',
+          solution: 'Pasang damper karet per atau ganti per belakang custom yang lebih tebal.'
+        }
+      ]
+    }
+  ];
+
+  let selectedVehicleId = 'avanza';
+  let activeBrand = 'all';
+
+  function renderVehicleList() {
+    const query = document.getElementById('issues-search').value.toLowerCase();
+    const container = document.getElementById('vehicle-list');
+    container.innerHTML = '';
+
+    const filtered = ISSUES_DATA.filter(v => {
+      const matchBrand = activeBrand === 'all' || v.brand === activeBrand;
+      const matchQuery = !query || v.name.toLowerCase().includes(query) || v.issues.some(i => i.name.toLowerCase().includes(query));
+      return matchBrand && matchQuery;
+    });
+
+    if (filtered.length === 0) {
+      container.innerHTML = '<p class="text-xs text-slate-500 py-4 text-center">Tidak ada mobil yang cocok.</p>';
+      return;
+    }
+
+    filtered.forEach(v => {
+      const isSelected = v.id === selectedVehicleId;
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.onclick = () => selectVehicle(v.id);
+      btn.className = `w-full text-left p-3.5 rounded-xl border-2 transition-all font-black text-xs sm:text-sm uppercase flex items-center justify-between ${
+        isSelected ? 'bg-[#162447] text-white border-[#162447] shadow-[2px_2px_0px_#94A3B8]' : 'bg-[#FAF8F2] text-slate-800 border-slate-300 hover:border-[#162447]'
+      }`;
+      btn.innerHTML = `<span>${v.name}</span><span>${v.issues.length} Isu</span>`;
+      container.appendChild(btn);
+    });
+  }
+
+  function selectVehicle(id) {
+    selectedVehicleId = id;
+    renderVehicleList();
+    renderDetails();
+  }
+
+  function renderDetails() {
+    const v = ISSUES_DATA.find(x => x.id === selectedVehicleId) || ISSUES_DATA[0];
+    document.getElementById('detail-title').textContent = v.name;
+    document.getElementById('detail-count').textContent = `Ditemukan ${v.issues.length} masalah langganan terdata`;
+
+    const container = document.getElementById('issues-list');
+    container.innerHTML = '';
+
+    v.issues.forEach(iss => {
+      const card = document.createElement('div');
+      card.className = 'p-5 rounded-xl bg-white/5 border border-white/10 space-y-2.5';
+      card.innerHTML = `
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+          <h4 class="text-base sm:text-lg font-black text-amber-300 uppercase">${iss.name}</h4>
+          <span class="text-xs font-bold text-blue-200">Titik Rawan: ${iss.km}</span>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-200 leading-relaxed font-medium"><strong>Gejala:</strong> ${iss.symptom}</p>
+        <div class="pt-2 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <span class="text-slate-300"><strong>Solusi:</strong> ${iss.solution}</span>
+          <span class="px-2.5 py-1 bg-amber-400 text-[#162447] font-black rounded font-mono shrink-0">${iss.cost}</span>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function filterIssues() {
+    renderVehicleList();
+  }
+
+  function setBrandFilter(b) {
+    activeBrand = b;
+    document.querySelectorAll('.brand-btn').forEach(btn => {
+      const val = btn.getAttribute('data-b');
+      if (val === b) {
+        btn.className = 'brand-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-black uppercase border-2 border-[#162447] bg-[#162447] text-white shadow-[2px_2px_0px_#94A3B8]';
+      } else {
+        btn.className = 'brand-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-black uppercase border-2 border-slate-300 bg-white text-slate-700';
+      }
+    });
+    renderVehicleList();
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    renderVehicleList();
+    renderDetails();
+  });
+</script>
+
+</body>
+</html>

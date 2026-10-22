@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Komparasi Mobil – Ravenmille</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,800;0,900;1,800;1,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ravenmille.css">
+</head>
+<body>
+<div class="ravenmille-comp min-h-screen bg-[#FDFBF7] text-slate-900 pb-16 halftone-bg">
+
+  <!-- Header Navigation -->
+  <header class="sticky top-0 z-40 bg-[#FDFBF7]/95 backdrop-blur-md border-b-2 border-[#162447] shadow-sm mb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-[#162447] rounded-xl border-2 border-[#162447] shadow-[2px_2px_0px_#94A3B8] flex items-center justify-center text-amber-400 font-black text-2xl">R</div>
+        <span class="font-black text-xl tracking-tight text-[#162447] uppercase hidden sm:inline">RAVENMILLE</span>
+      </a>
+      <nav class="flex items-center gap-2 overflow-x-auto">
+        <a href="kalkulator.html" class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Kalkulator</a>
+        <a href="risiko.html" class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Risiko</a>
+        <a href="komparasi.html" class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl bg-[#162447] text-white border-2 border-[#162447] shadow-[2px_2px_0px_#94A3B8]">Komparasi</a>
+        <a href="masalah.html" class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Masalah</a>
+        <a href="bengkel.html" class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Bengkel</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+    <!-- Header Banner: Periode Ditaruh di Bawah Deskripsi (Sesuai Permintaan) -->
+    <div class="bg-white border-2 border-[#162447] rounded-2xl p-6 sm:p-8 shadow-[6px_6px_0px_#162447] flex flex-col gap-4">
+      <div>
+        <span class="inline-block px-3 py-1 bg-amber-100 text-amber-900 border border-amber-300 rounded-lg text-xs font-black uppercase tracking-wider mb-2">
+          HEAD-TO-HEAD COMPARISON
+        </span>
+        <h1 class="text-2xl sm:text-4xl font-black italic text-[#162447] uppercase tracking-tight">
+          KOMPARASI FINANSIAL MULTI-KENDARAAN
+        </h1>
+        <p class="text-sm sm:text-base text-slate-700 max-w-4xl leading-relaxed font-medium mt-1">
+          Bandingkan total biaya kepemilikan riil, selisih depresiasi harga jual, dan efisiensi konsumsi BBM antara dua kandidat mobil secara langsung sebelum memutuskan pembelian.
+        </p>
+      </div>
+
+      <!-- Pemilih Periode Proyeksi Tepat di Bawah Deskripsi -->
+      <div class="pt-4 border-t-2 border-slate-100 flex flex-wrap items-center justify-between gap-4 bg-[#FAF8F2] p-4 rounded-xl border border-slate-200">
+        <span class="text-xs sm:text-sm font-black uppercase text-[#162447] tracking-wider flex items-center gap-2">
+          <span>📅</span> Durasi Waktu Komparasi:
+        </span>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="setCompPeriod(1)" class="comp-period-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-black uppercase border-2 border-[#162447] bg-white text-[#162447]" data-p="1">1 Tahun</button>
+          <button type="button" onclick="setCompPeriod(3)" class="comp-period-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-black uppercase border-2 border-[#162447] bg-[#162447] text-white shadow-[2px_2px_0px_#94A3B8]" data-p="3">3 Tahun</button>
+          <button type="button" onclick="setCompPeriod(5)" class="comp-period-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-black uppercase border-2 border-[#162447] bg-white text-[#162447]" data-p="5">5 Tahun</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dua Kolom Parameter Kendaraan: Slot A & Slot B -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      
+      <!-- KENDARAAN A -->
+      <div class="bg-white border-2 border-[#162447] rounded-2xl p-6 sm:p-7 shadow-[6px_6px_0px_#162447] space-y-4">
+        <div class="flex items-center justify-between border-b-2 border-slate-100 pb-3">
+          <span class="text-xs font-black uppercase px-3 py-1 bg-blue-100 text-blue-900 rounded-md border border-blue-300">KANDIDAT 1</span>
+          <span class="text-xs text-slate-500 font-bold">Slot Kendaraan A</span>
+        </div>
+
+        <div>
+          <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Nama / Model Kendaraan</label>
+          <input type="text" id="v1-name" value="Toyota Avanza 1.5 G CVT" class="w-full p-3 text-sm font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Harga Beli (Rp)</label>
+            <input type="number" id="v1-price" value="275000000" class="w-full p-3 text-sm font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+          </div>
+          <div>
+            <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Konsumsi BBM (km/L)</label>
+            <input type="number" step="0.1" id="v1-fuel-eff" value="13.5" class="w-full p-3 text-sm font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Servis Rutin/Thn (Rp)</label>
+            <input type="number" id="v1-service" value="3500000" class="w-full p-3 text-sm font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+          </div>
+          <div>
+            <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Pajak PKB/Thn (Rp)</label>
+            <input type="number" id="v1-tax" value="4200000" class="w-full p-3 text-sm font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Asuransi/Thn (Rp)</label>
+          <input type="number" id="v1-insurance" value="4800000" class="w-full p-3 text-sm font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+        </div>
+      </div>
+
+      <!-- KENDARAAN B -->
+      <div class="bg-white border-2 border-[#162447] rounded-2xl p-6 sm:p-7 shadow-[6px_6px_0px_#162447] space-y-4">
+        <div class="flex items-center justify-between border-b-2 border-slate-100 pb-3">
+          <span class="text-xs font-black uppercase px-3 py-1 bg-amber-100 text-amber-900 rounded-md border border-amber-300">KANDIDAT 2</span>
+          <span class="text-xs text-slate-500 font-bold">Slot Kendaraan B</span>
+        </div>
+
+        <div>
+          <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Nama / Model Kendaraan</label>
+          <input type="text" id="v2-name" value="Mitsubishi Xpander Ultimate" class="w-full p-3 text-sm font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Harga Beli (Rp)</label>
+            <input type="number" id="v2-price" value="315000000" class="w-full p-3 text-sm font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+          </div>
+          <div>
+            <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Konsumsi BBM (km/L)</label>
+            <input type="number" step="0.1" id="v2-fuel-eff" value="12.0" class="w-full p-3 text-sm font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Servis Rutin/Thn (Rp)</label>
+            <input type="number" id="v2-service" value="4200000" class="w-full p-3 text-sm font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+          </div>
+          <div>
+            <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Pajak PKB/Thn (Rp)</label>
+            <input type="number" id="v2-tax" value="4800000" class="w-full p-3 text-sm font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Asuransi/Thn (Rp)</label>
+          <input type="number" id="v2-insurance" value="5500000" class="w-full p-3 text-sm font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Parameter Bersama & Tombol Proses ke Halaman Baru Hasil Komparasi -->
+    <div class="bg-white border-2 border-[#162447] rounded-2xl p-6 sm:p-8 shadow-[6px_6px_0px_#162447] flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex-1 space-y-1">
+        <h3 class="text-lg font-black uppercase text-[#162447]">ASUMSI PEMAKAIAN BERSAMA</h3>
+        <p class="text-xs sm:text-sm text-slate-600 font-medium">Bahan Bakar: Rp 13.300/Liter · Jarak Tempuh: 15.000 km/tahun</p>
+      </div>
+
+      <!-- Tombol Trigger Navigasi ke Halaman Baru -->
+      <button type="button" onclick="submitComparisonAndNavigate()" class="px-8 py-4 rounded-xl bg-amber-400 hover:bg-amber-300 text-[#162447] font-black uppercase text-base sm:text-lg tracking-wider border-2 border-[#162447] shadow-[4px_4px_0px_#162447] hover:-translate-y-0.5 transition-all shrink-0">
+        Bandingkan & Proses Analisis Komparasi →
+      </button>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  let selectedCompPeriod = 3;
+
+  function setCompPeriod(p) {
+    selectedCompPeriod = p;
+    document.querySelectorAll('.comp-period-btn').forEach(btn => {
+      const val = parseInt(btn.getAttribute('data-p'));
+      if (val === p) {
+        btn.className = 'comp-period-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-black uppercase border-2 border-[#162447] bg-[#162447] text-white shadow-[2px_2px_0px_#94A3B8]';
+      } else {
+        btn.className = 'comp-period-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-black uppercase border-2 border-[#162447] bg-white text-[#162447]';
+      }
+    });
+  }
+
+  function submitComparisonAndNavigate() {
+    const data = {
+      period: selectedCompPeriod,
+      fuelPrice: 13300,
+      kmYear: 15000,
+      v1: {
+        name: document.getElementById('v1-name').value || 'Mobil A',
+        price: parseFloat(document.getElementById('v1-price').value) || 0,
+        fuelEff: parseFloat(document.getElementById('v1-fuel-eff').value) || 12,
+        service: parseFloat(document.getElementById('v1-service').value) || 0,
+        tax: parseFloat(document.getElementById('v1-tax').value) || 0,
+        insurance: parseFloat(document.getElementById('v1-insurance').value) || 0
+      },
+      v2: {
+        name: document.getElementById('v2-name').value || 'Mobil B',
+        price: parseFloat(document.getElementById('v2-price').value) || 0,
+        fuelEff: parseFloat(document.getElementById('v2-fuel-eff').value) || 12,
+        service: parseFloat(document.getElementById('v2-service').value) || 0,
+        tax: parseFloat(document.getElementById('v2-tax').value) || 0,
+        insurance: parseFloat(document.getElementById('v2-insurance').value) || 0
+      }
+    };
+
+    // Simpan ke localStorage agar bisa dibaca langsung di halaman baru hasil komparasi
+    localStorage.setItem('ravenmille_comparison_data', JSON.stringify(data));
+
+    // Navigasi ke halaman baru hasil komparasi
+    // Di WordPress, halaman ini beralamat di /hasil-komparasi atau 5-hasil-komparasi.html
+    window.location.href = "hasil-komparasi.html";
+  }
+</script>
+
+
+<script src="ravenmille.js"></script>
+</body>
+</html>
