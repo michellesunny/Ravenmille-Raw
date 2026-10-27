@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Ravenmille – Input Data Supabase</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="ravenmille-supabase.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: #FDFBF7;
+            color: #162447;
+            padding: 24px;
+        }
+
+        .wrap {
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 22px;
+            margin-bottom: 4px;
+        }
+
+        .sub {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .tabs button {
+            padding: 10px 16px;
+            border: 2px solid #162447;
+            border-radius: 10px;
+            background: #fff;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .tabs button.on {
+            background: #162447;
+            color: #fff;
+        }
+
+        .card {
+            background: #fff;
+            border: 2px solid #162447;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 4px 4px 0 #162447;
+        }
+
+        .card h2 {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin: 10px 0 4px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #162447;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        textarea {
+            min-height: 70px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .btn {
+            margin-top: 14px;
+            padding: 12px 20px;
+            background: #162447;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn:disabled {
+            opacity: .5;
+        }
+
+        .msg {
+            margin-top: 10px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .msg.ok {
+            color: #047857;
+        }
+
+        .msg.err {
+            color: #be123c;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            margin-top: 10px;
+            background: #FAF8F2;
+        }
+
+        .item img {
+            width: 64px;
+            height: 48px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #162447;
+        }
+
+        .item .nm {
+            flex: 1;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .item small {
+            display: block;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .del {
+            padding: 6px 12px;
+            background: #be123c;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .warn {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+    </style>
+    <base target="_blank">
+</head>
+
+<body>
+    <div class="wrap">
+        <h1>🛠️ Admin Ravenmille</h1>
+        <p class="sub">Input manual data kendaraan, masalah, inspektor & bengkel — tersimpan di Supabase, langsung
+            tampil di situs.</p>
+        <div class="warn" id="cfg-warn" style="display:none">⚠️ Supabase belum dikonfigurasi. Isi dulu
+            <code>SUPABASE_URL</code> & <code>SUPABASE_ANON_KEY</code> di file <code>ravenmille-supabase.js</code>.
+        </div>
+
+        <div class="tabs">
+            <button class="on" onclick="showTab('vehicles', this)">🚗 Kendaraan</button>
+            <button onclick="showTab('issues', this)">🔧 Masalah</button>
+            <button onclick="showTab('inspectors', this)">👨‍🔧 Inspektor</button>
+            <button onclick="showTab('workshops', this)">🏪 Bengkel</button>
+            <button onclick="showTab('news', this)">📰 Berita</button>
+        </div>
+
+        <!-- ================= KENDARAAN ================= -->
+        <div id="tab-vehicles">
+            <div class="card">
+                <h2>Tambah / Edit Kendaraan</h2>
+                <input type="hidden" id="v-id">
+                <label>Nama Model *</label><input id="v-name" placeholder="Toyota Avanza 1.5 G CVT">
+                <div class="row">
+                    <div><label>Merek</label><input id="v-brand" placeholder="Toyota"></div>
+                    <div><label>Kategori</label><input id="v-category" placeholder="LMPV POPULER"></div>
+                </div>
+                <div class="row">
+                    <div><label>Harga (Rp) *</label><input id="v-price" type="number" value="275000000"></div>
+                    <div><label>Konsumsi BBM (km/l) *</label><input id="v-fuel" type="number" step="0.1" value="13.5">
+                    </div>
+                </div>
+                <div class="row">
+                    <div><label>Servis / Tahun (Rp)</label><input id="v-service" type="number" value="3500000"></div>
+                    <div><label>Asuransi / Tahun (Rp)</label><input id="v-insurance" type="number" value="4800000">
+                    </div>
+                </div>
+                <div class="row">
+                    <div><label>Pajak PKB / Tahun (Rp)</label><input id="v-tax" type="number" value="4200000"></div>
+                    <div><label>Urutan Tampil</label><input id="v-order" type="number" value="0"></div>
+                </div>
+                <label>Gambar Model</label><input id="v-img" type="file" accept="image/*">
+                <button class="btn" id="v-btn" onclick="saveVehicle()">💾 Simpan Kendaraan</button>
+                <p class="msg" id="v-msg"></p>
+            </div>
+            <div class="card">
+                <h2>Daftar Kendaraan</h2>
+                <div id="v-list">
+                    <p>Memuat…</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= MASALAH ================= -->
+        <div id="tab-issues" style="display:none">
+            <div class="card">
+                <h2>Tambah Masalah / Biaya Perbaikan</h2>
+                <label>Kendaraan *</label><select id="i-vehicle"></select>
+                <label>Nama Masalah *</label><input id="i-name" placeholder="Bushing Rack Steer Aus">
+                <div class="row">
+                    <div><label>Titik KM Rawan</label><input id="i-km" placeholder="40.000 - 70.000 km"></div>
+                    <div><label>Estimasi Biaya</label><input id="i-cost" placeholder="Rp 650.000 - Rp 1.800.000"></div>
+                </div>
+                <label>Gejala</label><textarea id="i-symptom"></textarea>
+                <label>Solusi</label><textarea id="i-solution"></textarea>
+                <label>Gambar (opsional)</label><input id="i-img" type="file" accept="image/*">
+                <button class="btn" onclick="saveIssue()">💾 Simpan Masalah</button>
+                <p class="msg" id="i-msg"></p>
+            </div>
+            <div class="card">
+                <h2>Daftar Masalah</h2>
+                <div id="i-list">
+                    <p>Memuat…</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= INSPEKTOR ================= -->
+        <div id="tab-inspectors" style="display:none">
+            <div class="card">
+                <h2>Tambah Inspektor</h2>
+                <label>Nama *</label><input id="n-name">
+                <div class="row">
+                    <div><label>Kota</label><input id="n-city"></div>
+                    <div><label>WhatsApp (62xxx)</label><input id="n-phone"></div>
+                </div>
+                <label>Keahlian (pisahkan koma)</label><input id="n-spec" placeholder="CVT, Kelistrikan ECU">
+                <button class="btn" onclick="saveInspector()">💾 Simpan Inspektor</button>
+                <p class="msg" id="n-msg"></p>
+            </div>
+            <div class="card">
+                <h2>Daftar Inspektor</h2>
+                <div id="n-list">
+                    <p>Memuat…</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= BENGKEL ================= -->
+        <div id="tab-workshops" style="display:none">
+            <div class="card">
+                <h2>Tambah Bengkel</h2>
+                <label>Nama Bengkel *</label><input id="w-name">
+                <div class="row">
+                    <div><label>Kota</label><input id="w-city"></div>
+                    <div><label>WhatsApp (62xxx)</label><input id="w-phone"></div>
+                </div>
+                <label>Layanan (pisahkan koma)</label><input id="w-svc" placeholder="Tune Up, Overhaul Kaki-kaki">
+                <button class="btn" onclick="saveWorkshop()">💾 Simpan Bengkel</button>
+                <p class="msg" id="w-msg"></p>
+            </div>
+            <div class="card">
+                <h2>Daftar Bengkel</h2>
+                <div id="w-list">
+                    <p>Memuat…</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= BERITA ================= -->
+        <div id="tab-news" style="display:none">
+            <div class="card">
+                <h2>Tambah Berita / Artikel</h2>
+                <label>Judul Berita *</label><input id="b-title"
+                    placeholder="Harga Mobil Bekas Diprediksi Naik di 2026">
+                <div class="row">
+                    <div><label>Kategori</label><input id="b-category" placeholder="TIPS / BERITA / ANALISIS"></div>
+                    <div><label>Gambar Sampul</label><input id="b-img" type="file" accept="image/*"></div>
+                </div>
+                <label>Ringkasan (tampil di kartu)</label><textarea id="b-excerpt" style="min-height:50px"></textarea>
+                <label>Isi Berita * (pisahkan paragraf dengan enter)</label><textarea id="b-content"
+                    style="min-height:140px"></textarea>
+                <button class="btn" onclick="saveNews()">💾 Simpan Berita</button>
+                <p class="msg" id="b-msg"></p>
+            </div>
+            <div class="card">
+                <h2>Daftar Berita</h2>
+                <div id="b-list">
+                    <p>Memuat…</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const sb = window.RAVENMILLE_SUPABASE;
+        if (!sb) document.getElementById('cfg-warn').style.display = 'block';
+
+        function showTab(name, btn) {
+            document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('on'));
+            btn.classList.add('on');
+            ['vehicles', 'issues', 'inspectors', 'workshops', 'news'].forEach(t =>
+                document.getElementById('tab-' + t).style.display = (t === name) ? 'block' : 'none');
+            refreshAll();
+        }
+        function msg(id, text, ok) {
+            const el = document.getElementById(id);
+            el.textContent = text; el.className = 'msg ' + (ok ? 'ok' : 'err');
+            if (ok) setTimeout(() => el.textContent = '', 3000);
+        }
+        const arr = s => s.split(',').map(x => x.trim()).filter(Boolean);
+
+        /* ---------- KENDARAAN ---------- */
+        async function saveVehicle() {
+            if (!sb) return;
+            const id = document.getElementById('v-id').value;
+            const file = document.getElementById('v-img').files[0];
+            try {
+                let image_url = undefined;
+                if (file) image_url = await window.ravenmilleUploadImage(file, 'vehicles');
+                const row = {
+                    name: document.getElementById('v-name').value, brand: document.getElementById('v-brand').value,
+                    category: document.getElementById('v-category').value,
+                    price: +document.getElementById('v-price').value || 0, fuel_eff: +document.getElementById('v-fuel').value || 12,
+                    service: +document.getElementById('v-service').value || 0, insurance: +document.getElementById('v-insurance').value || 0,
+                    tax: +document.getElementById('v-tax').value || 0, sort_order: +document.getElementById('v-order').value || 0
+                };
+                if (image_url) row.image_url = image_url;
+                const q = id
+                    ? sb.from('vehicles').update(row).eq('id', id)
+                    : sb.from('vehicles').insert(row);
+                const { error } = await q;
+                if (error) throw error;
+                msg('v-msg', '✅ Kendaraan tersimpan!', true);
+                ['v-id', 'v-name', 'v-brand', 'v-category', 'v-img'].forEach(x => document.getElementById(x).value = '');
+                document.getElementById('v-btn').textContent = '💾 Simpan Kendaraan';
+                loadVehicles();
+            } catch (e) { msg('v-msg', '❌ ' + e.message); }
+        }
+        async function loadVehicles() {
+            if (!sb) return;
+            const { data } = await sb.from('vehicles').select('*').order('sort_order').order('created_at');
+            const list = document.getElementById('v-list');
+            const sel = document.getElementById('i-vehicle');
+            list.innerHTML = ''; sel.innerHTML = '';
+            (data || []).forEach(v => {
+                list.insertAdjacentHTML('beforeend', `<div class="item">
+      ${v.image_url ? `<img src="${v.image_url}">` : ''}
+      <div class="nm">${v.name}<small>Rp ${Number(v.price).toLocaleString('id-ID')} · ${v.fuel_eff} km/l · ${v.brand || ''}</small></div>
+      <button class="del" onclick="delRow('vehicles','${v.id}')">Hapus</button></div>`);
+                sel.insertAdjacentHTML('beforeend', `<option value="${v.id}">${v.name}</option>`);
+            });
+            if (!data || !data.length) list.innerHTML = '<p>Belum ada data. Tambahkan di atas 👆</p>';
+            loadIssues();
+        }
+
+        /* ---------- MASALAH ---------- */
+        async function saveIssue() {
+            if (!sb) return;
+            const file = document.getElementById('i-img').files[0];
+            try {
+                let image_url = null;
+                if (file) image_url = await window.ravenmilleUploadImage(file, 'issues');
+                const { error } = await sb.from('vehicle_issues').insert({
+                    vehicle_id: document.getElementById('i-vehicle').value,
+                    name: document.getElementById('i-name').value,
+                    km: document.getElementById('i-km').value,
+                    cost: document.getElementById('i-cost').value,
+                    symptom: document.getElementById('i-symptom').value,
+                    solution: document.getElementById('i-solution').value,
+                    image_url
+                });
+                if (error) throw error;
+                msg('i-msg', '✅ Masalah tersimpan!', true);
+                ['i-name', 'i-km', 'i-cost', 'i-symptom', 'i-solution', 'i-img'].forEach(x => document.getElementById(x).value = '');
+                loadIssues();
+            } catch (e) { msg('i-msg', '❌ ' + e.message); }
+        }
+        async function loadIssues() {
+            if (!sb) return;
+            const { data } = await sb.from('vehicle_issues').select('*, vehicles(name)').order('created_at', { ascending: false });
+            const list = document.getElementById('i-list');
+            list.innerHTML = '';
+            (data || []).forEach(i => {
+                list.insertAdjacentHTML('beforeend', `<div class="item">
+      ${i.image_url ? `<img src="${i.image_url}">` : ''}
+      <div class="nm">${i.name}<small>${i.vehicles ? i.vehicles.name : ''} · ${i.km} · ${i.cost}</small></div>
+      <button class="del" onclick="delRow('vehicle_issues','${i.id}')">Hapus</button></div>`);
+            });
+            if (!data || !data.length) list.innerHTML = '<p>Belum ada data.</p>';
+        }
+
+        /* ---------- INSPEKTOR & BENGKEL ---------- */
+        async function saveInspector() {
+            if (!sb) return;
+            const { error } = await sb.from('inspectors').insert({
+                name: document.getElementById('n-name').value,
+                city: document.getElementById('n-city').value,
+                phone: document.getElementById('n-phone').value,
+                specialties: arr(document.getElementById('n-spec').value)
+            });
+            msg('n-msg', error ? '❌ ' + error.message : '✅ Inspektor tersimpan!', !error);
+            if (!error) { ['n-name', 'n-city', 'n-phone', 'n-spec'].forEach(x => document.getElementById(x).value = ''); loadInspectors(); }
+        }
+        async function loadInspectors() {
+            if (!sb) return;
+            const { data } = await sb.from('inspectors').select('*').order('created_at', { ascending: false });
+            const list = document.getElementById('n-list'); list.innerHTML = '';
+            (data || []).forEach(r => list.insertAdjacentHTML('beforeend',
+                `<div class="item"><div class="nm">${r.name}<small>${r.city} · WA ${r.phone}</small></div>
+     <button class="del" onclick="delRow('inspectors','${r.id}')">Hapus</button></div>`));
+            if (!data || !data.length) list.innerHTML = '<p>Belum ada data.</p>';
+        }
+        async function saveWorkshop() {
+            if (!sb) return;
+            const { error } = await sb.from('workshops').insert({
+                name: document.getElementById('w-name').value,
+                city: document.getElementById('w-city').value,
+                phone: document.getElementById('w-phone').value,
+                services: arr(document.getElementById('w-svc').value)
+            });
+            msg('w-msg', error ? '❌ ' + error.message : '✅ Bengkel tersimpan!', !error);
+            if (!error) { ['w-name', 'w-city', 'w-phone', 'w-svc'].forEach(x => document.getElementById(x).value = ''); loadWorkshops(); }
+        }
+        async function loadWorkshops() {
+            if (!sb) return;
+            const { data } = await sb.from('workshops').select('*').order('created_at', { ascending: false });
+            const list = document.getElementById('w-list'); list.innerHTML = '';
+            (data || []).forEach(r => list.insertAdjacentHTML('beforeend',
+                `<div class="item"><div class="nm">${r.name}<small>${r.city} · WA ${r.phone}</small></div>
+     <button class="del" onclick="delRow('workshops','${r.id}')">Hapus</button></div>`));
+            if (!data || !data.length) list.innerHTML = '<p>Belum ada data.</p>';
+        }
+
+
+        /* ---------- BERITA ---------- */
+        async function saveNews() {
+            if (!sb) return;
+            const file = document.getElementById('b-img').files[0];
+            try {
+                let image_url = null;
+                if (file) image_url = await window.ravenmilleUploadImage(file, 'news');
+                const { error } = await sb.from('news').insert({
+                    title: document.getElementById('b-title').value,
+                    category: document.getElementById('b-category').value || 'BERITA',
+                    excerpt: document.getElementById('b-excerpt').value,
+                    content: document.getElementById('b-content').value,
+                    image_url
+                });
+                if (error) throw error;
+                msg('b-msg', '✅ Berita tersimpan!', true);
+                ['b-title', 'b-category', 'b-excerpt', 'b-content', 'b-img'].forEach(x => document.getElementById(x).value = '');
+                loadNews();
+            } catch (e) { msg('b-msg', '❌ ' + e.message); }
+        }
+        async function loadNews() {
+            if (!sb) return;
+            const { data } = await sb.from('news').select('*').order('created_at', { ascending: false });
+            const list = document.getElementById('b-list'); list.innerHTML = '';
+            (data || []).forEach(r => list.insertAdjacentHTML('beforeend', `<div class="item">
+    ${r.image_url ? `<img src="${r.image_url}">` : ''}
+    <div class="nm">${r.title}<small>${r.category} · ${new Date(r.created_at).toLocaleDateString('id-ID')}</small></div>
+    <a href="berita-detail.html?id=${r.id}" target="_blank" style="font-size:12px;font-weight:700;color:#162447;">Lihat</a>
+    <button class="del" onclick="delRow('news','${r.id}')">Hapus</button></div>`));
+            if (!data || !data.length) list.innerHTML = '<p>Belum ada berita.</p>';
+        }
+        /* ---------- UMUM ---------- */
+        async function delRow(table, id) {
+            if (!confirm('Hapus data ini?')) return;
+            await sb.from(table).delete().eq('id', id);
+            refreshAll();
+        }
+        function refreshAll() { loadVehicles(); loadInspectors(); loadWorkshops(); loadNews(); }
+        window.addEventListener('DOMContentLoaded', refreshAll);
+    </script>
+</body>
+
+</html>
