@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Komparasi Biaya Kepemilikan Kendaraan | Ravenmille</title>
+  <meta name="description" content="Bandingkan dua mobil secara berdampingan: selisih harga OTR, depresiasi, konsumsi BBM atau listrik EV, servis tahunan, pajak PKB, asuransi, dan bunga kredit.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Ravenmille Indonesia">
+  <meta property="og:title" content="Komparasi Biaya Kepemilikan Kendaraan | Ravenmille">
+  <meta property="og:description" content="Analisis head-to-head biaya kepemilikan riil dua kandidat kendaraan selama 1, 3, atau 5 tahun.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/aistudio/41e99c64-bb56-4a49-b805-25ba389725f0_removalai_preview_e589ba91.png">
+  <link rel="stylesheet" href="css/ravenmille-styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body class="halftone-bg">
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="index.html" class="brand-wordmark" aria-label="Ravenmille - Beranda">
+        <img src="assets/aistudio/41e99c64-bb56-4a49-b805-25ba389725f0_removalai_preview_e589ba91.png" alt="Logo Ravenmille - Drive With Confidence" class="brand-logo-img">
+      </a>
+
+      <nav class="nav-utama" aria-label="Navigasi utama">
+        <a href="kalkulator-tco.html" class="nav-link">Kalkulator</a>
+        <a href="analisis-risiko.html" class="nav-link">Risiko</a>
+        <a href="komparasi-kendaraan.html" class="nav-link is-active">Komparasi</a>
+        <a href="masalah-kendaraan.html" class="nav-link">Masalah</a>
+        <a href="bengkel-inspektor.html" class="nav-link">Bengkel</a>
+        <a href="berita-otomotif.html" class="nav-link">Berita</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="kalkulator-tco.html" class="btn btn-primary btn-sm header-cta-desktop">Hitung TCO</a>
+        <button type="button" id="mobile-menu-toggle" class="mobile-menu-btn" aria-expanded="false" aria-controls="mobile-nav-drawer" aria-label="Buka menu navigasi">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-nav-drawer" class="mobile-drawer">
+      <nav class="mobile-drawer-links" aria-label="Navigasi seluler">
+        <a href="kalkulator-tco.html" class="nav-link">Kalkulator TCO</a>
+        <a href="analisis-risiko.html" class="nav-link">Analisis Risiko Unit</a>
+        <a href="komparasi-kendaraan.html" class="nav-link is-active">Komparasi Mobil</a>
+        <a href="masalah-kendaraan.html" class="nav-link">Katalog Masalah</a>
+        <a href="bengkel-inspektor.html" class="nav-link">Bengkel &amp; Inspektor</a>
+        <a href="berita-otomotif.html" class="nav-link">Berita Otomotif</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container-utama halaman-konten">
+    <section class="kartu-utama">
+      <span class="meta-kicker">Head-to-Head Comparison</span>
+      <h1 class="judul-halaman" style="margin-top: 6px;">Komparasi Finansial Multi-Kendaraan</h1>
+      <p class="teks-pengantar" style="margin-top: 10px;">
+        Bandingkan total biaya kepemilikan riil (TCO), depresiasi nilai jual, konsumsi energi, servis berkala, pajak, dan asuransi antara dua kandidat mobil sebelum mengambil keputusan.
+      </p>
+
+      <div class="kartu-sekunder" style="margin-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px;">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px;">
+          <span style="font-size: 0.85rem; font-weight: 800; color: #162447;">Periode Komparasi</span>
+          <div class="segmented-control">
+            <button type="button" class="segmented-btn tombol-periode-komparasi" data-period="1">1 Tahun</button>
+            <button type="button" class="segmented-btn tombol-periode-komparasi is-active" data-period="3">3 Tahun</button>
+            <button type="button" class="segmented-btn tombol-periode-komparasi" data-period="5">5 Tahun</button>
+          </div>
+        </div>
+        <span style="font-size: 0.8rem; color: #64748b; font-weight: 600;">Simulasi perbandingan untuk kedua kandidat kendaraan</span>
+      </div>
+
+      <div style="margin-top: 18px;">
+        <div style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: #475569; margin-bottom: 10px;">
+          Pasangan Komparasi Populer Indonesia
+        </div>
+        <div class="grid-4">
+          <button type="button" class="filter-btn" style="text-align: left; white-space: normal; padding: 12px;" data-duel-preset="avanza-vs-xpander">
+            <strong style="display: block; color: #162447;">Avanza 1.5 G vs Xpander</strong>
+            <span style="font-size: 0.78rem; color: #64748b;">Duel dua Low MPV keluarga</span>
+          </button>
+          <button type="button" class="filter-btn" style="text-align: left; white-space: normal; padding: 12px;" data-duel-preset="brio-vs-wrv">
+            <strong style="display: block; color: #162447;">Brio Satya E vs WR-V RS</strong>
+            <span style="font-size: 0.78rem; color: #64748b;">City car vs Compact SUV</span>
+          </button>
+          <button type="button" class="filter-btn" style="text-align: left; white-space: normal; padding: 12px;" data-duel-preset="zenix-vs-reborn">
+            <strong style="display: block; color: #162447;">Zenix Hybrid vs Reborn Diesel</strong>
+            <span style="font-size: 0.78rem; color: #64748b;">Hybrid baru vs Diesel bekas</span>
+          </button>
+          <button type="button" class="filter-btn" style="text-align: left; white-space: normal; padding: 12px;" data-duel-preset="binguo-vs-wrv">
+            <strong style="display: block; color: #162447;">BinguoEV vs Honda WR-V</strong>
+            <span style="font-size: 0.78rem; color: #64748b;">Mobil listrik EV vs Bensin</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid-2">
+      <!-- Kandidat 1 -->
+      <div class="kartu-utama" style="display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding-bottom: 12px; border-bottom: 1px solid #e2e8f0;">
+          <div>
+            <span class="meta-kicker" style="color: #1d4ed8;">Kandidat 1 · Kendaraan A</span>
+          </div>
+          <div style="min-width: 210px; flex: 1; max-width: 240px;">
+            <label for="kandidat1-preset" class="sr-only">Pilih preset acuan kandidat 1</label>
+            <select id="kandidat1-preset" class="form-select" style="min-height: 38px; font-size: 0.82rem;"></select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="kandidat1-nama">Nama / Model Kendaraan A</label>
+          <input type="text" id="kandidat1-nama" class="form-input" value="Toyota Avanza 1.5 G CVT">
+        </div>
+
+        <div class="grid-2" style="gap: 14px;">
+          <div class="form-group">
+            <label class="form-label" for="kandidat1-harga">Harga OTR Pembelian (Rp)</label>
+            <input type="number" id="kandidat1-harga" class="form-input" step="1000000" value="276700000">
+          </div>
+          <div class="form-group">
+            <span class="form-label">Kondisi Unit</span>
+            <div class="segmented-control" style="width: 100%;">
+              <button type="button" id="kandidat1-kondisi-baru" class="segmented-btn is-active" style="flex: 1;">Baru</button>
+              <button type="button" id="kandidat1-kondisi-bekas" class="segmented-btn" style="flex: 1;">Bekas</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="gap: 14px;">
+          <div class="form-group">
+            <label class="form-label" for="kandidat1-pembayaran">Skema Pembayaran</label>
+            <select id="kandidat1-pembayaran" class="form-select">
+              <option value="kredit" selected>Kredit Leasing</option>
+              <option value="tunai">Tunai Keras (Cash)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="kandidat1-bbm-jenis">Jenis Energi / BBM</label>
+            <select id="kandidat1-bbm-jenis" class="form-select">
+              <option value="ron90">Pertalite (RON 90)</option>
+              <option value="ron92" selected>Pertamax (RON 92)</option>
+              <option value="solar_dex">Solar Dex / CN51</option>
+              <option value="listrik">Kendaraan Listrik (EV)</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="kandidat1-baris-kredit" class="grid-2" style="gap: 14px;">
+          <div class="form-group">
+            <label class="form-label" for="kandidat1-dp">Uang Muka / DP (%)</label>
+            <input type="number" id="kandidat1-dp" class="form-input" value="20" min="0" max="95">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="kandidat1-bunga">Bunga Kredit (% / tahun)</label>
+            <input type="number" id="kandidat1-bunga" class="form-input" value="6.5" step="0.1" min="0">
+          </div>
+        </div>
+
+        <div class="grid-2" style="gap: 14px;">
+          <div class="form-group">
+            <label class="form-label" id="kandidat1-label-efisiensi" for="kandidat1-efisiensi">Konsumsi BBM (km/liter)</label>
+            <input type="number" id="kandidat1-efisiensi" class="form-input" step="0.5" value="13.5">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="kandidat1-jarak">Jarak Tempuh / Tahun (km)</label>
+            <input type="number" id="kandidat1-jarak" class="form-input" step="1000" value="15000">
+          </div>
+        </div>
+
+        <div class="grid-3" style="gap: 12px; padding-top: 10px; border-top: 1px solid #e2e8f0;">
+          <div class="form-group">
+            <label class="form-label" for="kandidat1-servis">Servis/Thn (Rp)</label>
+            <input type="number" id="kandidat1-servis" class="form-input" value="3600000">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="kandidat1-pajak">Pajak PKB/Thn (Rp)</label>
+            <input type="number" id="kandidat1-pajak" class="form-input" value="4293500">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="kandidat1-asuransi">Asuransi/Thn (Rp)</label>
+            <input type="number" id="kandidat1-asuransi" class="form-input" value="5755360">
+          </div>
+        </div>
+      </div>
+
+      <!-- Kandidat 2 -->
+      <div class="kartu-utama" style="display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding-bottom: 12px; border-bottom: 1px solid #e2e8f0;">
+          <div>
+            <span class="meta-kicker">Kandidat 2 · Kendaraan B</span>
+          </div>
+          <div style="min-width: 210px; flex: 1; max-width: 240px;">
+            <label for="kandidat2-preset" class="sr-only">Pilih preset acuan kandidat 2</label>
+            <select id="kandidat2-preset" class="form-select" style="min-height: 38px; font-size: 0.82rem;"></select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="kandidat2-nama">Nama / Model Kendaraan B</label>
+          <input type="text" id="kandidat2-nama" class="form-input" value="Mitsubishi Xpander Ultimate CVT">
+        </div>
+
+        <div class="grid-2" style="gap: 14px;">
+          <div class="form-group">
+            <label class="form-label" for="kandidat2-harga">Harga OTR Pembelian (Rp)</label>
+            <input type="number" id="kandidat2-harga" class="form-input" step="1000000" value="315900000">
+          </div>
+          <div class="form-group">
+            <span class="form-label">Kondisi Unit</span>
+            <div class="segmented-control" style="width: 100%;">
+              <button type="button" id="kandidat2-kondisi-baru" class="segmented-btn is-active" style="flex: 1;">Baru</button>
+              <button type="button" id="kandidat2-kondisi-bekas" class="segmented-btn" style="flex: 1;">Bekas</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="gap: 14px;">
+          <div class="form-group">
+            <label class="form-label" for="kandidat2-pembayaran">Skema Pembayaran</label>
+            <select id="kandidat2-pembayaran" class="form-select">
+              <option value="kredit" selected>Kredit Leasing</option>
+              <option value="tunai">Tunai Keras (Cash)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="kandidat2-bbm-jenis">Jenis Energi / BBM</label>
+            <select id="kandidat2-bbm-jenis" class="form-select">
+              <option value="ron90">Pertalite (RON 90)</option>
+              <option value="ron92" selected>Pertamax (RON 92)</option>
+              <option value="solar_dex">Solar Dex / CN51</option>
+              <option value="listrik">Kendaraan Listrik (EV)</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="kandidat2-baris-kredit" class="grid-2" style="gap: 14px;">
+          <div class="form-group">
+            <label class="form-label" for="kandidat2-dp">Uang Muka / DP (%)</label>
+            <input type="number" id="kandidat2-dp" class="form-input" value="20" min="0" max="95">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="kandidat2-bunga">Bunga Kredit (% / tahun)</label>
+            <input type="number" id="kandidat2-bunga" class="form-input" value="6.5" step="0.1" min="0">
+          </div>
+        </div>
+
+        <div class="grid-2" style="gap: 14px;">
+          <div class="form-group">
+            <label class="form-label" id="kandidat2-label-efisiensi" for="kandidat2-efisiensi">Konsumsi BBM (km/liter)</label>
+            <input type="number" id="kandidat2-efisiensi" class="form-input" step="0.5" value="12.0">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="kandidat2-jarak">Jarak Tempuh / Tahun (km)</label>
+            <input type="number" id="kandidat2-jarak" class="form-input" step="1000" value="15000">
+          </div>
+        </div>
+
+        <div class="grid-3" style="gap: 12px; padding-top: 10px; border-top: 1px solid #e2e8f0;">
+          <div class="form-group">
+            <label class="form-label" for="kandidat2-servis">Servis/Thn (Rp)</label>
+            <input type="number" id="kandidat2-servis" class="form-input" value="3600000">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="kandidat2-pajak">Pajak PKB/Thn (Rp)</label>
+            <input type="number" id="kandidat2-pajak" class="form-input" value="4881500">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="kandidat2-asuransi">Asuransi/Thn (Rp)</label>
+            <input type="number" id="kandidat2-asuransi" class="form-input" value="6570720">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div id="komparasi-error-banner" class="status-banner is-danger" hidden></div>
+
+    <!-- Ringkasan & CTA Proses -->
+    <section class="kartu-utama" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;">
+      <div style="flex: 1; min-width: 260px;">
+        <h3 class="judul-seksi" style="font-size: 1.1rem;">Ringkasan Parameter Komparasi</h3>
+        <p id="komparasi-ringkasan-teks" class="tabular-nums" style="font-size: 0.9rem; color: #475569; margin-top: 6px; line-height: 1.55;">
+          Toyota Avanza 1.5 G CVT vs Mitsubishi Xpander Ultimate CVT · Periode 3 Tahun
+        </p>
+      </div>
+      <button type="button" id="btn-proses-komparasi" class="btn btn-accent btn-lg">
+        Bandingkan &amp; Lihat Matriks Hasil →
+      </button>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container-utama">
+      <div class="footer-bottom" style="margin-top: 0; border-top: 0; padding-top: 0;">
+        <p>© 2026 Ravenmille Indonesia. Komparasi Biaya Kepemilikan Kendaraan.</p>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+          <a href="index.html" class="footer-link">Beranda</a>
+          <a href="kalkulator-tco.html" class="footer-link">Kalkulator TCO</a>
+          <a href="analisis-risiko.html" class="footer-link">Analisis Risiko</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/supabase-client.js"></script>
+  <script src="js/common-ui.js"></script>
+  <script src="js/komparasi-kendaraan.js"></script>
+</body>
+
+</html>

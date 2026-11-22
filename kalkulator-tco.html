@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kalkulator TCO Kendaraan – Biaya Kepemilikan | Ravenmille</title>
+  <meta name="description" content="Hitung Total Cost of Ownership (TCO) mobil baru dan bekas di Indonesia: depresiasi, BBM, servis berkala, pajak PKB, asuransi, serta cicilan kredit.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Ravenmille Indonesia">
+  <meta property="og:title" content="Kalkulator TCO Kendaraan – Biaya Kepemilikan | Ravenmille">
+  <meta property="og:description" content="Simulasi lengkap biaya kepemilikan kendaraan 1, 3, dan 5 tahun lengkap dengan grafik komposisi dan ekspor laporan PDF atau CSV.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/aistudio/41e99c64-bb56-4a49-b805-25ba389725f0_removalai_preview_e589ba91.png">
+  <link rel="stylesheet" href="css/ravenmille-styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body class="halftone-bg">
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="index.html" class="brand-wordmark" aria-label="Ravenmille - Beranda">
+        <img src="assets/aistudio/41e99c64-bb56-4a49-b805-25ba389725f0_removalai_preview_e589ba91.png" alt="Logo Ravenmille - Drive With Confidence" class="brand-logo-img">
+      </a>
+
+      <nav class="nav-utama" aria-label="Navigasi utama">
+        <a href="kalkulator-tco.html" class="nav-link is-active">Kalkulator</a>
+        <a href="analisis-risiko.html" class="nav-link">Risiko</a>
+        <a href="komparasi-kendaraan.html" class="nav-link">Komparasi</a>
+        <a href="masalah-kendaraan.html" class="nav-link">Masalah</a>
+        <a href="bengkel-inspektor.html" class="nav-link">Bengkel</a>
+        <a href="berita-otomotif.html" class="nav-link">Berita</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="komparasi-kendaraan.html" class="btn btn-secondary btn-sm header-cta-desktop">Bandingkan Mobil</a>
+        <button type="button" id="mobile-menu-toggle" class="mobile-menu-btn" aria-expanded="false" aria-controls="mobile-nav-drawer" aria-label="Buka menu navigasi">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-nav-drawer" class="mobile-drawer">
+      <nav class="mobile-drawer-links" aria-label="Navigasi seluler">
+        <a href="kalkulator-tco.html" class="nav-link is-active">Kalkulator TCO</a>
+        <a href="analisis-risiko.html" class="nav-link">Analisis Risiko Unit</a>
+        <a href="komparasi-kendaraan.html" class="nav-link">Komparasi Mobil</a>
+        <a href="masalah-kendaraan.html" class="nav-link">Katalog Masalah</a>
+        <a href="bengkel-inspektor.html" class="nav-link">Bengkel &amp; Inspektor</a>
+        <a href="berita-otomotif.html" class="nav-link">Berita Otomotif</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container-utama halaman-konten">
+    <!-- Stepper 3 Langkah -->
+    <nav class="langkah-stepper no-print" aria-label="Tahapan kalkulator TCO">
+      <button type="button" class="langkah-stepper-btn is-active" data-step="1">
+        <span class="langkah-dot">1</span>
+        <span class="langkah-label"><small>Langkah 1</small><strong>Pilih Kendaraan</strong></span>
+      </button>
+      <div class="langkah-line" aria-hidden="true"></div>
+      <button type="button" class="langkah-stepper-btn" data-step="2">
+        <span class="langkah-dot">2</span>
+        <span class="langkah-label"><small>Langkah 2</small><strong>Input Parameter</strong></span>
+      </button>
+      <div class="langkah-line" aria-hidden="true"></div>
+      <button type="button" class="langkah-stepper-btn" data-step="3" disabled>
+        <span class="langkah-dot">3</span>
+        <span class="langkah-label"><small>Langkah 3</small><strong>Laporan &amp; Unduh</strong></span>
+      </button>
+    </nav>
+
+    <!-- Langkah 1: Pilih Kendaraan -->
+    <section id="kalkulator-panel-1" class="kartu-utama">
+      <span class="meta-kicker">Langkah 1 dari 3</span>
+      <h1 class="judul-halaman" style="margin-top: 6px;">Kalkulator Total Cost of Ownership (TCO)</h1>
+      <p class="teks-pengantar" style="margin-top: 10px;">
+        Pilih salah satu kendaraan populer dari katalog untuk memuat estimasi harga dan konsumsi bahan bakarnya, atau pilih opsi input manual untuk memasukkan kendaraan pilihan Anda sendiri.
+      </p>
+
+      <div class="katalog-rail-toolbar">
+        <div style="flex: 1; min-width: 220px; max-width: 360px;">
+          <label for="cari-kendaraan-katalog" class="sr-only">Cari model kendaraan di katalog</label>
+          <input type="search" id="cari-kendaraan-katalog" class="form-input" placeholder="Cari model atau merek (Avanza, Brio, Hybrid)...">
+        </div>
+        <div class="katalog-rail-nav">
+          <button type="button" id="rail-btn-prev" aria-label="Geser katalog ke kiri">‹</button>
+          <button type="button" id="rail-btn-next" aria-label="Geser katalog ke kanan">›</button>
+        </div>
+      </div>
+
+      <div id="katalog-kendaraan-rail" class="katalog-kendaraan-rail"></div>
+
+      <div class="status-banner is-info" style="margin-top: 12px;">
+        <strong>Panduan:</strong> Setelah memilih unit, Anda dapat menyesuaikan harga transaksi aktual, metode pembayaran tunai atau kredit, serta jarak tempuh tahunan pada Langkah 2.
+      </div>
+    </section>
+
+    <!-- Langkah 2: Parameter Kendaraan -->
+    <section id="kalkulator-panel-2" class="kartu-utama" hidden>
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; align-items: flex-end;">
+        <div>
+          <span class="meta-kicker">Langkah 2 dari 3</span>
+          <h2 id="langkah-2-judul" class="judul-halaman" style="margin-top: 6px;">Parameter Kendaraan</h2>
+          <p class="teks-pengantar" style="margin-top: 6px;">
+            Sesuaikan skema pembelian, konsumsi bahan bakar, dan estimasi beban tahunan kendaraan Anda.
+          </p>
+        </div>
+        <button type="button" id="btn-estimasi-otomatis" class="btn btn-secondary btn-sm">Hitung Otomatis Pajak &amp; Asuransi</button>
+      </div>
+
+      <div class="kartu-sekunder" style="margin-top: 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;">
+        <span style="font-size: 0.85rem; font-weight: 800; color: #162447;">Periode Proyeksi Kepemilikan</span>
+        <div class="segmented-control">
+          <button type="button" class="segmented-btn tombol-periode-tco" data-period="1">1 Tahun</button>
+          <button type="button" class="segmented-btn tombol-periode-tco is-active" data-period="3">3 Tahun</button>
+          <button type="button" class="segmented-btn tombol-periode-tco" data-period="5">5 Tahun</button>
+        </div>
+      </div>
+
+      <form id="form-kalkulator-tco" class="grid-3" style="margin-top: 22px;" onsubmit="return false;">
+        <div class="form-group">
+          <label class="form-label" for="input-nama-kendaraan">Nama Model Kendaraan</label>
+          <input type="text" id="input-nama-kendaraan" class="form-input" value="Toyota Avanza 1.5 G CVT">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="input-harga-beli">Harga Beli Kendaraan (Rp)</label>
+          <input type="number" id="input-harga-beli" class="form-input" value="276700000" min="0" step="1000000">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="input-metode-bayar">Metode Pembayaran</label>
+          <select id="input-metode-bayar" class="form-select">
+            <option value="kredit">Kredit Leasing</option>
+            <option value="tunai">Tunai Keras (Cash)</option>
+          </select>
+        </div>
+        <div class="form-group" id="kolom-uang-muka">
+          <label class="form-label" for="input-uang-muka">Uang Muka / DP (%)</label>
+          <input type="number" id="input-uang-muka" class="form-input" value="20" min="0" max="95">
+        </div>
+        <div class="form-group" id="kolom-bunga-kredit">
+          <label class="form-label" for="input-bunga-kredit">Bunga Kredit Flat (% / tahun)</label>
+          <input type="number" id="input-bunga-kredit" class="form-input" value="6.5" min="0" step="0.1">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="input-efisiensi-bbm">Konsumsi BBM (km/liter)</label>
+          <input type="number" id="input-efisiensi-bbm" class="form-input" value="13.5" min="1" step="0.1">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="input-harga-bbm">Harga Bahan Bakar / Liter (Rp)</label>
+          <input type="number" id="input-harga-bbm" class="form-input" value="12950" min="0" step="100">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="input-jarak-tahunan">Jarak Tempuh Tahunan (km/tahun)</label>
+          <input type="number" id="input-jarak-tahunan" class="form-input" value="15000" min="500" step="1000">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="input-biaya-servis">Estimasi Servis Rutin / Tahun (Rp)</label>
+          <input type="number" id="input-biaya-servis" class="form-input" value="3500000" min="0" step="100000">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="input-premi-asuransi">Premi Asuransi / Tahun (Rp)</label>
+          <input type="number" id="input-premi-asuransi" class="form-input" value="4800000" min="0" step="100000">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="input-pajak-pkb">Pajak Kendaraan PKB / Tahun (Rp)</label>
+          <input type="number" id="input-pajak-pkb" class="form-input" value="4200000" min="0" step="100000">
+        </div>
+      </form>
+
+      <div id="kalkulator-form-error" class="status-banner is-danger" style="margin-top: 16px;" hidden></div>
+
+      <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid #e2e8f0; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px;">
+        <button type="button" class="btn btn-secondary" data-go-step="1">← Ganti Kendaraan</button>
+        <button type="button" id="btn-analisis-tco" class="btn btn-accent">Hitung &amp; Tampilkan Laporan →</button>
+      </div>
+    </section>
+
+    <!-- Langkah 3: Laporan Audit -->
+    <section id="kalkulator-panel-3" style="display: flex; flex-direction: column; gap: 24px;" hidden>
+      <div class="kartu-utama">
+        <div class="meta-row" style="margin-bottom: 8px;">
+          <span class="meta-kicker" style="color: #162447;">Laporan Audit Finansial</span>
+          <span aria-hidden="true">·</span>
+          <span id="laporan-id" class="tabular-nums"></span>
+          <span aria-hidden="true">·</span>
+          <span id="laporan-tanggal"></span>
+        </div>
+
+        <h2 class="judul-halaman">Laporan Audit Biaya Kepemilikan Kendaraan</h2>
+        <p id="laporan-subjudul" style="margin-top: 6px; color: #334155;"></p>
+        <div id="laporan-ringkasan-param" class="meta-row tabular-nums" style="margin-top: 10px;"></div>
+
+        <div class="no-print" style="margin-top: 20px; padding-top: 16px; border-top: 1px solid #e2e8f0; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: center;">
+          <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+            <button type="button" class="btn btn-secondary btn-sm" data-go-step="2">← Ubah Parameter</button>
+            <button type="button" class="btn btn-secondary btn-sm" data-go-step="1">Pilih Mobil Lain</button>
+            <button type="button" id="btn-salin-ringkasan" class="btn btn-secondary btn-sm">Salin Ringkasan</button>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+            <div class="segmented-control">
+              <button type="button" class="segmented-btn tombol-periode-tco" data-period="1">1 Thn</button>
+              <button type="button" class="segmented-btn tombol-periode-tco is-active" data-period="3">3 Thn</button>
+              <button type="button" class="segmented-btn tombol-periode-tco" data-period="5">5 Thn</button>
+            </div>
+            <button type="button" id="btn-unduh-csv" class="btn btn-secondary btn-sm">Unduh CSV</button>
+            <button type="button" id="btn-cetak-pdf" class="btn btn-accent btn-sm">Cetak / Simpan PDF</button>
+          </div>
+        </div>
+
+        <div class="laporan-kpi-grid" style="margin-top: 22px;">
+          <div class="laporan-kpi-hero">
+            <small>Total Cost of Ownership · <span id="kpi-periode"></span></small>
+            <strong id="kpi-total-tco" class="tabular-nums"></strong>
+            <p>Akumulasi biaya riil kepemilikan: depresiasi aset, bunga kredit, pajak PKB, asuransi, bahan bakar, dan servis.</p>
+            <div class="laporan-kpi-hero-foot">
+              <span>Porsi Penyusutan Nilai</span>
+              <span id="kpi-rasio-depresiasi" class="tabular-nums"></span>
+            </div>
+          </div>
+
+          <div class="laporan-kpi-box">
+            <small>Beban per Bulan</small>
+            <strong id="kpi-beban-bulanan" class="tabular-nums"></strong>
+            <span>Rata-rata beban ekonomi bulanan</span>
+          </div>
+
+          <div class="laporan-kpi-box">
+            <small>Biaya Riil per Km</small>
+            <strong id="kpi-biaya-per-km" class="tabular-nums"></strong>
+            <span id="kpi-total-km" class="tabular-nums"></span>
+          </div>
+
+          <div class="laporan-kpi-box">
+            <small>Estimasi Nilai Sisa Jual</small>
+            <strong id="kpi-nilai-sisa" class="tabular-nums"></strong>
+            <span id="kpi-retensi" class="tabular-nums"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="kartu-utama">
+          <h3 class="judul-seksi" style="font-size: 1.15rem;">Komposisi Beban Biaya</h3>
+          <p style="font-size: 0.85rem; color: #64748b; margin-top: 4px;">Proporsi pengeluaran selama periode proyeksi</p>
+          <div class="komposisi-chart-wrap">
+            <div id="grafik-donut-komposisi" class="komposisi-donut-box"></div>
+            <div id="legenda-komposisi" class="komposisi-legenda"></div>
+          </div>
+        </div>
+
+        <div class="kartu-utama">
+          <h3 class="judul-seksi" style="font-size: 1.15rem;">Tren Beban Tahunan</h3>
+          <p style="font-size: 0.85rem; color: #64748b; margin-top: 4px;">Rincian akumulasi biaya setiap tahun kepemilikan</p>
+          <div id="grafik-batang-tahunan" class="grafik-batang-box" style="margin-top: 12px;"></div>
+          <div id="legenda-batang" class="legenda-batang"></div>
+        </div>
+      </div>
+
+      <div class="kartu-utama">
+        <h3 class="judul-seksi" style="font-size: 1.15rem;">Buku Proyeksi Finansial Tahunan</h3>
+        <p style="font-size: 0.85rem; color: #64748b; margin-top: 4px;">Satuan nilai dalam Rupiah (Rp)</p>
+        <div class="table-scroll" style="margin-top: 16px;">
+          <table id="tabel-proyeksi-tahunan" class="data-table" style="min-width: 780px;"></table>
+        </div>
+      </div>
+
+      <div class="kartu-utama">
+        <h3 class="judul-seksi" style="font-size: 1.1rem;">Metodologi &amp; Asumsi Simulasi</h3>
+        <div class="grid-3" style="margin-top: 16px; gap: 16px;">
+          <div class="kartu-sekunder">
+            <strong style="font-size: 0.85rem; color: #162447;">Pajak &amp; Asuransi</strong>
+            <p style="font-size: 0.82rem; color: #475569; margin-top: 6px; line-height: 1.55;">
+              Menggunakan input PKB dan premi asuransi tahunan. Tarif progresif daerah dapat dicek melalui Samsat setempat.
+            </p>
+          </div>
+          <div class="kartu-sekunder">
+            <strong style="font-size: 0.85rem; color: #162447;">Kurva Depresiasi</strong>
+            <p style="font-size: 0.82rem; color: #475569; margin-top: 6px; line-height: 1.55;">
+              Asumsi standar simulasi sebesar 15% (1 tahun), 32% (3 tahun), dan 46% (5 tahun) dari harga pembelian awal.
+            </p>
+          </div>
+          <div class="kartu-sekunder">
+            <strong style="font-size: 0.85rem; color: #162447;">Pembiayaan &amp; Energi</strong>
+            <p style="font-size: 0.82rem; color: #475569; margin-top: 6px; line-height: 1.55;">
+              Bunga kredit dihitung flat per tahun dari pokok pinjaman setelah DP. Hasil merupakan simulasi perencanaan, bukan penawaran leasing.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container-utama">
+      <div class="footer-bottom" style="margin-top: 0; border-top: 0; padding-top: 0;">
+        <p>© 2026 Ravenmille Indonesia. Kalkulator TCO Kendaraan.</p>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+          <a href="index.html" class="footer-link">Beranda</a>
+          <a href="komparasi-kendaraan.html" class="footer-link">Komparasi</a>
+          <a href="analisis-risiko.html" class="footer-link">Analisis Risiko</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/supabase-client.js"></script>
+  <script src="js/common-ui.js"></script>
+  <script src="js/kalkulator-tco.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Analisis Risiko &amp; Checklist Mobil Bekas | Ravenmille</title>
+  <meta name="description" content="Evaluasi skor risiko mobil bekas: deteksi anomali odometer, riwayat tabrakan sasis, potensi bekas banjir, serta cetak checklist inspeksi lapangan.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Ravenmille Indonesia">
+  <meta property="og:title" content="Analisis Risiko &amp; Checklist Mobil Bekas | Ravenmille">
+  <meta property="og:description" content="Sistem evaluasi risiko mobil bekas dan lembar checklist inspeksi lapangan interaktif sebelum membayar DP.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/aistudio/41e99c64-bb56-4a49-b805-25ba389725f0_removalai_preview_e589ba91.png">
+  <link rel="stylesheet" href="css/ravenmille-styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body class="halftone-bg">
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="index.html" class="brand-wordmark" aria-label="Ravenmille - Beranda">
+        <img src="assets/aistudio/41e99c64-bb56-4a49-b805-25ba389725f0_removalai_preview_e589ba91.png" alt="Logo Ravenmille - Drive With Confidence" class="brand-logo-img">
+      </a>
+
+      <nav class="nav-utama" aria-label="Navigasi utama">
+        <a href="kalkulator-tco.html" class="nav-link">Kalkulator</a>
+        <a href="analisis-risiko.html" class="nav-link is-active">Risiko</a>
+        <a href="komparasi-kendaraan.html" class="nav-link">Komparasi</a>
+        <a href="masalah-kendaraan.html" class="nav-link">Masalah</a>
+        <a href="bengkel-inspektor.html" class="nav-link">Bengkel</a>
+        <a href="berita-otomotif.html" class="nav-link">Berita</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="kalkulator-tco.html" class="btn btn-primary btn-sm header-cta-desktop">Hitung TCO</a>
+        <button type="button" id="mobile-menu-toggle" class="mobile-menu-btn" aria-expanded="false" aria-controls="mobile-nav-drawer" aria-label="Buka menu navigasi">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-nav-drawer" class="mobile-drawer">
+      <nav class="mobile-drawer-links" aria-label="Navigasi seluler">
+        <a href="kalkulator-tco.html" class="nav-link">Kalkulator TCO</a>
+        <a href="analisis-risiko.html" class="nav-link is-active">Analisis Risiko Unit</a>
+        <a href="komparasi-kendaraan.html" class="nav-link">Komparasi Mobil</a>
+        <a href="masalah-kendaraan.html" class="nav-link">Katalog Masalah</a>
+        <a href="bengkel-inspektor.html" class="nav-link">Bengkel &amp; Inspektor</a>
+        <a href="berita-otomotif.html" class="nav-link">Berita Otomotif</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container-utama halaman-konten">
+    <section class="kartu-utama">
+      <span class="meta-kicker">Inspection Intelligence</span>
+      <h1 class="judul-halaman" style="margin-top: 6px;">Analisis Risiko &amp; Checklist Inspeksi Mobil Bekas</h1>
+      <p class="teks-pengantar" style="margin-top: 10px;">
+        Evaluasi tingkat kerentanan komponen vital, potensi manipulasi odometer, serta riwayat tabrak atau banjir sebelum melakukan transaksi, lengkap dengan lembar pemeriksaan lapangan.
+      </p>
+      <div class="no-print" style="margin-top: 18px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+        <button type="button" id="btn-cetak-checklist" class="btn btn-secondary btn-sm">Cetak Lembar Checklist</button>
+        <button type="button" class="filter-btn" data-contoh-risiko="hrv-2017">Muat Contoh: HR-V CVT 2017</button>
+        <button type="button" class="filter-btn" data-contoh-risiko="avanza-2020">Muat Contoh: Avanza AT 2020</button>
+      </div>
+    </section>
+
+    <section class="split-asimetris">
+      <!-- Form Parameter -->
+      <div class="kartu-utama">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 14px; border-bottom: 1px solid #e2e8f0;">
+          <h2 class="judul-seksi" style="font-size: 1.2rem;">Parameter Riwayat Unit Bekas</h2>
+          <span class="meta-row" style="font-size: 0.78rem;">Wajib diisi (*)</span>
+        </div>
+
+        <form id="form-analisis-risiko" style="display: flex; flex-direction: column; gap: 16px; margin-top: 18px;" onsubmit="return false;">
+          <div class="form-group">
+            <label class="form-label" for="risiko-model">Model / Tipe Mobil yang Diinspeksi *</label>
+            <input type="text" id="risiko-model" list="risiko-model-list" class="form-input" placeholder="Contoh: Honda HR-V 1.5 E CVT 2017">
+            <datalist id="risiko-model-list"></datalist>
+          </div>
+
+          <div class="grid-2" style="gap: 16px;">
+            <div class="form-group">
+              <label class="form-label" for="risiko-tahun">Tahun Pembuatan *</label>
+              <select id="risiko-tahun" class="form-select"></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="risiko-odometer">Odometer Saat Ini (km) *</label>
+              <input type="number" id="risiko-odometer" class="form-input" min="0" step="1000" placeholder="Contoh: 85000">
+            </div>
+          </div>
+
+          <div class="grid-2" style="gap: 16px;">
+            <div class="form-group">
+              <label class="form-label" for="risiko-transmisi">Tipe Transmisi *</label>
+              <select id="risiko-transmisi" class="form-select">
+                <option value="matic_cvt">Matic CVT</option>
+                <option value="matic_at">Matic Konvensional (AT)</option>
+                <option value="manual">Manual (MT)</option>
+                <option value="matic_dct">Dual-Clutch (DCT)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="risiko-bodi">Kategori Bodi Kendaraan *</label>
+              <select id="risiko-bodi" class="form-select">
+                <option value="mpv">MPV (Avanza, Xpander, Innova)</option>
+                <option value="suv">SUV / Crossover (HR-V, Fortuner, Pajero)</option>
+                <option value="lcgc">LCGC (Brio, Calya, Sigra, Agya)</option>
+                <option value="city_car">City Car / Hatchback</option>
+                <option value="sedan">Sedan</option>
+                <option value="motor">Sepeda Motor</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="risiko-servis">Kelengkapan Buku &amp; Riwayat Servis *</label>
+            <select id="risiko-servis" class="form-select">
+              <option value="resmi_lengkap">Buku &amp; Faktur Bengkel Resmi Lengkap</option>
+              <option value="spesialis_rutin">Bengkel Spesialis dengan Faktur Rutin</option>
+              <option value="tidak_lengkap" selected>Tidak Lengkap (Putus Record)</option>
+              <option value="tanpa_riwayat">Tanpa Riwayat / Buku Servis Hilang</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="risiko-insiden">Klaim Riwayat Insiden Penjual *</label>
+            <select id="risiko-insiden" class="form-select">
+              <option value="bebas_insiden">Bebas Tabrakan &amp; Bebas Banjir</option>
+              <option value="senggolan_bodi">Senggolan Bodi Ringan (Repaint Luar)</option>
+              <option value="kena_banjir">Pernah Terendam Banjir</option>
+              <option value="tabrak_sasis">Bekas Perbaikan Sasis / Apron</option>
+            </select>
+          </div>
+
+          <div class="no-print" style="padding-top: 8px;">
+            <button type="button" id="btn-analisis-risiko" class="btn btn-accent btn-lg" style="width: 100%;" disabled>
+              Kalkulasi &amp; Analisis Risiko Unit →
+            </button>
+            <p id="risiko-helper-text" style="font-size: 0.8rem; color: #64748b; text-align: center; margin-top: 8px; font-weight: 600;">
+              Isi Model Mobil dan Odometer saat ini (atau pilih tombol Contoh di atas) untuk melihat evaluasi risiko.
+            </p>
+          </div>
+        </form>
+      </div>
+
+      <!-- Panel Hasil Evaluasi -->
+      <div>
+        <div id="risiko-placeholder" class="kartu-utama" style="border-style: dashed; text-align: center; display: flex; flex-direction: column; gap: 18px;">
+          <div>
+            <span class="meta-kicker">Menunggu Input Lengkap</span>
+            <h2 class="judul-seksi" style="margin-top: 8px;">Hasil Evaluasi Belum Tersedia</h2>
+            <p style="font-size: 0.9rem; color: #475569; line-height: 1.6; margin-top: 8px;">
+              Lengkapi parameter unit pada formulir di samping lalu tekan tombol analisis untuk menghasilkan skor kerentanan dan estimasi risiko komponen.
+            </p>
+          </div>
+
+          <div class="kartu-sekunder" style="text-align: left; display: flex; flex-direction: column; gap: 10px; font-size: 0.85rem;">
+            <strong style="color: #162447;">Status Kelengkapan Parameter</strong>
+            <div style="display: flex; justify-content: space-between; gap: 8px;">
+              <span>Model Mobil</span>
+              <strong id="status-model-text">Belum diisi</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; gap: 8px;">
+              <span>Odometer Saat Ini</span>
+              <strong id="status-odometer-text">Belum diisi</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; gap: 8px;">
+              <span>Riwayat Servis &amp; Insiden</span>
+              <strong style="color: #047857;">Siap</strong>
+            </div>
+          </div>
+        </div>
+
+        <div id="risiko-hasil" class="kartu-gelap" style="display: flex; flex-direction: column; gap: 18px;" hidden>
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.14);">
+            <div>
+              <span class="meta-kicker">Hasil Evaluasi Unit</span>
+              <h2 id="hasil-nama-unit" style="font-size: 1.25rem; font-weight: 900; margin-top: 4px;">Kendaraan Uji</h2>
+            </div>
+            <span id="hasil-level-badge" class="risiko-level-tag is-low">Risiko Rendah</span>
+          </div>
+
+          <div class="risiko-score-panel">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 12px;">
+              <div>
+                <span style="font-size: 0.75rem; color: #bfdbfe; font-weight: 700; text-transform: uppercase;">Skor Kerentanan</span>
+                <div class="tabular-nums" style="font-size: 2.25rem; font-weight: 900; color: #fbbf24; line-height: 1.1; margin-top: 4px;">
+                  <span id="hasil-skor">15</span> <span style="font-size: 1rem; color: #cbd5e1;">/ 100</span>
+                </div>
+              </div>
+              <div style="text-align: right;">
+                <span style="font-size: 0.75rem; color: #bfdbfe; display: block;">Rata-rata Pemakaian</span>
+                <strong id="hasil-km-tahun" class="tabular-nums" style="font-size: 0.95rem;">~10.000 km/tahun</strong>
+              </div>
+            </div>
+            <div class="progress-track">
+              <div id="hasil-skor-bar" class="progress-fill" style="width: 15%; background-color: #10b981;"></div>
+            </div>
+          </div>
+
+          <p id="hasil-ringkasan" style="font-size: 0.9rem; line-height: 1.6; color: #e2e8f0;"></p>
+
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <h3 id="hasil-faktor-judul" style="font-size: 0.8rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: #fbbf24;">Faktor Pemicu Risiko</h3>
+            <div id="hasil-daftar-faktor" style="display: flex; flex-direction: column; gap: 10px; max-height: 320px; overflow-y: auto;"></div>
+          </div>
+
+          <div class="no-print" style="display: flex; flex-direction: column; gap: 10px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.14);">
+            <a href="bengkel-inspektor.html" class="btn btn-whatsapp" style="width: 100%;">Sewa Inspektor Independen via WhatsApp</a>
+            <a href="masalah-kendaraan.html" class="btn btn-secondary btn-sm" style="width: 100%;">Lihat Katalog Penyakit Khas</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Checklist Lapangan Interaktif -->
+    <section class="kartu-utama">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; padding-bottom: 18px; border-bottom: 1px solid #e2e8f0;">
+        <div>
+          <span class="meta-kicker">Daftar Cek Lapangan Interaktif</span>
+          <h2 id="checklist-judul" class="judul-seksi" style="margin-top: 4px;">Checklist Inspeksi Lapangan Unit Bekas</h2>
+          <p style="font-size: 0.9rem; color: #475569; margin-top: 4px;">
+            Tandai setiap poin setelah Anda memeriksanya secara langsung di lokasi unit.
+          </p>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <div style="text-align: right;" class="tabular-nums">
+            <strong id="checklist-counter" style="display: block; font-size: 0.95rem; color: #162447;">0 / 12 Selesai</strong>
+            <span id="checklist-percent" style="font-size: 0.8rem; color: #64748b; font-weight: 700;">0% Terverifikasi</span>
+          </div>
+          <div class="progress-track is-light" style="width: 120px;">
+            <div id="checklist-progress-fill" class="progress-fill" style="width: 0%; background-color: #162447;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="no-print" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-top: 16px;">
+        <div class="filter-bar">
+          <button type="button" class="filter-btn is-active" data-checklist-filter="all">Semua Item</button>
+          <button type="button" class="filter-btn" data-checklist-filter="priority">Prioritas Tinggi</button>
+          <button type="button" class="filter-btn" data-checklist-filter="pending">Belum Dicek</button>
+        </div>
+        <button type="button" id="btn-reset-checklist" class="btn btn-secondary btn-sm">Reset Checklist</button>
+      </div>
+
+      <div id="checklist-grid" class="grid-2" style="margin-top: 18px; gap: 16px;"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container-utama">
+      <div class="footer-bottom" style="margin-top: 0; border-top: 0; padding-top: 0;">
+        <p>© 2026 Ravenmille Indonesia. Analisis Risiko &amp; Inspeksi Kendaraan.</p>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+          <a href="index.html" class="footer-link">Beranda</a>
+          <a href="kalkulator-tco.html" class="footer-link">Kalkulator TCO</a>
+          <a href="bengkel-inspektor.html" class="footer-link">Bengkel &amp; Inspektor</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/supabase-client.js"></script>
+  <script src="js/common-ui.js"></script>
+  <script src="js/analisis-risiko.js"></script>
+</body>
+
+</html>

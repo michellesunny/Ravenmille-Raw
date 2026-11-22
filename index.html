@@ -4,614 +4,555 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ravenmille – Beyond the Price. Drive Smarter.</title>
+  <title>Ravenmille – Kalkulator TCO &amp; Inspeksi Mobil Bekas</title>
+  <meta name="description" content="Hitung Total Cost of Ownership (TCO), cek risiko mobil bekas, bandingkan biaya kepemilikan kendaraan, dan temukan bengkel serta inspektor terpercaya di Indonesia.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Ravenmille Indonesia">
+  <meta property="og:locale" content="id_ID">
+  <meta property="og:title" content="Ravenmille – Kalkulator TCO &amp; Inspeksi Mobil Bekas">
+  <meta property="og:description" content="Hitung Total Cost of Ownership (TCO), cek risiko mobil bekas, bandingkan biaya kepemilikan kendaraan, dan temukan bengkel serta inspektor terpercaya.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ravenmille – Kalkulator TCO &amp; Inspeksi Mobil Bekas">
+  <meta name="twitter:description" content="Platform kecerdasan finansial dan inspeksi otomotif independen Indonesia sebelum Anda membeli kendaraan.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,800;0,900;1,800;1,900&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="ravenmille.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/aistudio/41e99c64-bb56-4a49-b805-25ba389725f0_removalai_preview_e589ba91.png">
+  <link rel="stylesheet" href="css/ravenmille-styles.css">
+  <link rel="stylesheet" href="css/landing-animations.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Ravenmille Indonesia",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "All",
+    "inLanguage": "id",
+    "description": "Platform independen untuk menghitung Total Cost of Ownership (TCO), analisis risiko mobil bekas, dan komparasi biaya kepemilikan kendaraan di Indonesia.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "IDR"
+    }
+  }
+  </script>
 </head>
 
 <body>
-  <div
-    class="ravenmille-root min-h-screen bg-[#FDFBF7] text-slate-900 overflow-x-hidden selection:bg-amber-300 selection:text-slate-900">
+  <div id="scroll-progress-bar" aria-hidden="true"></div>
 
-    <!-- ================= TOP HEADER NAVIGATION ================= -->
-    <header class="sticky top-0 z-50 bg-[#FDFBF7]/95 backdrop-blur-md border-b-2 border-[#162447] shadow-sm">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        <!-- Logo Emblem Only -->
-        <a href="index.html" class="flex items-center gap-3 group">
-          <div
-            class="w-12 h-12 bg-[#162447] rounded-xl border-2 border-[#162447] shadow-[2px_2px_0px_#94A3B8] flex items-center justify-center text-amber-400 font-black text-2xl group-hover:scale-105 transition-transform">
-            R
-          </div>
-          <span class="font-black text-xl tracking-tight text-[#162447] uppercase hidden sm:inline">RAVENMILLE</span>
-        </a>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="index.html" class="brand-wordmark" aria-label="Ravenmille - Beranda">
+        <img src="assets/aistudio/41e99c64-bb56-4a49-b805-25ba389725f0_removalai_preview_e589ba91.png" alt="Logo Ravenmille - Drive With Confidence" class="brand-logo-img">
+      </a>
 
-        <!-- Direct Single CTA Button (Sesuai Permintaan) -->
-        <a href="kalkulator.html"
-          class="inline-flex items-center gap-2 px-6 py-3 bg-[#162447] hover:bg-[#1E3E62] text-white text-xs sm:text-sm font-black uppercase tracking-wider rounded-xl border-2 border-[#162447] shadow-[3px_3px_0px_#94A3B8] hover:-translate-y-0.5 transition-all">
-          <span>Mulai Menggunakan Ravenmille</span>
-          <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+      <nav class="nav-utama" aria-label="Navigasi utama">
+        <a href="kalkulator-tco.html" class="nav-link">Kalkulator</a>
+        <a href="analisis-risiko.html" class="nav-link">Risiko</a>
+        <a href="komparasi-kendaraan.html" class="nav-link">Komparasi</a>
+        <a href="masalah-kendaraan.html" class="nav-link">Masalah</a>
+        <a href="bengkel-inspektor.html" class="nav-link">Bengkel</a>
+        <a href="berita-otomotif.html" class="nav-link">Berita</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="kalkulator-tco.html" class="btn btn-primary btn-sm header-cta-desktop">Hitung TCO</a>
+        <button type="button" id="mobile-menu-toggle" class="mobile-menu-btn" aria-expanded="false" aria-controls="mobile-nav-drawer" aria-label="Buka menu navigasi">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
           </svg>
-        </a>
+        </button>
       </div>
-    </header>
+    </div>
 
-    <!-- ================= HERO SECTION ================= -->
-    <!-- ================= HERO SECTION ================= -->
-    <section class="hero-section py-20 sm:py-32 border-b-2 border-[#162447] relative overflow-hidden">
-      <!-- Overlay Gradient khusus supaya gambar mobil menyatu halus dengan background -->
-      <div class="hero-overlay"></div>
+    <div id="mobile-nav-drawer" class="mobile-drawer">
+      <nav class="mobile-drawer-links" aria-label="Navigasi seluler">
+        <a href="kalkulator-tco.html" class="nav-link">Kalkulator TCO</a>
+        <a href="analisis-risiko.html" class="nav-link">Analisis Risiko Unit</a>
+        <a href="komparasi-kendaraan.html" class="nav-link">Komparasi Mobil</a>
+        <a href="masalah-kendaraan.html" class="nav-link">Katalog Masalah</a>
+        <a href="bengkel-inspektor.html" class="nav-link">Bengkel &amp; Inspektor</a>
+        <a href="berita-otomotif.html" class="nav-link">Berita Otomotif</a>
+      </nav>
+    </div>
+  </header>
 
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <div class="max-w-4xl mx-auto space-y-6">
-
-          <!-- Badge -->
-          <div
-            class="inline-block px-5 py-2 rounded-full border-2 border-amber-400 bg-[#162447]/90 text-amber-300 text-xs sm:text-sm font-black uppercase tracking-wider shadow-[3px_3px_0px_#F59E0B] backdrop-blur-sm">
-            FIND EVERYTHING YOU NEED ABOUT AUTOMOTIVE IN ONE PLACE
-          </div>
-
-          <!-- Headline Utama -->
-          <h1
-            class="text-4xl sm:text-6xl md:text-7xl font-black italic text-white uppercase tracking-tight leading-none drop-shadow-md">
-            BEYOND THE PRICE.<br />
-            <span class="text-amber-400">DRIVE SMARTER.</span>
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-bg-media" aria-hidden="true"></div>
+      <div class="hero-ambient-grid" aria-hidden="true"></div>
+      <div class="hero-orbit-ring hero-orbit-a" aria-hidden="true"></div>
+      <div class="hero-orbit-ring hero-orbit-b" aria-hidden="true"></div>
+      <div class="container-utama hero-content-layer">
+        <div class="hero-inner">
+          <p class="hero-kicker">Kecerdasan Finansial &amp; Inspeksi Otomotif Independen</p>
+          <h1 class="hero-headline">
+            Beyond the Price.
+            <span class="accent-line">Drive Smarter.</span>
           </h1>
-
-          <!-- Deskripsi -->
-          <p class="text-base sm:text-xl text-slate-200 max-w-2xl mx-auto font-medium leading-relaxed drop-shadow">
-            Platform kecerdasan finansial & inspeksi otomotif independen Indonesia. Hitung kalkulasi biaya riil
-            kepemilikan (TCO), antisipasi lonjakan servis tersembunyi, dan beli kendaraan dengan rasa percaya diri.
+          <p class="hero-subcopy">
+            Hitung Total Cost of Ownership (TCO) kendaraan Anda secara menyeluruh, deteksi risiko tersembunyi mobil bekas sebelum membayar DP, dan bandingkan opsi pembelian berbasis data nyata.
           </p>
-
-          <!-- CTA Buttons -->
-          <div class="pt-6 flex flex-wrap items-center justify-center gap-4">
-            <a href="kalkulator.html"
-              class="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-amber-400 hover:bg-amber-500 text-[#162447] text-sm sm:text-base font-black uppercase tracking-wider border-2 border-[#162447] shadow-[4px_4px_0px_#162447] hover:-translate-y-0.5 transition-all group">
-              <span>CALCULATE YOUR TCO</span>
-              <svg class="w-5 h-5 text-[#162447] group-hover:translate-x-1 transition-transform" fill="none"
-                stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          <div class="hero-cta-group">
+            <a href="kalkulator-tco.html" class="btn btn-accent btn-lg">
+              <span>Hitung TCO Sekarang</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
               </svg>
             </a>
-
-            <a href="komparasi.html"
-              class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white hover:bg-slate-100 text-[#162447] border-2 border-[#162447] text-sm sm:text-base font-black uppercase tracking-wider shadow-[4px_4px_0px_#162447] hover:-translate-y-0.5 transition-all">
-              <span>KOMPARASI KENDARAAN</span>
-            </a>
+            <a href="komparasi-kendaraan.html" class="btn btn-secondary btn-lg">Bandingkan 2 Kendaraan</a>
           </div>
-
         </div>
       </div>
     </section>
 
-    <!-- ================= GRID MENU FITUR UTAMA ================= -->
-    <section class="py-16 sm:py-20 bg-white border-b-2 border-[#162447]">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="mb-12 text-center space-y-3">
-          <span class="text-xs sm:text-sm font-black uppercase tracking-widest text-amber-600">PILIHAN ALAT BANTU
-            LENGKAP</span>
-          <h2 class="text-3xl sm:text-5xl font-black text-[#162447] uppercase tracking-tight">KONTROL PENUH KEPUTUSAN
-            OTOMOTIF ANDA</h2>
+    <!-- Ticker Parameter Analisis -->
+    <div class="hero-marquee-strip" aria-label="Ringkasan parameter analisis Ravenmille">
+      <div class="hero-marquee-track">
+        <div class="hero-marquee-group">
+          <span>PROYEKSI DEPRESIASI 1–5 TAHUN</span>
+          <span class="marquee-dot" aria-hidden="true"></span>
+          <span>PERHITUNGAN BIAYA RIIL PER KM</span>
+          <span class="marquee-dot" aria-hidden="true"></span>
+          <span>DETEKSI RISIKO TRANSMISI &amp; RACK STEER</span>
+          <span class="marquee-dot" aria-hidden="true"></span>
+          <span>KOMPARASI HEAD-TO-HEAD OBJEKTIF</span>
+          <span class="marquee-dot" aria-hidden="true"></span>
+          <span>EKSPOR AUDIT LAPORAN PDF &amp; CSV</span>
+          <span class="marquee-dot" aria-hidden="true"></span>
+          <span>DIREKTORI BENGKEL &amp; INSPEKTOR INDEPENDEN</span>
+          <span class="marquee-dot" aria-hidden="true"></span>
+        </div>
+        <div class="hero-marquee-group" aria-hidden="true">
+          <span>PROYEKSI DEPRESIASI 1–5 TAHUN</span>
+          <span class="marquee-dot"></span>
+          <span>PERHITUNGAN BIAYA RIIL PER KM</span>
+          <span class="marquee-dot"></span>
+          <span>DETEKSI RISIKO TRANSMISI &amp; RACK STEER</span>
+          <span class="marquee-dot"></span>
+          <span>KOMPARASI HEAD-TO-HEAD OBJEKTIF</span>
+          <span class="marquee-dot"></span>
+          <span>EKSPOR AUDIT LAPORAN PDF &amp; CSV</span>
+          <span class="marquee-dot"></span>
+          <span>DIREKTORI BENGKEL &amp; INSPEKTOR INDEPENDEN</span>
+          <span class="marquee-dot"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pilihan Fitur Utama -->
+    <section class="section-band is-white">
+      <div class="container-utama">
+        <div class="section-header-block is-centered">
+          <span class="meta-kicker">Perangkat Analisis Lengkap</span>
+          <h2 class="judul-seksi">Kontrol Penuh Keputusan Otomotif Anda</h2>
+          <p class="teks-pengantar" style="text-align: center;">
+            Lima alat bantu saling terintegrasi untuk memastikan Anda tidak menanggung biaya perawatan atau depresiasi di luar rencana.
+          </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-
-          <!-- Fitur 1: Kalkulator TCO -->
-          <a href="kalkulator.html"
-            class="bg-[#FAF8F2] border-2 border-[#162447] rounded-2xl p-6 sm:p-7 shadow-[5px_5px_0px_#162447] hover:shadow-[7px_7px_0px_#162447] hover:-translate-y-1 transition-all flex flex-col justify-between group">
-            <div class="space-y-4">
-              <div
-                class="w-12 h-12 rounded-xl bg-blue-100 text-[#162447] border-2 border-[#162447] flex items-center justify-center font-black text-xl">
-                📊
+        <div class="fitur-bento-grid">
+          <a href="kalkulator-tco.html" class="fitur-card">
+            <div>
+              <div class="fitur-icon-box" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="16" height="20" x="4" y="2" rx="2"></rect>
+                  <line x1="8" x2="16" y1="6" y2="6"></line>
+                  <line x1="8" x2="8" y1="14" y2="14"></line>
+                  <line x1="12" x2="12" y1="14" y2="14"></line>
+                  <line x1="16" x2="16" y1="14" y2="14"></line>
+                  <line x1="8" x2="8" y1="18" y2="18"></line>
+                  <line x1="12" x2="12" y1="18" y2="18"></line>
+                  <line x1="16" x2="16" y1="18" y2="18"></line>
+                </svg>
               </div>
-              <h3 class="text-xl sm:text-2xl font-black text-[#162447] uppercase">Kalkulator TCO Riil</h3>
-              <p class="text-sm sm:text-base text-slate-700 leading-relaxed font-medium">
-                Ketahui total pengeluaran kepemilikan mobil: depresiasi nilai, bensin, servis rutin, asuransi, dan pajak
-                tahunan.
+              <h3 class="fitur-card-title">01. Kalkulator TCO Riil</h3>
+              <p class="fitur-card-desc">
+                Proyeksikan total pengeluaran kepemilikan mobil selama 1, 3, hingga 5 tahun: depresiasi aset, BBM, servis berkala, asuransi, dan pajak PKB.
               </p>
             </div>
-            <div
-              class="mt-6 pt-4 border-t-2 border-slate-200 flex items-center justify-between font-black text-xs sm:text-sm uppercase text-[#162447]">
+            <div class="fitur-card-link">
               <span>Buka Kalkulator</span>
-              <span>→</span>
+              <span aria-hidden="true">→</span>
             </div>
           </a>
 
-          <!-- Fitur 2: Analisis Risiko -->
-          <a href="risiko.html"
-            class="bg-[#FAF8F2] border-2 border-[#162447] rounded-2xl p-6 sm:p-7 shadow-[5px_5px_0px_#162447] hover:shadow-[7px_7px_0px_#162447] hover:-translate-y-1 transition-all flex flex-col justify-between group">
-            <div class="space-y-4">
-              <div
-                class="w-12 h-12 rounded-xl bg-rose-100 text-rose-800 border-2 border-[#162447] flex items-center justify-center font-black text-xl">
-                🛡️
+          <a href="analisis-risiko.html" class="fitur-card">
+            <div>
+              <div class="fitur-icon-box" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
               </div>
-              <h3 class="text-xl sm:text-2xl font-black text-[#162447] uppercase">Analisis Risiko Unit</h3>
-              <p class="text-sm sm:text-base text-slate-700 leading-relaxed font-medium">
-                Evaluasi risiko mobil bekas: potensi odometer reset, riwayat tabrak sasis, dan banjir sebelum bayar uang
-                muka.
+              <h3 class="fitur-card-title">02. Analisis Risiko Unit</h3>
+              <p class="fitur-card-desc">
+                Evaluasi skor kerentanan mobil bekas berdasarkan usia, odometer, transmisi, dan riwayat servis beserta checklist inspeksi lapangan.
               </p>
             </div>
-            <div
-              class="mt-6 pt-4 border-t-2 border-slate-200 flex items-center justify-between font-black text-xs sm:text-sm uppercase text-[#162447]">
-              <span>Cek Risiko Unit</span>
-              <span>→</span>
+            <div class="fitur-card-link">
+              <span>Periksa Risiko Unit</span>
+              <span aria-hidden="true">→</span>
             </div>
           </a>
 
-          <!-- Fitur 3: Komparasi Multi-Kendaraan -->
-          <a href="komparasi.html"
-            class="bg-[#FAF8F2] border-2 border-[#162447] rounded-2xl p-6 sm:p-7 shadow-[5px_5px_0px_#162447] hover:shadow-[7px_7px_0px_#162447] hover:-translate-y-1 transition-all flex flex-col justify-between group">
-            <div class="space-y-4">
-              <div
-                class="w-12 h-12 rounded-xl bg-amber-100 text-amber-800 border-2 border-[#162447] flex items-center justify-center font-black text-xl">
-                ⚖️
+          <a href="komparasi-kendaraan.html" class="fitur-card">
+            <div>
+              <div class="fitur-icon-box" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path>
+                  <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path>
+                  <path d="M7 21h10"></path>
+                  <path d="M12 3v18"></path>
+                  <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"></path>
+                </svg>
               </div>
-              <h3 class="text-xl sm:text-2xl font-black text-[#162447] uppercase">Komparasi Mobil</h3>
-              <p class="text-sm sm:text-base text-slate-700 leading-relaxed font-medium">
-                Bandingkan 2 mobil langsung secara berdampingan. Lihat mobil mana yang lebih hemat dan efisien dalam 1,
-                3, hingga 5 tahun.
+              <h3 class="fitur-card-title">03. Komparasi Head-to-Head</h3>
+              <p class="fitur-card-desc">
+                Bandingkan dua kandidat mobil secara berdampingan untuk mengetahui selisih pengeluaran bulanan dan efisiensi bahan bakarnya.
               </p>
             </div>
-            <div
-              class="mt-6 pt-4 border-t-2 border-slate-200 flex items-center justify-between font-black text-xs sm:text-sm uppercase text-[#162447]">
+            <div class="fitur-card-link">
               <span>Mulai Komparasi</span>
-              <span>→</span>
+              <span aria-hidden="true">→</span>
             </div>
           </a>
 
-          <!-- Fitur 4: Basis Data Masalah Mobil -->
-          <a href="masalah.html"
-            class="bg-[#FAF8F2] border-2 border-[#162447] rounded-2xl p-6 sm:p-7 shadow-[5px_5px_0px_#162447] hover:shadow-[7px_7px_0px_#162447] hover:-translate-y-1 transition-all flex flex-col justify-between group">
-            <div class="space-y-4">
-              <div
-                class="w-12 h-12 rounded-xl bg-purple-100 text-purple-800 border-2 border-[#162447] flex items-center justify-center font-black text-xl">
-                🔧
+          <a href="masalah-kendaraan.html" class="fitur-card">
+            <div>
+              <div class="fitur-icon-box" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                </svg>
               </div>
-              <h3 class="text-xl sm:text-2xl font-black text-[#162447] uppercase">Katalog Penyakit Khas</h3>
-              <p class="text-sm sm:text-base text-slate-700 leading-relaxed font-medium">
-                Pelajari penyakit langganan mobil populer Indonesia (rack steer, transmisi CVT, fuel pump) dan estimasi
-                biaya servisnya.
+              <h3 class="fitur-card-title">04. Katalog Masalah Khas</h3>
+              <p class="fitur-card-desc">
+                Pelajari penyakit umum mobil populer di Indonesia seperti rack steer, transmisi CVT, dan fuel pump lengkap dengan estimasi biaya perbaikannya.
               </p>
             </div>
-            <div
-              class="mt-6 pt-4 border-t-2 border-slate-200 flex items-center justify-between font-black text-xs sm:text-sm uppercase text-[#162447]">
-              <span>Cari Masalah Mobil</span>
-              <span>→</span>
+            <div class="fitur-card-link">
+              <span>Lihat Katalog Masalah</span>
+              <span aria-hidden="true">→</span>
             </div>
           </a>
 
-          <!-- Fitur 5: Bengkel & Sewa Inspektor WhatsApp -->
-          <a href="bengkel.html"
-            class="bg-[#FAF8F2] border-2 border-[#162447] rounded-2xl p-6 sm:p-7 shadow-[5px_5px_0px_#162447] hover:shadow-[7px_7px_0px_#162447] hover:-translate-y-1 transition-all flex flex-col justify-between group md:col-span-2 lg:col-span-2">
-            <div class="space-y-4">
-              <div
-                class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-800 border-2 border-[#162447] flex items-center justify-center font-black text-xl">
-                📍
+          <a href="bengkel-inspektor.html" class="fitur-card is-wide">
+            <div>
+              <div class="fitur-icon-box" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
               </div>
-              <h3 class="text-xl sm:text-2xl font-black text-[#162447] uppercase">Bengkel Rekanan & Sewa Jasa Inspektor
-              </h3>
-              <p class="text-sm sm:text-base text-slate-700 leading-relaxed font-medium">
-                Temukan bengkel spesialis terpercaya dan kontak langsung teknisi inspektor profesional via WhatsApp
-                untuk cek unit langsung ke showroom atau rumah penjual.
+              <h3 class="fitur-card-title">05. Direktori Bengkel Spesialis &amp; Sewa Inspektor</h3>
+              <p class="fitur-card-desc">
+                Temukan bengkel spesialis terpercaya di kota Anda serta hubungi langsung inspektor independen via WhatsApp untuk memeriksa kondisi unit sebelum membeli.
               </p>
             </div>
-            <div
-              class="mt-6 pt-4 border-t-2 border-slate-200 flex items-center justify-between font-black text-xs sm:text-sm uppercase text-emerald-800">
-              <span>Buka Direktori & Kontak WA</span>
-              <span>→</span>
+            <div class="fitur-card-link">
+              <span>Buka Direktori Bengkel &amp; Inspektor</span>
+              <span aria-hidden="true">→</span>
             </div>
           </a>
-
         </div>
       </div>
     </section>
 
-    <!-- ================= ABOUT US SECTION ================= -->
-    <section class="py-16 sm:py-24 bg-[#FDFBF7] border-b-2 border-[#162447]">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        <!-- Title Header dengan Aksen Kotak Rapi -->
-        <div class="mb-12 space-y-4">
-          <div class="flex items-center gap-3">
-            <div class="flex h-7 w-9 border-2 border-[#162447] rounded overflow-hidden">
-              <div class="w-1/2 bg-[#162447]"></div>
-              <div class="w-1/2 bg-white"></div>
-            </div>
-            <h2 class="text-3xl sm:text-5xl font-black text-[#162447] uppercase tracking-tight">ABOUT US</h2>
-          </div>
-          <p class="text-base sm:text-xl text-slate-700 max-w-4xl font-medium leading-relaxed">
-            Ravenmille is a website that helps prospective vehicle buyers, particularly those looking at used vehicles
-            assess the total cost of ownership and financial risks before making a purchase.
+    <!-- Tentang Kami -->
+    <section id="tentang" class="section-band is-canvas">
+      <div class="container-utama">
+        <div class="section-header-block">
+          <span class="meta-kicker">Tentang Ravenmille</span>
+          <h2 class="judul-seksi">Transparansi Biaya Kepemilikan Kendaraan</h2>
+          <p class="teks-pengantar">
+            Ravenmille membantu calon pembeli kendaraan di Indonesia—terutama pembeli mobil bekas—menilai total biaya kepemilikan dan risiko teknis secara objektif sebelum transaksi dilakukan.
           </p>
         </div>
 
-        <!-- Vision & Mission Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <!-- Vision -->
-          <div
-            class="bg-[#162447] text-white p-8 sm:p-10 rounded-2xl border-2 border-[#162447] shadow-[6px_6px_0px_#1E293B] flex flex-col justify-between">
-            <div class="space-y-4">
-              <span class="text-xs font-black uppercase tracking-widest text-blue-300">OUR PURPOSE</span>
-              <h3 class="text-3xl sm:text-4xl font-black uppercase tracking-tight text-white">OUR VISION</h3>
-              <p class="text-slate-200 text-base sm:text-lg leading-relaxed font-normal">
-                To become the <strong class="text-white font-bold underline decoration-amber-400 decoration-2">go-to
-                  tool</strong> for used vehicle buyers in Indonesia, so no one pays for hidden costs they never saw
-                coming.
-              </p>
-            </div>
+        <div class="grid-2">
+          <div class="kartu-gelap" style="display: flex; flex-direction: column; gap: 14px;">
+            <span class="meta-kicker">Tujuan Kami</span>
+            <h3 style="font-size: 1.6rem; font-weight: 900; letter-spacing: -0.02em;">Visi Ravenmille</h3>
+            <p style="color: #e2e8f0; line-height: 1.7; font-size: 1rem;">
+              Menjadi rujukan utama bagi calon pembeli kendaraan di Indonesia agar tidak ada lagi pemilik mobil yang terkejut oleh biaya perbaikan, pajak, maupun depresiasi tersembunyi.
+            </p>
           </div>
 
-          <!-- Mission -->
-          <div
-            class="bg-[#162447] text-white p-8 sm:p-10 rounded-2xl border-2 border-[#162447] shadow-[6px_6px_0px_#1E293B] flex flex-col justify-between">
-            <div class="space-y-4">
-              <span class="text-xs font-black uppercase tracking-widest text-blue-300">HOW WE EXECUTE</span>
-              <h3 class="text-3xl sm:text-4xl font-black uppercase tracking-tight text-white">OUR MISSION</h3>
-              <ul class="space-y-3 text-slate-200 text-sm sm:text-base font-medium">
-                <li class="flex items-center gap-3">
-                  <span class="w-2 h-2 rounded-full bg-blue-400 shrink-0"></span>
-                  <span><strong class="text-white font-bold">Educate</strong> buyers about hidden costs and financial
-                    risks.</span>
-                </li>
-                <li class="flex items-center gap-3">
-                  <span class="w-2 h-2 rounded-full bg-blue-400 shrink-0"></span>
-                  <span><strong class="text-white font-bold">Calculate</strong> the total cost of ownership in one clear
-                    report.</span>
-                </li>
-                <li class="flex items-center gap-3">
-                  <span class="w-2 h-2 rounded-full bg-blue-400 shrink-0"></span>
-                  <span><strong class="text-white font-bold">Show</strong> the risks of each vehicle.</span>
-                </li>
-                <li class="flex items-center gap-3">
-                  <span class="w-2 h-2 rounded-full bg-blue-400 shrink-0"></span>
-                  <span><strong class="text-white font-bold">Compare</strong> vehicles by real cost.</span>
-                </li>
-              </ul>
-            </div>
+          <div class="kartu-gelap" style="display: flex; flex-direction: column; gap: 14px;">
+            <span class="meta-kicker">Cara Kerja Kami</span>
+            <h3 style="font-size: 1.6rem; font-weight: 900; letter-spacing: -0.02em;">Misi Ravenmille</h3>
+            <ul style="display: flex; flex-direction: column; gap: 10px; color: #e2e8f0; font-size: 0.95rem; line-height: 1.55;">
+              <li><strong>Edukasi</strong> calon pembeli mengenai pos pengeluaran dan risiko teknis kendaraan.</li>
+              <li><strong>Kalkulasi</strong> total biaya kepemilikan dalam satu laporan audit terstruktur.</li>
+              <li><strong>Identifikasi</strong> risiko spesifik unit berdasarkan usia, jarak tempuh, dan riwayat servis.</li>
+              <li><strong>Komparasi</strong> antar kandidat kendaraan berdasarkan biaya ekonomi riil.</li>
+            </ul>
           </div>
         </div>
-
       </div>
     </section>
 
-    <!-- ================= HOW RAVENMILLE HELPS ================= -->
-    <section class="py-16 sm:py-24 bg-[#162447] text-white border-b-2 border-[#162447]">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        <div class="text-center mb-14 space-y-3">
-          <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white">HOW RAVENMILLE HELPS</h2>
-          <p class="text-blue-200 text-base sm:text-lg font-medium max-w-2xl mx-auto" id="how-helps">
-            Tiga langkah mudah mengubah keraguan menjadi keputusan pembelian mobil yang matang dan percaya diri.
-          </p>
+    <!-- Cara Ravenmille Membantu -->
+    <section class="section-band is-navy">
+      <div class="container-utama">
+        <div class="section-header-block is-centered">
+          <span class="meta-kicker">Alur Penggunaan</span>
+          <h2 class="judul-seksi" style="color: #ffffff;">Tiga Langkah Menuju Keputusan Pembelian yang Matang</h2>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-          <!-- Step 1 -->
-          <div
-            class="bg-[#1E293B] border-2 border-slate-600 rounded-2xl p-6 sm:p-8 flex flex-col space-y-4 shadow-[4px_4px_0px_#0F172A]">
-            <div
-              class="w-10 h-10 rounded-xl bg-blue-600 text-white font-black text-lg flex items-center justify-center border border-blue-400">
-              1
-            </div>
-            <h3 class="text-2xl font-black uppercase text-white tracking-wide">CHOOSE</h3>
-            <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-              Select the car or requirement you wish to analyze. Pilih dari katalog mobil populer Indonesia atau
-              masukkan tipe kustom Anda sendiri.
+        <div class="grid-3">
+          <div class="step-card-dark">
+            <div class="step-number-badge">1</div>
+            <h3 style="font-size: 1.25rem; font-weight: 800;">Pilih Kendaraan</h3>
+            <p style="color: #cbd5e1; font-size: 0.9375rem; line-height: 1.65;">
+              Pilih unit populer dari katalog Indonesia atau masukkan nama dan harga penawaran kendaraan pilihan Anda sendiri.
             </p>
           </div>
 
-          <!-- Step 2 -->
-          <div
-            class="bg-[#1E293B] border-2 border-slate-600 rounded-2xl p-6 sm:p-8 flex flex-col space-y-4 shadow-[4px_4px_0px_#0F172A]">
-            <div
-              class="w-10 h-10 rounded-xl bg-blue-500 text-white font-black text-lg flex items-center justify-center border border-blue-300">
-              2
-            </div>
-            <h3 class="text-2xl font-black uppercase text-white tracking-wide">ANALYZE</h3>
-            <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-              View estimated costs, risks, and maintenance requirements. Kalkulasi pos pajak daerah, asuransi, siklus
-              servis, dan depresiasi pasar.
+          <div class="step-card-dark">
+            <div class="step-number-badge">2</div>
+            <h3 style="font-size: 1.25rem; font-weight: 800;">Analisis Biaya &amp; Risiko</h3>
+            <p style="color: #cbd5e1; font-size: 0.9375rem; line-height: 1.65;">
+              Evaluasi akumulasi pajak tahunan, premi asuransi, bahan bakar, servis rutin, depresiasi, serta skor kerentanan unit.
             </p>
           </div>
 
-          <!-- Step 3 -->
-          <div
-            class="bg-[#1E293B] border-2 border-slate-600 rounded-2xl p-6 sm:p-8 flex flex-col space-y-4 shadow-[4px_4px_0px_#0F172A]">
-            <div
-              class="w-10 h-10 rounded-xl text-white font-black text-lg flex items-center justify-center border border-emerald-300">
-              3
-            </div>
-            <h3 class="text-2xl font-black uppercase text-white tracking-wide">DECIDE</h3>
-            <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-              Use the results to help make decisions. Unduh dokumen audit PDF resmi atau file CSV untuk dibawa saat
-              negosiasi harga di showroom.
+          <div class="step-card-dark">
+            <div class="step-number-badge">3</div>
+            <h3 style="font-size: 1.25rem; font-weight: 800;">Putuskan dengan Yakin</h3>
+            <p style="color: #cbd5e1; font-size: 0.9375rem; line-height: 1.65;">
+              Unduh laporan audit dalam format PDF atau CSV, lalu gunakan checklist lapangan atau jasa inspektor independen saat mengecek unit.
             </p>
           </div>
         </div>
-
       </div>
     </section>
 
-    <!-- ================= BUILD YOUR REPORT NOW ================= -->
-    <section class="py-16 sm:py-24 bg-[#FDFBF7] border-b-2 border-[#162447]"
-      style="padding-top: 50px; padding-bottom: 50px;">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-
-          <!-- Left Text -->
-          <div class="lg:col-span-5 space-y-6" style="margin-right: 40px;">
-            <div
-              class="inline-block px-4 py-1.5 rounded-full bg-blue-100 text-blue-900 border border-blue-300 text-xs font-black uppercase tracking-wider">
-              INSTANT PDF & CSV OUTPUT
-            </div>
-            <h2 class="text-4xl sm:text-5xl font-black text-[#162447] uppercase tracking-tight leading-none">
-              BUILD YOUR REPORT NOW
-            </h2>
-            <p class="text-slate-700 text-base sm:text-lg leading-relaxed font-medium">
-              Dapatkan dokumen laporan kepemilikan komprehensif seperti contoh di samping: proyeksi tahun demi tahun,
-              rincian biaya per bulan, estimasi nilai sisa jual kembali, dan referensi regulasi PKB Indonesia.
+    <!-- Pratinjau Laporan Audit -->
+    <section class="section-band is-canvas">
+      <div class="container-utama">
+        <div class="report-preview-split">
+          <div style="display: flex; flex-direction: column; gap: 18px;">
+            <span class="meta-kicker">Laporan Audit PDF &amp; CSV</span>
+            <h2 class="judul-seksi">Susun Laporan Keuangan Kendaraan Anda</h2>
+            <p class="teks-pengantar">
+              Dapatkan dokumen proyeksi tahun demi tahun yang merangkum beban biaya bulanan, biaya riil per kilometer, komposisi pengeluaran, serta estimasi nilai jual kembali.
             </p>
             <div>
-              <a href="kalkulator.html"
-                class="inline-flex items-center gap-3 px-8 py-4 bg-[#162447] hover:bg-[#1E3E62] text-white rounded-xl border-2 border-[#162447] font-black uppercase tracking-wider text-sm shadow-[4px_4px_0px_#94A3B8] hover:-translate-y-0.5 transition-all">
-                <span>GENERATE YOUR REPORT &rarr;</span>
-              </a>
+              <a href="kalkulator-tco.html" class="btn btn-primary btn-lg">Buat Laporan TCO Anda</a>
             </div>
           </div>
 
-          <!-- Right Preview Card -->
-          <div class="lg:col-span-7">
-            <div
-              class="bg-white border-2 border-[#162447] rounded-2xl p-6 sm:p-8 shadow-[6px_6px_0px_#162447] space-y-6">
-              <img src="tco.png" alt="tco" style="border-radius: 10px;">
-            </div>
-
+          <div class="report-preview-frame">
+            <img src="images/laporan-audit-tco-kendaraan.png" alt="Pratinjau laporan audit Total Cost of Ownership kendaraan Ravenmille" loading="lazy">
           </div>
         </div>
-    </section>
-
-    <!-- ================= TESTIMONIALS SECTION ================= -->
-    <section class="py-16 sm:py-20 bg-[#FAF8F2] border-b-2 border-[#162447]"
-      style="background-color: hsla(47, 100%, 95%, 0.4);">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-          <div
-            class="bg-[#162447] text-white px-6 py-2.5 rounded-full font-black text-sm tracking-wider uppercase border-2 border-[#162447] shadow-[3px_3px_0px_#94A3B8]"
-            style="padding-left: 32px; padding-right: 32px;">
-            <span class="text-amber-400 text-base" style="font-size: 32px; font-weight: bold;">120+</span> <span
-              style="font-size: 20px;">MONTHLY USERS</span>
-          </div>
-          <div class="text-amber-500 text-xl tracking-widest" style="font-size: 32px; color: rgb(255, 208, 0);">
-            ★★★★★
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <!-- Card 1 -->
-          <div
-            class="bg-white border-2 border-[#162447] rounded-2xl p-6 shadow-[5px_5px_0px_#162447] flex flex-col justify-between">
-            <div class="space-y-4">
-              <div class="flex items-center gap-3">
-                <div
-                  class="w-7 h-7 rounded-full bg-blue-100 text-blue-900 font-black text-xs flex items-center justify-center border border-blue-300 shrink-0">
-                  &rsaquo;
-                </div>
-                <div>
-                  <h4 class="font-black text-[#162447] text-base uppercase">RAKA, 27</h4>
-                  <p class="text-xs text-slate-500 font-semibold">Calon pembeli mobil bekas, Semarang</p>
-                </div>
-              </div>
-              <p class="text-sm text-slate-700 italic leading-relaxed">
-                "Hampir ambil Avanza 2016 yang harganya paling murah. Setelah hitung di Ravenmille, ternyata biaya 3
-                tahunnya lebih mahal karena umur komponen suspensi dan servis besarnya."
-              </p>
-            </div>
-            <span class="text-[11px] text-slate-400 mt-6 block font-bold">09 September 2026</span>
-          </div>
-
-          <!-- Card 2 -->
-          <div
-            class="bg-white border-2 border-[#162447] rounded-2xl p-6 shadow-[5px_5px_0px_#162447] flex flex-col justify-between">
-            <div class="space-y-4">
-              <div class="flex items-center gap-3">
-                <div
-                  class="w-7 h-7 rounded-full bg-blue-100 text-blue-900 font-black text-xs flex items-center justify-center border border-blue-300 shrink-0">
-                  &rsaquo;
-                </div>
-                <div>
-                  <h4 class="font-black text-[#162447] text-base uppercase">DITA, 19</h4>
-                  <p class="text-xs text-slate-500 font-semibold">Pekerja kantoran, Jakarta</p>
-                </div>
-              </div>
-              <p class="text-sm text-slate-700 italic leading-relaxed">
-                "Checklist-nya kepakai banget. Aku jadi tahu harus nanya riwayat CVT ke penjual dan cek rembesan oli
-                sebelum transfer DP ke showroom."
-              </p>
-            </div>
-            <span class="text-[11px] text-slate-400 mt-6 block font-bold">17 September 2026</span>
-          </div>
-
-          <!-- Card 3 -->
-          <div
-            class="bg-white border-2 border-[#162447] rounded-2xl p-6 shadow-[5px_5px_0px_#162447] flex flex-col justify-between">
-            <div class="space-y-4">
-              <div class="flex items-center gap-3">
-                <div
-                  class="w-7 h-7 rounded-full bg-blue-100 text-blue-900 font-black text-xs flex items-center justify-center border border-blue-300 shrink-0">
-                  &rsaquo;
-                </div>
-                <div>
-                  <h4 class="font-black text-[#162447] text-base uppercase">BIMA, 31</h4>
-                  <p class="text-xs text-slate-500 font-semibold">Pemilik Bengkel, Yogyakarta</p>
-                </div>
-              </div>
-              <p class="text-sm text-slate-700 italic leading-relaxed">
-                "Akhirnya ada yang ngumpulin semua biaya jadi satu laporan, nggak perlu buka lima situs terpisah buat
-                tahu pajak, depresiasi, dan harga servis."
-              </p>
-            </div>
-            <span class="text-[11px] text-slate-400 mt-6 block font-bold">25 September 2026</span>
-          </div>
-        </div>
-
       </div>
     </section>
 
-    <!-- ================= ACCORDION FAQ ================= -->
-    <section class="py-16 sm:py-20 bg-[#FAF8F2] border-b-2 border-[#162447]" style="background-color:#162447">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-10 space-y-2">
-          <h2 class="text-3xl sm:text-4xl font-black text-[#162447] uppercase" style="color: whitesmoke;">PERTANYAAN
-            UMUM (FAQ)</h2>
-          <p class="text-sm sm:text-base text-slate-600 font-medium" style="color: whitesmoke;">Semua hal yang perlu
-            Anda ketahui mengenai
-            metodologi perhitungan Ravenmille.</p>
+    <!-- Testimoni Pengguna -->
+    <section class="section-band is-cream">
+      <div class="container-utama">
+        <div class="proof-header-row">
+          <div class="proof-stat-box">
+            <span id="monthly-users-count" class="proof-stat-number">120+</span>
+            <span>Pengguna Aktif Bulanan</span>
+          </div>
+          <span class="meta-row">Evaluasi dari pembeli mobil bekas, pengguna harian, dan praktisi bengkel</span>
         </div>
 
-        <div class="space-y-4" id="faq-container">
-          <!-- FAQ Item 1 -->
-          <div class="bg-white border-2 border-[#162447] rounded-xl shadow-[3px_3px_0px_#162447] overflow-hidden">
-            <button type="button"
-              class="faq-toggle w-full px-6 py-4 text-left font-black text-base sm:text-lg text-[#162447] flex items-center justify-between">
-              <span>Apa itu Total Cost of Ownership (TCO)?</span>
-              <span class="faq-icon text-xl font-black">+</span>
+        <div class="grid-3">
+          <article class="kartu-utama" style="display: flex; flex-direction: column; justify-content: space-between; gap: 18px;">
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <div class="meta-row">
+                <strong>Raka Pratama</strong>
+                <span aria-hidden="true">·</span>
+                <span>Calon pembeli mobil bekas, Semarang</span>
+              </div>
+              <p style="font-size: 0.9375rem; line-height: 1.65; color: #334155;">
+                "Hampir mengambil Avanza 2016 yang harganya paling murah. Setelah menghitung TCO di Ravenmille, total biaya 3 tahunnya justru lebih tinggi karena jadwal peremajaan suspensi dan servis besar."
+              </p>
+            </div>
+            <span class="meta-row" style="font-size: 0.78rem;">September 2026</span>
+          </article>
+
+          <article class="kartu-utama" style="display: flex; flex-direction: column; justify-content: space-between; gap: 18px;">
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <div class="meta-row">
+                <strong>Dita Maharani</strong>
+                <span aria-hidden="true">·</span>
+                <span>Karyawan swasta, Jakarta</span>
+              </div>
+              <p style="font-size: 0.9375rem; line-height: 1.65; color: #334155;">
+                "Checklist lapangannya sangat membantu. Saya jadi tahu poin spesifik yang harus ditanyakan soal riwayat oli CVT dan pengecekan kebocoran sebelum membayar DP ke showroom."
+              </p>
+            </div>
+            <span class="meta-row" style="font-size: 0.78rem;">September 2026</span>
+          </article>
+
+          <article class="kartu-utama" style="display: flex; flex-direction: column; justify-content: space-between; gap: 18px;">
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <div class="meta-row">
+                <strong>Bima Nugroho</strong>
+                <span aria-hidden="true">·</span>
+                <span>Pemilik bengkel, Yogyakarta</span>
+              </div>
+              <p style="font-size: 0.9375rem; line-height: 1.65; color: #334155;">
+                "Praktis karena semua komponen biaya dikumpulkan dalam satu laporan. Calon pembeli tidak perlu lagi membuka banyak situs berbeda hanya untuk memperkirakan pajak, depresiasi, dan servis."
+              </p>
+            </div>
+            <span class="meta-row" style="font-size: 0.78rem;">September 2026</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section-band is-navy">
+      <div class="container-utama">
+        <div class="section-header-block is-centered">
+          <span class="meta-kicker">Pertanyaan Umum</span>
+          <h2 class="judul-seksi" style="color: #ffffff;">Metodologi &amp; Penggunaan Ravenmille</h2>
+        </div>
+
+        <div class="faq-list">
+          <div class="faq-item">
+            <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-1">
+              <span>Apa itu Total Cost of Ownership (TCO) kendaraan?</span>
+              <span class="faq-symbol" aria-hidden="true">+</span>
             </button>
-            <div
-              class="faq-content hidden px-6 pb-5 text-sm sm:text-base text-slate-700 leading-relaxed border-t border-slate-100 pt-3">
-              TCO adalah total biaya kepemilikan riil kendaraan yang mencakup bukan hanya harga beli, melainkan
-              akumulasi depresiasi nilai, bahan bakar harian, servis & suku cadang berkala, asuransi, serta pajak
-              kendaraan bermotor (PKB).
+            <div id="faq-panel-1" class="faq-answer" hidden>
+              TCO adalah total biaya ekonomi riil selama memiliki kendaraan, meliputi penyusutan nilai jual kembali (depresiasi), bahan bakar, perawatan rutin, premi asuransi, bunga pembiayaan, serta pajak kendaraan bermotor (PKB).
             </div>
           </div>
 
-          <!-- FAQ Item 2 -->
-          <div class="bg-white border-2 border-[#162447] rounded-xl shadow-[3px_3px_0px_#162447] overflow-hidden">
-            <button type="button"
-              class="faq-toggle w-full px-6 py-4 text-left font-black text-base sm:text-lg text-[#162447] flex items-center justify-between">
-              <span>Apakah saya bisa langsung menyewa jasa inspektor ke lokasi showroom?</span>
-              <span class="faq-icon text-xl font-black">+</span>
+          <div class="faq-item">
+            <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-2">
+              <span>Apakah saya bisa memesan jasa inspektor langsung ke lokasi penjual?</span>
+              <span class="faq-symbol" aria-hidden="true">+</span>
             </button>
-            <div
-              class="faq-content hidden px-6 pb-5 text-sm sm:text-base text-slate-700 leading-relaxed border-t border-slate-100 pt-3">
-              Ya! Melalui menu Direktori Bengkel & Inspektor, Anda dapat memilih inspektor sesuai domisili kota
-              (Jakarta, Surabaya, Bandung, Semarang, Yogyakarta, dll.) dan langsung klik tombol WhatsApp untuk booking
-              jadwal serta negosiasi biaya.
+            <div id="faq-panel-2" class="faq-answer" hidden>
+              Ya. Melalui halaman Bengkel &amp; Inspektor, Anda dapat memfilter teknisi inspektor independen berdasarkan kota domisili lalu menghubungi mereka langsung melalui WhatsApp untuk menentukan jadwal pengecekan.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-3">
+              <span>Apakah angka depresiasi di kalkulator merupakan harga pasar mengikat?</span>
+              <span class="faq-symbol" aria-hidden="true">+</span>
+            </button>
+            <div id="faq-panel-3" class="faq-answer" hidden>
+              Tidak. Angka depresiasi di kalkulator menggunakan kurva simulasi standar (15% pada tahun ke-1, 32% pada tahun ke-3, dan 46% pada tahun ke-5) sebagai acuan perencanaan keuangan, bukan penawaran jual beli resmi.
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ================= FORM SECTION ================= -->
-    <section class="py-16 sm:py-24 bg-[#FDFBF7] border-b-2 border-[#162447]"
-      style="display: flex; justify-content: center; background-color: hsla(0, 0%, 100%, .05);">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        <div class="bg-white border-2 border-[#162447] rounded-3xl p-8 sm:p-12 shadow-[8px_8px_0px_#162447]"
-          id="form-design">
-          <div class="text-center space-y-3 mb-8">
-            <h2 class="text-3xl sm:text-4xl font-black text-[#162447] uppercase tracking-tight">
-              LET’S FIND YOUR NEXT VEHICLE
-            </h2>
-            <p class="text-xs sm:text-sm text-slate-600 font-black uppercase tracking-wide max-w-xl mx-auto">
-              TELL US WHAT YOU’RE LOOKING FOR AND GET INSIGHTS TO HELP YOU MAKE A BETTER VEHICLE DECISION.
+    <!-- Form Konsultasi Kendaraan -->
+    <section id="konsultasi" class="section-band is-canvas" style="border-bottom: 0;">
+      <div class="container-utama" style="max-width: 780px;">
+        <div class="kartu-utama" style="padding: 36px;">
+          <div class="section-header-block is-centered" style="margin-bottom: 28px;">
+            <span class="meta-kicker">Rekomendasi Alat Analisis</span>
+            <h2 class="judul-seksi">Temukan Kendaraan Berikutnya dengan Tepat</h2>
+            <p class="teks-pengantar" style="text-align: center; font-size: 0.95rem;">
+              Tuliskan kendaraan yang sedang Anda incar untuk mendapatkan jalur analisis TCO dan inspeksi yang paling sesuai.
             </p>
           </div>
 
-          <form action="#" method="POST" class="space-y-5">
-            <div>
-              <label class="block text-xs font-black text-[#162447] uppercase mb-1.5">FULL NAME</label>
-              <input type="text" placeholder="Nama Lengkap Anda"
-                class="w-full px-4 py-3 bg-white border-2 border-slate-300 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:border-[#162447]">
+          <form id="form-konsultasi-kendaraan" style="display: flex; flex-direction: column; gap: 18px;" novalidate>
+            <div class="grid-2" style="gap: 16px;">
+              <div class="form-group">
+                <label class="form-label" for="konsultasi-nama">Nama Lengkap</label>
+                <input type="text" id="konsultasi-nama" class="form-input" placeholder="Nama lengkap Anda" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="konsultasi-email">Alamat Email</label>
+                <input type="email" id="konsultasi-email" class="form-input" placeholder="nama@email.com" required>
+              </div>
             </div>
 
-            <div>
-              <label class="block text-xs font-black text-[#162447] uppercase mb-1.5">EMAIL ADDRESS</label>
-              <input type="email" placeholder="nama@email.com"
-                class="w-full px-4 py-3 bg-white border-2 border-slate-300 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:border-[#162447]">
+            <div class="grid-2" style="gap: 16px;">
+              <div class="form-group">
+                <label class="form-label" for="konsultasi-mobil">Mobil yang Sedang Dipertimbangkan</label>
+                <input type="text" id="konsultasi-mobil" class="form-input" placeholder="Contoh: Honda Brio 2020 / Avanza 2019" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="konsultasi-tujuan">Kebutuhan Utama Anda</label>
+                <select id="konsultasi-tujuan" class="form-select">
+                  <option value="beli-bekas">Beli Mobil Bekas (Cek Risiko &amp; Biaya)</option>
+                  <option value="beli-baru">Beli Mobil Baru (Hitung TCO &amp; Depresiasi)</option>
+                  <option value="komparasi">Bandingkan 2 Pilihan Mobil</option>
+                  <option value="inspeksi">Sewa Jasa Inspektor Independen</option>
+                </select>
+              </div>
             </div>
 
-            <div>
-              <label class="block text-xs font-black text-[#162447] uppercase mb-1.5">CAR YOU'RE INTERESTED IN</label>
-              <input type="text" placeholder="Contoh: Honda Brio 2020 / Avanza 2018"
-                class="w-full px-4 py-3 bg-white border-2 border-slate-300 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:border-[#162447]">
-            </div>
+            <label style="display: flex; align-items: flex-start; gap: 10px; font-size: 0.85rem; color: #475569; cursor: pointer;">
+              <input type="checkbox" id="konsultasi-persetujuan" style="margin-top: 3px; width: 16px; height: 16px; accent-color: #162447;">
+              <span>Saya menyetujui penyimpanan data ringkas untuk mendapatkan panduan dan pembaruan fitur dari Ravenmille.</span>
+            </label>
 
-            <div>
-              <label class="block text-xs font-black text-[#162447] uppercase mb-1.5">WHAT ARE YOU LOOKING TO DO</label>
-              <select
-                class="w-full px-4 py-3 bg-white border-2 border-slate-300 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:border-[#162447]">
-                <option value="beli-bekas">Beli Mobil Bekas (Perlu Cek Biaya & Risiko)</option>
-                <option value="beli-baru">Beli Mobil Baru (Hitung TCO & Depresiasi)</option>
-                <option value="komparasi">Komparasi 2 Pilihan Mobil</option>
-                <option value="inspeksi">Sewa Jasa Inspektor</option>
-              </select>
-            </div>
+            <div id="konsultasi-feedback" class="status-banner" hidden></div>
 
-            <div class="flex items-start gap-3 pt-2">
-              <input type="checkbox" id="consent" class="mt-1 w-4 h-4 accent-[#162447]">
-              <label for="consent" class="text-xs text-slate-600 font-medium leading-normal cursor-pointer">
-                I agree to receive promotional emails, updates, and other marketing communications from Ravenmille.
-              </label>
-            </div>
-
-            <div class="pt-4">
-              <button type="submit"
-                class="w-full py-4 bg-[#162447] hover:bg-[#1E3E62] text-white font-black uppercase tracking-widest text-sm rounded-2xl border-2 border-[#162447] shadow-[4px_4px_0px_#94A3B8] transition-all">
-                SUBMIT
-              </button>
-            </div>
+            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">Kirim &amp; Dapatkan Jalur Analisis</button>
           </form>
         </div>
-
       </div>
     </section>
+  </main>
 
-    <!-- ================= FOOTER ================= -->
-    <footer class="bg-[#162447] text-white py-12 border-t-4 border-[#0F1D38] halftone-dark">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
-        <div class="flex items-center gap-3">
-          <div
-            class="w-10 h-10 bg-amber-400 text-[#162447] font-black rounded-lg flex items-center justify-center text-xl">
-            R
+  <footer class="site-footer">
+    <div class="container-utama">
+      <div class="footer-grid">
+        <div class="footer-brand-col">
+          <div class="brand-wordmark brand-logo-plate">
+            <img src="assets/aistudio/41e99c64-bb56-4a49-b805-25ba389725f0_removalai_preview_e589ba91.png" alt="Logo Ravenmille - Drive With Confidence" class="brand-logo-img">
           </div>
-          <span class="font-black text-lg tracking-wider uppercase">RAVENMILLE INDONESIA</span>
+          <p class="footer-desc">
+            Platform independen untuk menghitung biaya riil kepemilikan kendaraan dan mengevaluasi risiko mobil bekas sebelum Anda membeli.
+          </p>
         </div>
-        <p class="text-xs sm:text-sm text-blue-200">
-          © 2026 Ravenmille. Independent Automotive Financial & Risk Intelligence.
-        </p>
+
+        <nav aria-label="Fitur">
+          <h4 class="footer-heading">Fitur Utama</h4>
+          <ul class="footer-links">
+            <li><a class="footer-link" href="kalkulator-tco.html">Kalkulator TCO</a></li>
+            <li><a class="footer-link" href="analisis-risiko.html">Analisis Risiko Unit</a></li>
+            <li><a class="footer-link" href="komparasi-kendaraan.html">Komparasi Mobil</a></li>
+            <li><a class="footer-link" href="masalah-kendaraan.html">Katalog Masalah Khas</a></li>
+            <li><a class="footer-link" href="bengkel-inspektor.html">Bengkel &amp; Inspektor</a></li>
+          </ul>
+        </nav>
+
+        <nav aria-label="Navigasi">
+          <h4 class="footer-heading">Informasi</h4>
+          <ul class="footer-links">
+            <li><a class="footer-link" href="berita-otomotif.html">Berita Otomotif</a></li>
+            <li><a class="footer-link" href="#tentang">Tentang Kami</a></li>
+            <li><a class="footer-link" href="#faq">FAQ</a></li>
+            <li><a class="footer-link" href="admin.html">Kelola Data</a></li>
+          </ul>
+        </nav>
       </div>
-    </footer>
 
-  </div>
+      <div class="footer-bottom">
+        <p>© 2026 Ravenmille Indonesia. Independent Automotive Financial &amp; Risk Intelligence.</p>
+        <a href="#" class="footer-link" style="color: #fbbf24; font-weight: 800;">Kembali ke atas ↑</a>
+      </div>
+    </div>
+  </footer>
 
-  <!-- Vanilla JS for Accordion Interaction -->
-  <script>
-    document.querySelectorAll('.faq-toggle').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const content = btn.nextElementSibling;
-        const icon = btn.querySelector('.faq-icon');
-        const isHidden = content.classList.contains('hidden');
-
-        document.querySelectorAll('.faq-content').forEach(c => c.classList.add('hidden'));
-        document.querySelectorAll('.faq-icon').forEach(i => i.textContent = '+');
-
-        if (isHidden) {
-          content.classList.remove('hidden');
-          icon.textContent = '−';
-        }
-      });
-    });
-  </script>
-
-
-  <script src="ravenmille.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/common-ui.js"></script>
+  <script src="js/landing.js"></script>
 </body>
 
 </html>

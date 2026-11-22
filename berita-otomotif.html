@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Berita &amp; Panduan Finansial Otomotif Indonesia | Ravenmille</title>
+  <meta name="description" content="Artikel riset biaya kepemilikan kendaraan (TCO), panduan inspeksi mobil bekas, tips mendeteksi odometer, dan berita otomotif terkini dari Ravenmille.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Ravenmille Indonesia">
+  <meta property="og:locale" content="id_ID">
+  <meta property="og:title" content="Berita &amp; Panduan Finansial Otomotif Indonesia | Ravenmille">
+  <meta property="og:description" content="Wawasan objektif seputar pasar mobil bekas, perawatan berkala, dan perbandingan biaya kepemilikan kendaraan.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/aistudio/41e99c64-bb56-4a49-b805-25ba389725f0_removalai_preview_e589ba91.png">
+  <link rel="stylesheet" href="css/ravenmille-styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body class="halftone-bg">
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="index.html" class="brand-wordmark" aria-label="Ravenmille - Beranda">
+        <img src="assets/aistudio/41e99c64-bb56-4a49-b805-25ba389725f0_removalai_preview_e589ba91.png" alt="Logo Ravenmille - Drive With Confidence" class="brand-logo-img">
+      </a>
+
+      <nav class="nav-utama" aria-label="Navigasi utama">
+        <a href="kalkulator-tco.html" class="nav-link">Kalkulator</a>
+        <a href="analisis-risiko.html" class="nav-link">Risiko</a>
+        <a href="komparasi-kendaraan.html" class="nav-link">Komparasi</a>
+        <a href="masalah-kendaraan.html" class="nav-link">Masalah</a>
+        <a href="bengkel-inspektor.html" class="nav-link">Bengkel</a>
+        <a href="berita-otomotif.html" class="nav-link is-active">Berita</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="kalkulator-tco.html" class="btn btn-primary btn-sm header-cta-desktop">Hitung TCO</a>
+        <button type="button" id="mobile-menu-toggle" class="mobile-menu-btn" aria-expanded="false" aria-controls="mobile-nav-drawer" aria-label="Buka menu navigasi">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-nav-drawer" class="mobile-drawer">
+      <nav class="mobile-drawer-links" aria-label="Navigasi seluler">
+        <a href="kalkulator-tco.html" class="nav-link">Kalkulator TCO</a>
+        <a href="analisis-risiko.html" class="nav-link">Analisis Risiko Unit</a>
+        <a href="komparasi-kendaraan.html" class="nav-link">Komparasi Mobil</a>
+        <a href="masalah-kendaraan.html" class="nav-link">Katalog Masalah</a>
+        <a href="bengkel-inspektor.html" class="nav-link">Bengkel &amp; Inspektor</a>
+        <a href="berita-otomotif.html" class="nav-link is-active">Berita Otomotif</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container-utama halaman-konten">
+    <section class="kartu-utama">
+      <span class="meta-kicker">Publikasi &amp; Riset Ravenmille</span>
+      <h1 class="judul-halaman" style="margin-top: 6px;">Berita &amp; Panduan Otomotif</h1>
+      <p class="teks-pengantar" style="margin-top: 10px;">
+        Baca analisis mendalam seputar depresiasi mobil di Indonesia, strategi perawatan preventif, serta tips memilih mobil bekas bebas risiko.
+      </p>
+
+      <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; margin-top: 22px;">
+        <div class="form-group" style="flex: 1; min-width: 240px; max-width: 420px;">
+          <label for="cari-berita-input" class="form-label">Cari Judul atau Topik Artikel</label>
+          <input type="search" id="cari-berita-input" class="form-input" placeholder="Contoh: odometer, hybrid, CVT, pajak...">
+        </div>
+
+        <div class="filter-bar" role="group" aria-label="Filter kategori berita">
+          <button type="button" class="filter-btn is-active" data-kategori-berita="SEMUA">Semua Topik</button>
+          <button type="button" class="filter-btn" data-kategori-berita="ANALISIS">Analisis</button>
+          <button type="button" class="filter-btn" data-kategori-berita="TIPS">Tips Inspeksi</button>
+          <button type="button" class="filter-btn" data-kategori-berita="BERITA">Berita</button>
+        </div>
+      </div>
+    </section>
+
+    <section aria-label="Daftar artikel otomotif">
+      <div id="berita-grid-container" class="grid-3"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container-utama">
+      <div class="footer-grid">
+        <div class="footer-brand-col">
+          <div class="brand-wordmark brand-logo-plate">
+            <img src="assets/aistudio/41e99c64-bb56-4a49-b805-25ba389725f0_removalai_preview_e589ba91.png" alt="Logo Ravenmille - Drive With Confidence" class="brand-logo-img">
+          </div>
+          <p class="footer-desc">
+            Platform independen untuk menghitung biaya riil kepemilikan kendaraan dan mengevaluasi risiko mobil bekas sebelum Anda membeli.
+          </p>
+        </div>
+
+        <nav aria-label="Fitur">
+          <h4 class="footer-heading">Fitur Utama</h4>
+          <ul class="footer-links">
+            <li><a class="footer-link" href="kalkulator-tco.html">Kalkulator TCO</a></li>
+            <li><a class="footer-link" href="analisis-risiko.html">Analisis Risiko Unit</a></li>
+            <li><a class="footer-link" href="komparasi-kendaraan.html">Komparasi Mobil</a></li>
+            <li><a class="footer-link" href="masalah-kendaraan.html">Katalog Masalah Khas</a></li>
+            <li><a class="footer-link" href="bengkel-inspektor.html">Bengkel &amp; Inspektor</a></li>
+          </ul>
+        </nav>
+
+        <nav aria-label="Navigasi">
+          <h4 class="footer-heading">Informasi</h4>
+          <ul class="footer-links">
+            <li><a class="footer-link" href="berita-otomotif.html">Berita Otomotif</a></li>
+            <li><a class="footer-link" href="index.html#tentang">Tentang Kami</a></li>
+            <li><a class="footer-link" href="index.html#faq">FAQ</a></li>
+            <li><a class="footer-link" href="admin.html">Kelola Data</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Ravenmille Indonesia. Independent Automotive Financial &amp; Risk Intelligence.</p>
+        <a href="#" class="footer-link" style="color: #fbbf24; font-weight: 800;">Kembali ke atas ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/supabase-client.js"></script>
+  <script src="js/common-ui.js"></script>
+  <script src="js/berita-otomotif.js"></script>
+</body>
+
+</html>

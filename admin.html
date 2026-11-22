@@ -2,513 +2,520 @@
 <html lang="id">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin Ravenmille – Input Data Supabase</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="ravenmille-supabase.js"></script>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', system-ui, sans-serif;
-        }
-
-        body {
-            background: #FDFBF7;
-            color: #162447;
-            padding: 24px;
-        }
-
-        .wrap {
-            max-width: 860px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            font-size: 22px;
-            margin-bottom: 4px;
-        }
-
-        .sub {
-            color: #64748b;
-            font-size: 13px;
-            margin-bottom: 20px;
-        }
-
-        .tabs {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .tabs button {
-            padding: 10px 16px;
-            border: 2px solid #162447;
-            border-radius: 10px;
-            background: #fff;
-            font-weight: 800;
-            cursor: pointer;
-        }
-
-        .tabs button.on {
-            background: #162447;
-            color: #fff;
-        }
-
-        .card {
-            background: #fff;
-            border: 2px solid #162447;
-            border-radius: 14px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 4px 4px 0 #162447;
-        }
-
-        .card h2 {
-            font-size: 16px;
-            margin-bottom: 12px;
-        }
-
-        label {
-            display: block;
-            font-size: 12px;
-            font-weight: 800;
-            text-transform: uppercase;
-            margin: 10px 0 4px;
-        }
-
-        input,
-        select,
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #162447;
-            border-radius: 10px;
-            font-size: 14px;
-        }
-
-        textarea {
-            min-height: 70px;
-        }
-
-        .row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .btn {
-            margin-top: 14px;
-            padding: 12px 20px;
-            background: #162447;
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            font-weight: 800;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        .btn:disabled {
-            opacity: .5;
-        }
-
-        .msg {
-            margin-top: 10px;
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-        .msg.ok {
-            color: #047857;
-        }
-
-        .msg.err {
-            color: #be123c;
-        }
-
-        .item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px;
-            border: 1px solid #cbd5e1;
-            border-radius: 10px;
-            margin-top: 10px;
-            background: #FAF8F2;
-        }
-
-        .item img {
-            width: 64px;
-            height: 48px;
-            object-fit: cover;
-            border-radius: 8px;
-            border: 1px solid #162447;
-        }
-
-        .item .nm {
-            flex: 1;
-            font-weight: 700;
-            font-size: 14px;
-        }
-
-        .item small {
-            display: block;
-            color: #64748b;
-            font-weight: 500;
-        }
-
-        .del {
-            padding: 6px 12px;
-            background: #be123c;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .warn {
-            background: #fef3c7;
-            border: 2px solid #f59e0b;
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-    </style>
-    <base target="_blank">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Ravenmille – Input Data Supabase</title>
+  <meta name="description" content="Halaman terpisah Admin Ravenmille untuk menambah, mengedit, dan menghapus data kendaraan, masalah teknis, inspektor, bengkel, dan berita pada Supabase.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/aistudio/41e99c64-bb56-4a49-b805-25ba389725f0_removalai_preview_e589ba91.png">
+  <link rel="stylesheet" href="css/ravenmille-styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
-<body>
-    <div class="wrap">
-        <h1>🛠️ Admin Ravenmille</h1>
-        <p class="sub">Input manual data kendaraan, masalah, inspektor & bengkel — tersimpan di Supabase, langsung
-            tampil di situs.</p>
-        <div class="warn" id="cfg-warn" style="display:none">⚠️ Supabase belum dikonfigurasi. Isi dulu
-            <code>SUPABASE_URL</code> & <code>SUPABASE_ANON_KEY</code> di file <code>ravenmille-supabase.js</code>.
+<body class="halftone-bg">
+  <!-- Header Terpisah Khusus Portal Admin -->
+  <header class="admin-standalone-header">
+    <div class="admin-standalone-header-inner">
+      <div class="brand-wordmark" style="color: #ffffff; gap: 14px;">
+        <span class="brand-logo-plate" style="padding: 4px 10px;">
+          <img src="assets/aistudio/41e99c64-bb56-4a49-b805-25ba389725f0_removalai_preview_e589ba91.png" alt="Logo Ravenmille - Drive With Confidence" class="brand-logo-img" style="height: 38px;">
+        </span>
+        <div>
+          <span style="display: block; line-height: 1.1; font-size: 0.98rem;">Admin Portal</span>
+          <small style="display: block; font-size: 0.72rem; font-weight: 600; color: #cbd5e1; text-transform: none; letter-spacing: 0;">Input Data Supabase</small>
         </div>
+      </div>
 
-        <div class="tabs">
-            <button class="on" onclick="showTab('vehicles', this)">🚗 Kendaraan</button>
-            <button onclick="showTab('issues', this)">🔧 Masalah</button>
-            <button onclick="showTab('inspectors', this)">👨‍🔧 Inspektor</button>
-            <button onclick="showTab('workshops', this)">🏪 Bengkel</button>
-            <button onclick="showTab('news', this)">📰 Berita</button>
-        </div>
-
-        <!-- ================= KENDARAAN ================= -->
-        <div id="tab-vehicles">
-            <div class="card">
-                <h2>Tambah / Edit Kendaraan</h2>
-                <input type="hidden" id="v-id">
-                <label>Nama Model *</label><input id="v-name" placeholder="Toyota Avanza 1.5 G CVT">
-                <div class="row">
-                    <div><label>Merek</label><input id="v-brand" placeholder="Toyota"></div>
-                    <div><label>Kategori</label><input id="v-category" placeholder="LMPV POPULER"></div>
-                </div>
-                <div class="row">
-                    <div><label>Harga (Rp) *</label><input id="v-price" type="number" value="275000000"></div>
-                    <div><label>Konsumsi BBM (km/l) *</label><input id="v-fuel" type="number" step="0.1" value="13.5">
-                    </div>
-                </div>
-                <div class="row">
-                    <div><label>Servis / Tahun (Rp)</label><input id="v-service" type="number" value="3500000"></div>
-                    <div><label>Asuransi / Tahun (Rp)</label><input id="v-insurance" type="number" value="4800000">
-                    </div>
-                </div>
-                <div class="row">
-                    <div><label>Pajak PKB / Tahun (Rp)</label><input id="v-tax" type="number" value="4200000"></div>
-                    <div><label>Urutan Tampil</label><input id="v-order" type="number" value="0"></div>
-                </div>
-                <label>Gambar Model</label><input id="v-img" type="file" accept="image/*">
-                <button class="btn" id="v-btn" onclick="saveVehicle()">💾 Simpan Kendaraan</button>
-                <p class="msg" id="v-msg"></p>
-            </div>
-            <div class="card">
-                <h2>Daftar Kendaraan</h2>
-                <div id="v-list">
-                    <p>Memuat…</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= MASALAH ================= -->
-        <div id="tab-issues" style="display:none">
-            <div class="card">
-                <h2>Tambah Masalah / Biaya Perbaikan</h2>
-                <label>Kendaraan *</label><select id="i-vehicle"></select>
-                <label>Nama Masalah *</label><input id="i-name" placeholder="Bushing Rack Steer Aus">
-                <div class="row">
-                    <div><label>Titik KM Rawan</label><input id="i-km" placeholder="40.000 - 70.000 km"></div>
-                    <div><label>Estimasi Biaya</label><input id="i-cost" placeholder="Rp 650.000 - Rp 1.800.000"></div>
-                </div>
-                <label>Gejala</label><textarea id="i-symptom"></textarea>
-                <label>Solusi</label><textarea id="i-solution"></textarea>
-                <label>Gambar (opsional)</label><input id="i-img" type="file" accept="image/*">
-                <button class="btn" onclick="saveIssue()">💾 Simpan Masalah</button>
-                <p class="msg" id="i-msg"></p>
-            </div>
-            <div class="card">
-                <h2>Daftar Masalah</h2>
-                <div id="i-list">
-                    <p>Memuat…</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= INSPEKTOR ================= -->
-        <div id="tab-inspectors" style="display:none">
-            <div class="card">
-                <h2>Tambah Inspektor</h2>
-                <label>Nama *</label><input id="n-name">
-                <div class="row">
-                    <div><label>Kota</label><input id="n-city"></div>
-                    <div><label>WhatsApp (62xxx)</label><input id="n-phone"></div>
-                </div>
-                <label>Keahlian (pisahkan koma)</label><input id="n-spec" placeholder="CVT, Kelistrikan ECU">
-                <button class="btn" onclick="saveInspector()">💾 Simpan Inspektor</button>
-                <p class="msg" id="n-msg"></p>
-            </div>
-            <div class="card">
-                <h2>Daftar Inspektor</h2>
-                <div id="n-list">
-                    <p>Memuat…</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= BENGKEL ================= -->
-        <div id="tab-workshops" style="display:none">
-            <div class="card">
-                <h2>Tambah Bengkel</h2>
-                <label>Nama Bengkel *</label><input id="w-name">
-                <div class="row">
-                    <div><label>Kota</label><input id="w-city"></div>
-                    <div><label>WhatsApp (62xxx)</label><input id="w-phone"></div>
-                </div>
-                <label>Layanan (pisahkan koma)</label><input id="w-svc" placeholder="Tune Up, Overhaul Kaki-kaki">
-                <button class="btn" onclick="saveWorkshop()">💾 Simpan Bengkel</button>
-                <p class="msg" id="w-msg"></p>
-            </div>
-            <div class="card">
-                <h2>Daftar Bengkel</h2>
-                <div id="w-list">
-                    <p>Memuat…</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= BERITA ================= -->
-        <div id="tab-news" style="display:none">
-            <div class="card">
-                <h2>Tambah Berita / Artikel</h2>
-                <label>Judul Berita *</label><input id="b-title"
-                    placeholder="Harga Mobil Bekas Diprediksi Naik di 2026">
-                <div class="row">
-                    <div><label>Kategori</label><input id="b-category" placeholder="TIPS / BERITA / ANALISIS"></div>
-                    <div><label>Gambar Sampul</label><input id="b-img" type="file" accept="image/*"></div>
-                </div>
-                <label>Ringkasan (tampil di kartu)</label><textarea id="b-excerpt" style="min-height:50px"></textarea>
-                <label>Isi Berita * (pisahkan paragraf dengan enter)</label><textarea id="b-content"
-                    style="min-height:140px"></textarea>
-                <button class="btn" onclick="saveNews()">💾 Simpan Berita</button>
-                <p class="msg" id="b-msg"></p>
-            </div>
-            <div class="card">
-                <h2>Daftar Berita</h2>
-                <div id="b-list">
-                    <p>Memuat…</p>
-                </div>
-            </div>
-        </div>
+      <a href="index.html" class="btn btn-accent btn-sm">← Kembali ke Situs</a>
     </div>
+  </header>
 
-    <script>
-        const sb = window.RAVENMILLE_SUPABASE;
-        if (!sb) document.getElementById('cfg-warn').style.display = 'block';
+  <main class="container-utama halaman-konten">
+    <section class="kartu-utama">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px;">
+        <div>
+          <span class="meta-kicker">Manajemen Basis Data Terpisah</span>
+          <h1 class="judul-halaman" style="margin-top: 6px; font-size: clamp(1.5rem, 2.8vw, 2.1rem);">Input &amp; Kelola Data Supabase</h1>
+          <p class="teks-pengantar" style="margin-top: 8px; font-size: 0.9375rem;">
+            Kelola katalog kendaraan, masalah teknis, profil inspektor, bengkel spesialis, dan artikel berita. Perubahan langsung tersinkronisasi dengan database Supabase Ravenmille.
+          </p>
+        </div>
+      </div>
 
-        function showTab(name, btn) {
-            document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('on'));
-            btn.classList.add('on');
-            ['vehicles', 'issues', 'inspectors', 'workshops', 'news'].forEach(t =>
-                document.getElementById('tab-' + t).style.display = (t === name) ? 'block' : 'none');
-            refreshAll();
-        }
-        function msg(id, text, ok) {
-            const el = document.getElementById(id);
-            el.textContent = text; el.className = 'msg ' + (ok ? 'ok' : 'err');
-            if (ok) setTimeout(() => el.textContent = '', 3000);
-        }
-        const arr = s => s.split(',').map(x => x.trim()).filter(Boolean);
+      <div id="supabase-config-warning" class="status-banner is-danger" style="margin-top: 16px;" hidden>
+        Koneksi SDK Supabase tidak termuat. Pastikan skrip Supabase CDN dan <code>js/supabase-client.js</code> dapat diakses.
+      </div>
 
-        /* ---------- KENDARAAN ---------- */
-        async function saveVehicle() {
-            if (!sb) return;
-            const id = document.getElementById('v-id').value;
-            const file = document.getElementById('v-img').files[0];
-            try {
-                let image_url = undefined;
-                if (file) image_url = await window.ravenmilleUploadImage(file, 'vehicles');
-                const row = {
-                    name: document.getElementById('v-name').value, brand: document.getElementById('v-brand').value,
-                    category: document.getElementById('v-category').value,
-                    price: +document.getElementById('v-price').value || 0, fuel_eff: +document.getElementById('v-fuel').value || 12,
-                    service: +document.getElementById('v-service').value || 0, insurance: +document.getElementById('v-insurance').value || 0,
-                    tax: +document.getElementById('v-tax').value || 0, sort_order: +document.getElementById('v-order').value || 0
-                };
-                if (image_url) row.image_url = image_url;
-                const q = id
-                    ? sb.from('vehicles').update(row).eq('id', id)
-                    : sb.from('vehicles').insert(row);
-                const { error } = await q;
-                if (error) throw error;
-                msg('v-msg', '✅ Kendaraan tersimpan!', true);
-                ['v-id', 'v-name', 'v-brand', 'v-category', 'v-img'].forEach(x => document.getElementById(x).value = '');
-                document.getElementById('v-btn').textContent = '💾 Simpan Kendaraan';
-                loadVehicles();
-            } catch (e) { msg('v-msg', '❌ ' + e.message); }
-        }
-        async function loadVehicles() {
-            if (!sb) return;
-            const { data } = await sb.from('vehicles').select('*').order('sort_order').order('created_at');
-            const list = document.getElementById('v-list');
-            const sel = document.getElementById('i-vehicle');
-            list.innerHTML = ''; sel.innerHTML = '';
-            (data || []).forEach(v => {
-                list.insertAdjacentHTML('beforeend', `<div class="item">
-      ${v.image_url ? `<img src="${v.image_url}">` : ''}
-      <div class="nm">${v.name}<small>Rp ${Number(v.price).toLocaleString('id-ID')} · ${v.fuel_eff} km/l · ${v.brand || ''}</small></div>
-      <button class="del" onclick="delRow('vehicles','${v.id}')">Hapus</button></div>`);
-                sel.insertAdjacentHTML('beforeend', `<option value="${v.id}">${v.name}</option>`);
-            });
-            if (!data || !data.length) list.innerHTML = '<p>Belum ada data. Tambahkan di atas 👆</p>';
-            loadIssues();
-        }
+      <div class="filter-bar" style="margin-top: 20px;" role="tablist" aria-label="Kategori data admin">
+        <button type="button" class="filter-btn is-active" data-admin-tab="kendaraan">Kendaraan</button>
+        <button type="button" class="filter-btn" data-admin-tab="masalah">Masalah Khas</button>
+        <button type="button" class="filter-btn" data-admin-tab="inspektor">Inspektor</button>
+        <button type="button" class="filter-btn" data-admin-tab="bengkel">Bengkel</button>
+        <button type="button" class="filter-btn" data-admin-tab="berita">Berita</button>
+        <button type="button" class="filter-btn" data-admin-tab="konsultasi">Konsultasi Masuk</button>
+      </div>
+    </section>
 
-        /* ---------- MASALAH ---------- */
-        async function saveIssue() {
-            if (!sb) return;
-            const file = document.getElementById('i-img').files[0];
-            try {
-                let image_url = null;
-                if (file) image_url = await window.ravenmilleUploadImage(file, 'issues');
-                const { error } = await sb.from('vehicle_issues').insert({
-                    vehicle_id: document.getElementById('i-vehicle').value,
-                    name: document.getElementById('i-name').value,
-                    km: document.getElementById('i-km').value,
-                    cost: document.getElementById('i-cost').value,
-                    symptom: document.getElementById('i-symptom').value,
-                    solution: document.getElementById('i-solution').value,
-                    image_url
-                });
-                if (error) throw error;
-                msg('i-msg', '✅ Masalah tersimpan!', true);
-                ['i-name', 'i-km', 'i-cost', 'i-symptom', 'i-solution', 'i-img'].forEach(x => document.getElementById(x).value = '');
-                loadIssues();
-            } catch (e) { msg('i-msg', '❌ ' + e.message); }
-        }
-        async function loadIssues() {
-            if (!sb) return;
-            const { data } = await sb.from('vehicle_issues').select('*, vehicles(name)').order('created_at', { ascending: false });
-            const list = document.getElementById('i-list');
-            list.innerHTML = '';
-            (data || []).forEach(i => {
-                list.insertAdjacentHTML('beforeend', `<div class="item">
-      ${i.image_url ? `<img src="${i.image_url}">` : ''}
-      <div class="nm">${i.name}<small>${i.vehicles ? i.vehicles.name : ''} · ${i.km} · ${i.cost}</small></div>
-      <button class="del" onclick="delRow('vehicle_issues','${i.id}')">Hapus</button></div>`);
-            });
-            if (!data || !data.length) list.innerHTML = '<p>Belum ada data.</p>';
-        }
+    <!-- Tab 1: Kendaraan -->
+    <section id="admin-tab-kendaraan" class="grid-2" style="align-items: start;">
+      <div class="kartu-utama">
+        <h2 class="judul-seksi">Tambah / Edit Kendaraan</h2>
+        <input type="hidden" id="kendaraan-id">
 
-        /* ---------- INSPEKTOR & BENGKEL ---------- */
-        async function saveInspector() {
-            if (!sb) return;
-            const { error } = await sb.from('inspectors').insert({
-                name: document.getElementById('n-name').value,
-                city: document.getElementById('n-city').value,
-                phone: document.getElementById('n-phone').value,
-                specialties: arr(document.getElementById('n-spec').value)
-            });
-            msg('n-msg', error ? '❌ ' + error.message : '✅ Inspektor tersimpan!', !error);
-            if (!error) { ['n-name', 'n-city', 'n-phone', 'n-spec'].forEach(x => document.getElementById(x).value = ''); loadInspectors(); }
-        }
-        async function loadInspectors() {
-            if (!sb) return;
-            const { data } = await sb.from('inspectors').select('*').order('created_at', { ascending: false });
-            const list = document.getElementById('n-list'); list.innerHTML = '';
-            (data || []).forEach(r => list.insertAdjacentHTML('beforeend',
-                `<div class="item"><div class="nm">${r.name}<small>${r.city} · WA ${r.phone}</small></div>
-     <button class="del" onclick="delRow('inspectors','${r.id}')">Hapus</button></div>`));
-            if (!data || !data.length) list.innerHTML = '<p>Belum ada data.</p>';
-        }
-        async function saveWorkshop() {
-            if (!sb) return;
-            const { error } = await sb.from('workshops').insert({
-                name: document.getElementById('w-name').value,
-                city: document.getElementById('w-city').value,
-                phone: document.getElementById('w-phone').value,
-                services: arr(document.getElementById('w-svc').value)
-            });
-            msg('w-msg', error ? '❌ ' + error.message : '✅ Bengkel tersimpan!', !error);
-            if (!error) { ['w-name', 'w-city', 'w-phone', 'w-svc'].forEach(x => document.getElementById(x).value = ''); loadWorkshops(); }
-        }
-        async function loadWorkshops() {
-            if (!sb) return;
-            const { data } = await sb.from('workshops').select('*').order('created_at', { ascending: false });
-            const list = document.getElementById('w-list'); list.innerHTML = '';
-            (data || []).forEach(r => list.insertAdjacentHTML('beforeend',
-                `<div class="item"><div class="nm">${r.name}<small>${r.city} · WA ${r.phone}</small></div>
-     <button class="del" onclick="delRow('workshops','${r.id}')">Hapus</button></div>`));
-            if (!data || !data.length) list.innerHTML = '<p>Belum ada data.</p>';
-        }
+        <div class="grid-2" style="margin-top: 18px; gap: 14px;">
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label for="kendaraan-nama" class="form-label">Nama Model Kendaraan *</label>
+            <input type="text" id="kendaraan-nama" class="form-input" placeholder="Contoh: Toyota Avanza 1.5 G CVT">
+          </div>
+          <div class="form-group">
+            <label for="kendaraan-merek" class="form-label">Merek / Pabrikan</label>
+            <input type="text" id="kendaraan-merek" class="form-input" placeholder="Contoh: Toyota">
+          </div>
+          <div class="form-group">
+            <label for="kendaraan-kategori" class="form-label">Kategori Segmen</label>
+            <input type="text" id="kendaraan-kategori" class="form-input" placeholder="Contoh: Low MPV">
+          </div>
+          <div class="form-group">
+            <label for="kendaraan-harga" class="form-label">Harga Referensi (Rp) *</label>
+            <input type="number" id="kendaraan-harga" class="form-input" value="275000000">
+          </div>
+          <div class="form-group">
+            <label for="kendaraan-efisiensi" class="form-label">Konsumsi BBM (km/L) *</label>
+            <input type="number" id="kendaraan-efisiensi" class="form-input" step="0.1" value="13.5">
+          </div>
+          <div class="form-group">
+            <label for="kendaraan-servis" class="form-label">Servis / Tahun (Rp)</label>
+            <input type="number" id="kendaraan-servis" class="form-input" value="3500000">
+          </div>
+          <div class="form-group">
+            <label for="kendaraan-asuransi" class="form-label">Asuransi / Tahun (Rp)</label>
+            <input type="number" id="kendaraan-asuransi" class="form-input" value="4800000">
+          </div>
+          <div class="form-group">
+            <label for="kendaraan-pajak" class="form-label">Pajak PKB / Tahun (Rp)</label>
+            <input type="number" id="kendaraan-pajak" class="form-input" value="4200000">
+          </div>
+          <div class="form-group">
+            <label for="kendaraan-urutan" class="form-label">Urutan Tampil</label>
+            <input type="number" id="kendaraan-urutan" class="form-input" value="0">
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label for="kendaraan-gambar" class="form-label">Gambar Model Kendaraan (Opsional)</label>
+            <input type="file" id="kendaraan-gambar" class="form-input" accept="image/*" style="padding-top: 8px;">
+          </div>
+        </div>
 
+        <div id="kendaraan-status-msg" class="status-banner" style="margin-top: 16px;" hidden></div>
 
-        /* ---------- BERITA ---------- */
-        async function saveNews() {
-            if (!sb) return;
-            const file = document.getElementById('b-img').files[0];
-            try {
-                let image_url = null;
-                if (file) image_url = await window.ravenmilleUploadImage(file, 'news');
-                const { error } = await sb.from('news').insert({
-                    title: document.getElementById('b-title').value,
-                    category: document.getElementById('b-category').value || 'BERITA',
-                    excerpt: document.getElementById('b-excerpt').value,
-                    content: document.getElementById('b-content').value,
-                    image_url
-                });
-                if (error) throw error;
-                msg('b-msg', '✅ Berita tersimpan!', true);
-                ['b-title', 'b-category', 'b-excerpt', 'b-content', 'b-img'].forEach(x => document.getElementById(x).value = '');
-                loadNews();
-            } catch (e) { msg('b-msg', '❌ ' + e.message); }
-        }
-        async function loadNews() {
-            if (!sb) return;
-            const { data } = await sb.from('news').select('*').order('created_at', { ascending: false });
-            const list = document.getElementById('b-list'); list.innerHTML = '';
-            (data || []).forEach(r => list.insertAdjacentHTML('beforeend', `<div class="item">
-    ${r.image_url ? `<img src="${r.image_url}">` : ''}
-    <div class="nm">${r.title}<small>${r.category} · ${new Date(r.created_at).toLocaleDateString('id-ID')}</small></div>
-    <a href="berita-detail.html?id=${r.id}" target="_blank" style="font-size:12px;font-weight:700;color:#162447;">Lihat</a>
-    <button class="del" onclick="delRow('news','${r.id}')">Hapus</button></div>`));
-            if (!data || !data.length) list.innerHTML = '<p>Belum ada berita.</p>';
-        }
-        /* ---------- UMUM ---------- */
-        async function delRow(table, id) {
-            if (!confirm('Hapus data ini?')) return;
-            await sb.from(table).delete().eq('id', id);
-            refreshAll();
-        }
-        function refreshAll() { loadVehicles(); loadInspectors(); loadWorkshops(); loadNews(); }
-        window.addEventListener('DOMContentLoaded', refreshAll);
-    </script>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px;">
+          <button type="button" id="btn-simpan-kendaraan" class="btn btn-primary">Simpan Kendaraan</button>
+          <button type="button" id="btn-batal-kendaraan" class="btn btn-secondary" hidden>Batal Edit</button>
+        </div>
+      </div>
+
+      <div class="kartu-utama">
+        <h2 class="judul-seksi">Daftar Kendaraan Tersimpan</h2>
+        <div id="daftar-kendaraan-admin" style="margin-top: 14px;">Memuat data kendaraan...</div>
+      </div>
+    </section>
+
+    <!-- Tab 2: Masalah Khas -->
+    <section id="admin-tab-masalah" class="grid-2" style="align-items: start;" hidden>
+      <div class="kartu-utama">
+        <h2 class="judul-seksi">Tambah / Edit Masalah Kendaraan</h2>
+        <input type="hidden" id="masalah-id">
+
+        <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 18px;">
+          <div class="form-group">
+            <label for="masalah-kendaraan-id" class="form-label">Pilih Kendaraan Terkait *</label>
+            <select id="masalah-kendaraan-id" class="form-select">
+              <option value="">Memuat daftar kendaraan...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="masalah-nama" class="form-label">Nama Masalah / Komponen *</label>
+            <input type="text" id="masalah-nama" class="form-input" placeholder="Contoh: Bushing Rack Steer Aus">
+          </div>
+          <div class="grid-2" style="gap: 12px;">
+            <div class="form-group">
+              <label for="masalah-km" class="form-label">Titik KM Rawan</label>
+              <input type="text" id="masalah-km" class="form-input" placeholder="Contoh: 40.000 - 70.000 km">
+            </div>
+            <div class="form-group">
+              <label for="masalah-biaya" class="form-label">Estimasi Biaya</label>
+              <input type="text" id="masalah-biaya" class="form-input" placeholder="Contoh: Rp 650.000 - Rp 1.800.000">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="masalah-gejala" class="form-label">Gejala Fisik</label>
+            <textarea id="masalah-gejala" class="form-textarea" placeholder="Jelaskan bunyi atau tanda kerusakan..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="masalah-solusi" class="form-label">Solusi &amp; Pencegahan</label>
+            <textarea id="masalah-solusi" class="form-textarea" placeholder="Jelaskan langkah perbaikan dan pencegahannya..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="masalah-gambar" class="form-label">Gambar Komponen (Opsional)</label>
+            <input type="file" id="masalah-gambar" class="form-input" accept="image/*" style="padding-top: 8px;">
+          </div>
+        </div>
+
+        <div id="masalah-status-msg" class="status-banner" style="margin-top: 16px;" hidden></div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px;">
+          <button type="button" id="btn-simpan-masalah" class="btn btn-primary">Simpan Masalah</button>
+          <button type="button" id="btn-batal-masalah" class="btn btn-secondary" hidden>Batal Edit</button>
+        </div>
+      </div>
+
+      <div class="kartu-utama">
+        <h2 class="judul-seksi">Daftar Masalah Tersimpan</h2>
+        <div id="daftar-masalah-admin" style="margin-top: 14px;">Memuat data masalah...</div>
+      </div>
+    </section>
+
+    <!-- Tab 3: Inspektor -->
+    <section id="admin-tab-inspektor" class="grid-2" style="align-items: start;" hidden>
+      <div class="kartu-utama">
+        <h2 class="judul-seksi">Tambah / Edit Inspektor</h2>
+        <input type="hidden" id="inspektor-id">
+
+        <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 18px;">
+          <div class="form-group">
+            <label for="inspektor-nama" class="form-label">Nama Lengkap Inspektor *</label>
+            <input type="text" id="inspektor-nama" class="form-input" placeholder="Contoh: Hendro Wibowo, S.T.">
+          </div>
+          <div class="grid-2" style="gap: 12px;">
+            <div class="form-group">
+              <label for="inspektor-kota" class="form-label">Kota Domisili</label>
+              <input type="text" id="inspektor-kota" class="form-input" placeholder="Contoh: Semarang">
+            </div>
+            <div class="form-group">
+              <label for="inspektor-telepon" class="form-label">Nomor WhatsApp (62...)</label>
+              <input type="text" id="inspektor-telepon" class="form-input" placeholder="6281234567890">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inspektor-keahlian" class="form-label">Keahlian (Pisahkan dengan koma)</label>
+            <textarea id="inspektor-keahlian" class="form-textarea" placeholder="CVT, Kelistrikan ECU, Sasis &amp; Bekas Banjir"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="inspektor-gambar" class="form-label">Foto Profil Inspektor (Opsional)</label>
+            <input type="file" id="inspektor-gambar" class="form-input" accept="image/*" style="padding-top: 8px;">
+          </div>
+        </div>
+
+        <div id="inspektor-status-msg" class="status-banner" style="margin-top: 16px;" hidden></div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px;">
+          <button type="button" id="btn-simpan-inspektor" class="btn btn-primary">Simpan Inspektor</button>
+          <button type="button" id="btn-batal-inspektor" class="btn btn-secondary" hidden>Batal Edit</button>
+        </div>
+      </div>
+
+      <div class="kartu-utama">
+        <h2 class="judul-seksi">Daftar Inspektor Terdaftar</h2>
+        <div id="daftar-inspektor-admin" style="margin-top: 14px;">Memuat data inspektor...</div>
+      </div>
+    </section>
+
+    <!-- Tab 4: Bengkel -->
+    <section id="admin-tab-bengkel" class="grid-2" style="align-items: start;" hidden>
+      <div class="kartu-utama">
+        <h2 class="judul-seksi">Tambah / Edit Bengkel</h2>
+        <input type="hidden" id="bengkel-id">
+
+        <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 18px;">
+          <div class="form-group">
+            <label for="bengkel-nama" class="form-label">Nama Bengkel Spesialis *</label>
+            <input type="text" id="bengkel-nama" class="form-input" placeholder="Contoh: Karya Prima Matic Jakarta">
+          </div>
+          <div class="grid-2" style="gap: 12px;">
+            <div class="form-group">
+              <label for="bengkel-kota" class="form-label">Kota</label>
+              <input type="text" id="bengkel-kota" class="form-input" placeholder="Contoh: Jakarta">
+            </div>
+            <div class="form-group">
+              <label for="bengkel-telepon" class="form-label">Nomor WhatsApp (62...)</label>
+              <input type="text" id="bengkel-telepon" class="form-input" placeholder="6281234567890">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="bengkel-layanan" class="form-label">Layanan Unggulan (Pisahkan dengan koma)</label>
+            <textarea id="bengkel-layanan" class="form-textarea" placeholder="Tune Up, Overhaul Kaki-kaki, Overhaul CVT"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="bengkel-gambar" class="form-label">Foto Profil / Logo Bengkel (Opsional)</label>
+            <input type="file" id="bengkel-gambar" class="form-input" accept="image/*" style="padding-top: 8px;">
+          </div>
+        </div>
+
+        <div id="bengkel-status-msg" class="status-banner" style="margin-top: 16px;" hidden></div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px;">
+          <button type="button" id="btn-simpan-bengkel" class="btn btn-primary">Simpan Bengkel</button>
+          <button type="button" id="btn-batal-bengkel" class="btn btn-secondary" hidden>Batal Edit</button>
+        </div>
+      </div>
+
+      <div class="kartu-utama">
+        <h2 class="judul-seksi">Daftar Bengkel Terdaftar</h2>
+        <div id="daftar-bengkel-admin" style="margin-top: 14px;">Memuat data bengkel...</div>
+      </div>
+    </section>
+
+    <!-- Tab 5: Berita -->
+    <section id="admin-tab-berita" class="grid-2" style="align-items: start;" hidden>
+      <div class="kartu-utama">
+        <h2 class="judul-seksi">Tambah / Edit Berita &amp; Artikel</h2>
+        <input type="hidden" id="berita-id">
+
+        <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 18px;">
+          <div class="form-group">
+            <label for="berita-judul" class="form-label">Judul Berita *</label>
+            <input type="text" id="berita-judul" class="form-input" placeholder="Contoh: Harga Mobil Bekas Diprediksi Stabil di 2026">
+          </div>
+          <div class="grid-2" style="gap: 12px;">
+            <div class="form-group">
+              <label for="berita-kategori" class="form-label">Kategori</label>
+              <input type="text" id="berita-kategori" class="form-input" placeholder="TIPS / BERITA / ANALISIS">
+            </div>
+            <div class="form-group">
+              <label for="berita-gambar" class="form-label">Gambar Sampul (Opsional)</label>
+              <input type="file" id="berita-gambar" class="form-input" accept="image/*" style="padding-top: 8px;">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="berita-ringkasan" class="form-label">Ringkasan (Tampil di Kartu)</label>
+            <textarea id="berita-ringkasan" class="form-textarea" placeholder="Ringkasan satu atau dua kalimat untuk kartu berita..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="berita-isi" class="form-label">Isi Berita * (Pisahkan Paragraf dengan Enter)</label>
+            <textarea id="berita-isi" class="form-textarea" style="min-height: 160px;" placeholder="Tuliskan paragraf lengkap artikel..."></textarea>
+          </div>
+        </div>
+
+        <div id="berita-status-msg" class="status-banner" style="margin-top: 16px;" hidden></div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px;">
+          <button type="button" id="btn-simpan-berita" class="btn btn-primary">Simpan Berita</button>
+          <button type="button" id="btn-batal-berita" class="btn btn-secondary" hidden>Batal Edit</button>
+        </div>
+      </div>
+
+      <div class="kartu-utama">
+        <h2 class="judul-seksi">Daftar Artikel Tersimpan</h2>
+        <div id="daftar-berita-admin" style="margin-top: 14px;">Memuat data berita...</div>
+      </div>
+    </section>
+
+    <!-- Tab 6: Konsultasi Masuk -->
+    <section id="admin-tab-konsultasi" class="kartu-utama" hidden>
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 12px;">
+        <div>
+          <h2 class="judul-seksi">Permintaan Konsultasi &amp; Pencarian Kendaraan</h2>
+          <p style="font-size: 0.875rem; color: #64748b; margin-top: 4px;">
+            Data pengunjung yang mengisi formulir di halaman Beranda tersimpan ke tabel <code>consultations</code> Supabase.
+          </p>
+        </div>
+        <button type="button" id="btn-muat-ulang-admin" class="btn btn-secondary btn-sm">Muat Ulang Data</button>
+      </div>
+      <div id="daftar-konsultasi-admin" style="margin-top: 16px;">Memuat data konsultasi...</div>
+    </section>
+
+    <!-- Status Koneksi & Panduan Arsitektur SQL Supabase -->
+    <section class="kartu-utama">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;">
+        <div>
+          <span class="meta-kicker">Diagnostik Koneksi Database</span>
+          <h2 class="judul-seksi" style="font-size: 1.15rem; margin-top: 4px;">Status Kesiapan Tabel Supabase</h2>
+        </div>
+        <button type="button" id="btn-cek-supabase" class="btn btn-secondary btn-sm">Cek Ulang Koneksi</button>
+      </div>
+      <div id="supabase-schema-status" class="grid-4" style="margin-top: 16px; gap: 12px;"></div>
+
+      <details style="margin-top: 20px; border-top: 1px solid #e2e8f0; padding-top: 16px;">
+        <summary style="font-weight: 800; color: #162447; cursor: pointer;">Lihat &amp; Salin Skema SQL Lengkap Arsitektur Supabase Ravenmille</summary>
+        <p style="margin-top: 10px; font-size: 0.875rem; color: #475569; line-height: 1.6;">
+          Salin skrip SQL di bawah dan jalankan pada <strong>SQL Editor</strong> di dashboard Supabase Anda untuk membuat seluruh tabel, kebijakan akses (RLS), serta kolom foto profil yang terhubung dengan kode aplikasi ini:
+        </p>
+        <div style="margin-top: 10px; display: flex; justify-content: flex-end;">
+          <button type="button" id="btn-salin-sql-supabase" class="btn btn-accent btn-sm">Salin Skema SQL</button>
+        </div>
+        <pre id="supabase-sql-schema" style="margin-top: 10px; padding: 14px; background: #162447; color: #f8fafc; border-radius: 10px; overflow-x: auto; font-size: 0.78rem; line-height: 1.55;">-- =========================================================
+-- Ravenmille – Skema Database & Storage Supabase Lengkap
+-- =========================================================
+create extension if not exists "pgcrypto";
+
+-- 1. Tabel Katalog Kendaraan
+create table if not exists public.vehicles (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  brand text default '',
+  category text default 'Katalog',
+  price numeric not null default 0,
+  fuel_eff numeric not null default 12,
+  fuel_price numeric default 12950,
+  km_year integer default 15000,
+  service numeric default 0,
+  insurance numeric default 0,
+  tax numeric default 0,
+  image_url text,
+  sort_order integer default 0,
+  is_active boolean default true,
+  created_at timestamptz default now()
+);
+
+-- 2. Tabel Masalah Khas Kendaraan
+create table if not exists public.vehicle_issues (
+  id uuid primary key default gen_random_uuid(),
+  vehicle_id uuid references public.vehicles(id) on delete cascade,
+  name text not null,
+  km text default '',
+  cost text default '',
+  symptom text default '',
+  solution text default '',
+  image_url text,
+  created_at timestamptz default now()
+);
+
+-- 3. Tabel Inspektor Independen (+ Foto Profil)
+create table if not exists public.inspectors (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  title text default 'Inspektor Independen Terdaftar',
+  city text default '',
+  province text default '',
+  phone text default '',
+  specialties text[] default '{}',
+  tools text default '',
+  price1 text default 'Konsultasi via WA',
+  price2 text default '',
+  availability text default 'Sesuai Janji',
+  rating numeric,
+  inspections integer default 0,
+  image_url text,
+  created_at timestamptz default now()
+);
+alter table public.inspectors add column if not exists image_url text;
+
+-- 4. Tabel Bengkel Spesialis (+ Foto Profil)
+create table if not exists public.workshops (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  category text default 'Bengkel Spesialis',
+  city text default '',
+  address text default '',
+  hours text default '',
+  phone text default '',
+  maps text default '',
+  warranty text default '',
+  services text[] default '{}',
+  image_url text,
+  created_at timestamptz default now()
+);
+alter table public.workshops add column if not exists image_url text;
+
+-- 5. Tabel Berita & Artikel
+create table if not exists public.news (
+  id uuid primary key default gen_random_uuid(),
+  title text not null,
+  category text default 'BERITA',
+  excerpt text default '',
+  content text not null,
+  image_url text,
+  is_active boolean default true,
+  created_at timestamptz default now()
+);
+
+-- 6. Tabel Konsultasi Pengunjung (Beranda)
+create table if not exists public.consultations (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  email text not null,
+  vehicle_interest text not null,
+  goal text default 'beli-bekas',
+  created_at timestamptz default now()
+);
+
+-- 7. Tabel Log Simulasi TCO, Risiko, & Komparasi (Opsional / Analitik)
+create table if not exists public.tco_simulations (
+  id uuid primary key default gen_random_uuid(),
+  report_code text not null,
+  vehicle_name text not null,
+  price numeric default 0,
+  period_years integer default 3,
+  payment_method text default 'kredit',
+  km_per_year integer default 15000,
+  total_tco numeric default 0,
+  monthly_cost numeric default 0,
+  created_at timestamptz default now()
+);
+
+create table if not exists public.risk_assessments (
+  id uuid primary key default gen_random_uuid(),
+  vehicle_name text not null,
+  vehicle_year integer,
+  odometer_km integer,
+  transmission text,
+  body_type text,
+  service_history text,
+  incident_history text,
+  risk_score integer,
+  risk_level text,
+  created_at timestamptz default now()
+);
+
+create table if not exists public.comparison_logs (
+  id uuid primary key default gen_random_uuid(),
+  period_years integer default 3,
+  vehicle_a_name text not null,
+  vehicle_a_price numeric default 0,
+  vehicle_b_name text not null,
+  vehicle_b_price numeric default 0,
+  created_at timestamptz default now()
+);
+
+-- 8. Aktifkan RLS & Kebijakan Akses Publik (Sesuaikan untuk produksi)
+alter table public.vehicles enable row level security;
+alter table public.vehicle_issues enable row level security;
+alter table public.inspectors enable row level security;
+alter table public.workshops enable row level security;
+alter table public.news enable row level security;
+alter table public.consultations enable row level security;
+alter table public.tco_simulations enable row level security;
+alter table public.risk_assessments enable row level security;
+alter table public.comparison_logs enable row level security;
+
+create policy "public_all_vehicles" on public.vehicles for all using (true) with check (true);
+create policy "public_all_issues" on public.vehicle_issues for all using (true) with check (true);
+create policy "public_all_inspectors" on public.inspectors for all using (true) with check (true);
+create policy "public_all_workshops" on public.workshops for all using (true) with check (true);
+create policy "public_all_news" on public.news for all using (true) with check (true);
+create policy "public_insert_select_consultations" on public.consultations for all using (true) with check (true);
+create policy "public_insert_tco_logs" on public.tco_simulations for insert with check (true);
+create policy "public_insert_risk_logs" on public.risk_assessments for insert with check (true);
+create policy "public_insert_comparison_logs" on public.comparison_logs for insert with check (true);
+
+-- 9. Storage Bucket Gambar ('vehicle-images')
+insert into storage.buckets (id, name, public)
+values ('vehicle-images', 'vehicle-images', true)
+on conflict (id) do nothing;
+
+create policy "public_read_vehicle_images" on storage.objects
+  for select using (bucket_id = 'vehicle-images');
+create policy "public_upload_vehicle_images" on storage.objects
+  for insert with check (bucket_id = 'vehicle-images');</pre>
+      </details>
+    </section>
+  </main>
+
+  <script src="js/supabase-client.js"></script>
+  <script src="js/common-ui.js"></script>
+  <script src="js/admin-panel.js"></script>
 </body>
 
 </html>

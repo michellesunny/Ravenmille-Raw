@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Katalog Masalah Khas Kendaraan &amp; Estimasi Biaya | Ravenmille</title>
+  <meta name="description" content="Pelajari penyakit umum mobil populer di Indonesia seperti rack steer, transmisi CVT, fuel pump, dan kompresor AC lengkap dengan titik KM rawan dan estimasi biaya perbaikannya.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Ravenmille Indonesia">
+  <meta property="og:locale" content="id_ID">
+  <meta property="og:title" content="Katalog Masalah Khas Kendaraan &amp; Estimasi Biaya | Ravenmille">
+  <meta property="og:description" content="Daftar gejala kerusakan umum, titik kilometer rawan, solusi pencegahan, dan estimasi biaya bengkel kendaraan di Indonesia.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/aistudio/41e99c64-bb56-4a49-b805-25ba389725f0_removalai_preview_e589ba91.png">
+  <link rel="stylesheet" href="css/ravenmille-styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body class="halftone-bg">
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="index.html" class="brand-wordmark" aria-label="Ravenmille - Beranda">
+        <img src="assets/aistudio/41e99c64-bb56-4a49-b805-25ba389725f0_removalai_preview_e589ba91.png" alt="Logo Ravenmille - Drive With Confidence" class="brand-logo-img">
+      </a>
+
+      <nav class="nav-utama" aria-label="Navigasi utama">
+        <a href="kalkulator-tco.html" class="nav-link">Kalkulator</a>
+        <a href="analisis-risiko.html" class="nav-link">Risiko</a>
+        <a href="komparasi-kendaraan.html" class="nav-link">Komparasi</a>
+        <a href="masalah-kendaraan.html" class="nav-link is-active">Masalah</a>
+        <a href="bengkel-inspektor.html" class="nav-link">Bengkel</a>
+        <a href="berita-otomotif.html" class="nav-link">Berita</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="analisis-risiko.html" class="btn btn-primary btn-sm header-cta-desktop">Cek Risiko Unit</a>
+        <button type="button" id="mobile-menu-toggle" class="mobile-menu-btn" aria-expanded="false" aria-controls="mobile-nav-drawer" aria-label="Buka menu navigasi">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-nav-drawer" class="mobile-drawer">
+      <nav class="mobile-drawer-links" aria-label="Navigasi seluler">
+        <a href="kalkulator-tco.html" class="nav-link">Kalkulator TCO</a>
+        <a href="analisis-risiko.html" class="nav-link">Analisis Risiko Unit</a>
+        <a href="komparasi-kendaraan.html" class="nav-link">Komparasi Mobil</a>
+        <a href="masalah-kendaraan.html" class="nav-link is-active">Katalog Masalah</a>
+        <a href="bengkel-inspektor.html" class="nav-link">Bengkel &amp; Inspektor</a>
+        <a href="berita-otomotif.html" class="nav-link">Berita Otomotif</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container-utama halaman-konten">
+    <section class="kartu-utama">
+      <span class="meta-kicker">Basis Data Teknis Kendaraan</span>
+      <h1 class="judul-halaman" style="margin-top: 6px;">Katalog Masalah Khas &amp; Estimasi Perbaikan</h1>
+      <p class="teks-pengantar" style="margin-top: 10px;">
+        Kenali titik kerusakan paling sering muncul pada model mobil populer di Indonesia sebelum membeli unit bekas, lengkap dengan gejala fisik, jadwal kilometer rawan, serta kisaran biaya perbaikan bengkel spesialis.
+      </p>
+
+      <div class="grid-2" style="margin-top: 22px; gap: 16px;">
+        <div class="form-group">
+          <label for="cari-masalah-kendaraan" class="form-label">Cari Gejala, Model, atau Komponen</label>
+          <input type="search" id="cari-masalah-kendaraan" class="form-input" placeholder="Contoh: rack steer, CVT bergetar, fuel pump, AC...">
+        </div>
+        <div class="form-group">
+          <label for="filter-model-masalah" class="form-label">Filter Model Kendaraan</label>
+          <select id="filter-model-masalah" class="form-select">
+            <option value="Semua Model">Semua Model Kendaraan</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filter-bar" style="margin-top: 18px;" role="group" aria-label="Filter kategori komponen">
+        <button type="button" class="filter-btn is-active" data-kategori-masalah="Semua Kategori">Semua Kategori</button>
+        <button type="button" class="filter-btn" data-kategori-masalah="Transmisi &amp; Kopling">Transmisi &amp; Kopling</button>
+        <button type="button" class="filter-btn" data-kategori-masalah="Kaki-kaki &amp; Kemudi">Kaki-kaki &amp; Kemudi</button>
+        <button type="button" class="filter-btn" data-kategori-masalah="Mesin &amp; Pendingin">Mesin &amp; Pendingin</button>
+        <button type="button" class="filter-btn" data-kategori-masalah="Kelistrikan &amp; AC">Kelistrikan &amp; AC</button>
+      </div>
+
+      <p id="masalah-jumlah-hasil" class="meta-row tabular-nums" style="margin-top: 16px;">Memuat katalog masalah kendaraan...</p>
+    </section>
+
+    <section aria-label="Daftar masalah kendaraan">
+      <div id="daftar-masalah-grid" class="grid-2"></div>
+    </section>
+
+    <section class="kartu-gelap" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;">
+      <div style="display: flex; flex-direction: column; gap: 8px; max-width: 60ch;">
+        <span class="meta-kicker">Langkah Pencegahan</span>
+        <h2 class="judul-seksi" style="color: #ffffff;">Butuh Pemeriksaan Menyeluruh Sebelum Membayar DP?</h2>
+        <p style="color: #cbd5e1; font-size: 0.9375rem; line-height: 1.6;">
+          Gabungkan temuan katalog ini dengan alat Analisis Risiko Unit atau pesan jasa inspektor independen untuk menguji kondisi kaki-kaki, transmisi, dan kelistrikan secara langsung.
+        </p>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+        <a href="analisis-risiko.html" class="btn btn-accent">Hitung Skor Risiko</a>
+        <a href="bengkel-inspektor.html" class="btn btn-secondary">Sewa Inspektor</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container-utama">
+      <div class="footer-grid">
+        <div class="footer-brand-col">
+          <div class="brand-wordmark brand-logo-plate">
+            <img src="assets/aistudio/41e99c64-bb56-4a49-b805-25ba389725f0_removalai_preview_e589ba91.png" alt="Logo Ravenmille - Drive With Confidence" class="brand-logo-img">
+          </div>
+          <p class="footer-desc">
+            Platform independen untuk menghitung biaya riil kepemilikan kendaraan dan mengevaluasi risiko mobil bekas sebelum Anda membeli.
+          </p>
+        </div>
+
+        <nav aria-label="Fitur">
+          <h4 class="footer-heading">Fitur Utama</h4>
+          <ul class="footer-links">
+            <li><a class="footer-link" href="kalkulator-tco.html">Kalkulator TCO</a></li>
+            <li><a class="footer-link" href="analisis-risiko.html">Analisis Risiko Unit</a></li>
+            <li><a class="footer-link" href="komparasi-kendaraan.html">Komparasi Mobil</a></li>
+            <li><a class="footer-link" href="masalah-kendaraan.html">Katalog Masalah Khas</a></li>
+            <li><a class="footer-link" href="bengkel-inspektor.html">Bengkel &amp; Inspektor</a></li>
+          </ul>
+        </nav>
+
+        <nav aria-label="Navigasi">
+          <h4 class="footer-heading">Informasi</h4>
+          <ul class="footer-links">
+            <li><a class="footer-link" href="berita-otomotif.html">Berita Otomotif</a></li>
+            <li><a class="footer-link" href="index.html#tentang">Tentang Kami</a></li>
+            <li><a class="footer-link" href="index.html#faq">FAQ</a></li>
+            <li><a class="footer-link" href="admin.html">Kelola Data</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Ravenmille Indonesia. Independent Automotive Financial &amp; Risk Intelligence.</p>
+        <a href="#" class="footer-link" style="color: #fbbf24; font-weight: 800;">Kembali ke atas ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/supabase-client.js"></script>
+  <script src="js/common-ui.js"></script>
+  <script src="js/masalah-kendaraan.js"></script>
+</body>
+
+</html>
