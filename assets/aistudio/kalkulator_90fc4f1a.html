@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kalkulator TCO – Ravenmille</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,800;0,900;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="ravenmille.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <base target="_blank">
+
+  <style>
+    /* ===== Wizard 3 langkah ===== */
+    .wz-steps {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      background: #fff;
+      border: 2px solid #162447;
+      border-radius: 16px;
+      box-shadow: 4px 4px 0 #162447;
+      padding: 16px 22px
+    }
+
+    .wz-step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: none;
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+      text-align: left;
+      font: inherit;
+      color: #94a3b8;
+      flex: none
+    }
+
+    .wz-step:disabled {
+      cursor: not-allowed
+    }
+
+    .wz-dot {
+      flex: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid #cbd5e1;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: .8rem;
+      background: #fff;
+      color: #94a3b8;
+      transition: all .35s
+    }
+
+    .wz-txt small {
+      display: block;
+      font-size: .62rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #64748b
+    }
+
+    .wz-txt b {
+      display: block;
+      font-size: .85rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #94a3b8;
+      transition: color .3s
+    }
+
+    .wz-step.is-active .wz-dot {
+      background: #162447;
+      border-color: #162447;
+      color: #fff
+    }
+
+    .wz-step.is-active .wz-txt b,
+    .wz-step.is-done .wz-txt b {
+      color: #1e293b
+    }
+
+    .wz-step.is-done .wz-dot {
+      background: #3fae7a;
+      border-color: #3fae7a;
+      color: #fff
+    }
+
+    .wz-line {
+      flex: 1;
+      height: 2px;
+      border-radius: 2px;
+      background: #cbd5e1;
+      position: relative;
+      overflow: hidden;
+      min-width: 16px
+    }
+
+    .wz-line i {
+      position: absolute;
+      inset: 0;
+      background: #162447;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .6s cubic-bezier(.22, 1, .36, 1)
+    }
+
+    .wz-line.on i {
+      transform: scaleX(1)
+    }
+
+    .wz-panel[hidden] {
+      display: none !important
+    }
+
+    .wz-panel.enter {
+      animation: wzIn .5s cubic-bezier(.22, 1, .36, 1)
+    }
+
+    @keyframes wzIn {
+      from {
+        opacity: 0;
+        transform: translateY(16px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    .wz-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 22px;
+      border-radius: 12px;
+      border: 2px solid #162447;
+      background: #fff;
+      color: #162447;
+      font: inherit;
+      font-weight: 900;
+      font-size: .8rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      cursor: pointer;
+      box-shadow: 3px 3px 0 #162447;
+      transition: transform .15s
+    }
+
+    .wz-btn:hover {
+      transform: translateY(-2px)
+    }
+
+    .wz-btn.primary {
+      background: #fbbf24
+    }
+
+    .wz-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center
+    }
+
+    .pbtn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 2px solid #162447;
+      background: #fff;
+      color: #162447;
+      font: inherit;
+      font-weight: 900;
+      font-size: .8rem;
+      text-transform: uppercase;
+      cursor: pointer
+    }
+
+    .pbtn.is-on {
+      background: #162447;
+      color: #fff;
+      box-shadow: 2px 2px 0 #94A3B8
+    }
+
+    /* Langkah 1: carousel kendaraan */
+    .wz-tag {
+      display: inline-block;
+      padding: 5px 12px;
+      border: 2px solid #162447;
+      border-radius: 99px;
+      font-size: .7rem;
+      font-weight: 900;
+      letter-spacing: .06em;
+      text-transform: uppercase
+    }
+
+    .rail-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 20px;
+      margin-top: 20px;
+      border-top: 1.5px solid #e2e8f0
+    }
+
+    .rail-nav {
+      display: flex;
+      gap: 8px
+    }
+
+    .rail-nav button {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 2px solid #162447;
+      background: #fff;
+      font-weight: 900;
+      cursor: pointer
+    }
+
+    .rail {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding: 14px 6px 18px;
+      scrollbar-width: thin
+    }
+
+    .vc {
+      flex: 0 0 236px;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      border: 2px solid #162447;
+      border-radius: 14px;
+      background: #FAF8F2;
+      box-shadow: 3px 3px 0 #162447;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s
+    }
+
+    .vc:hover {
+      transform: translateY(-4px);
+      box-shadow: 5px 7px 0 #162447
+    }
+
+    .vc.is-sel {
+      outline: 3px solid #f59e0b;
+      outline-offset: 2px
+    }
+
+    .vc-img {
+      position: relative;
+      height: 150px;
+      background: #e2e8f0;
+      border-bottom: 2px solid #162447
+    }
+
+    .vc-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block
+    }
+
+    .vc-ph {
+      height: 100%;
+      display: grid;
+      place-items: center;
+      font-size: 2.5rem
+    }
+
+    .vc-tag,
+    .vc-eff {
+      position: absolute;
+      font-size: .62rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      border-radius: 6px;
+      padding: 3px 8px
+    }
+
+    .vc-tag {
+      top: 10px;
+      left: 10px;
+      background: #fff;
+      border: 1.5px solid #162447;
+      color: #162447
+    }
+
+    .vc-eff {
+      bottom: 10px;
+      right: 10px;
+      background: #162447;
+      color: #fff
+    }
+
+    .vc-body {
+      padding: 14px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1
+    }
+
+    .vc-body h3 {
+      font-weight: 900;
+      font-size: .95rem;
+      color: #162447;
+      text-transform: uppercase;
+      line-height: 1.25
+    }
+
+    .vc-price {
+      font-weight: 800;
+      font-size: .85rem;
+      color: #475569
+    }
+
+    .vc-btn {
+      margin-top: auto;
+      padding: 9px;
+      border-radius: 9px;
+      border: 2px solid #162447;
+      background: #162447;
+      color: #fff;
+      font: inherit;
+      font-weight: 900;
+      font-size: .72rem;
+      text-transform: uppercase;
+      cursor: pointer
+    }
+
+    .vc-custom {
+      background: #EEF2FF;
+      justify-content: space-between;
+      padding: 20px
+    }
+
+    .vc-custom .plus {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: #162447;
+      color: #fbbf24;
+      display: grid;
+      place-items: center;
+      font-size: 1.3rem;
+      font-weight: 900;
+      margin-bottom: 14px
+    }
+
+    .vc-custom p {
+      font-size: .78rem;
+      color: #475569;
+      line-height: 1.5;
+      margin: 6px 0 16px
+    }
+
+    .vc-custom .vc-btn {
+      background: #fff;
+      color: #162447
+    }
+
+    .wz-note {
+      margin-top: 20px;
+      border: 2px solid #162447;
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 3px 3px 0 #162447;
+      padding: 14px 18px;
+      font-size: .8rem;
+      line-height: 1.6;
+      color: #334155
+    }
+
+    @media (max-width:640px) {
+      .wz-steps {
+        gap: 8px;
+        padding: 14px 12px
+      }
+
+      .wz-txt small {
+        display: none
+      }
+
+      .wz-txt b {
+        font-size: .6rem
+      }
+
+      .wz-step {
+        gap: 6px
+      }
+
+      .wz-dot {
+        width: 26px;
+        height: 26px
+      }
+    }
+
+    /* ===== Laporan (langkah 3) ===== */
+    .rp {
+      display: flex;
+      flex-direction: column;
+      gap: 20px
+    }
+
+    .rp-card {
+      background: #fff;
+      border: 2px solid #162447;
+      border-radius: 16px;
+      box-shadow: 4px 4px 0 #162447;
+      padding: 22px
+    }
+
+    .rp-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      font-size: .65rem;
+      font-weight: 800;
+      color: #475569
+    }
+
+    .rp-title {
+      font-size: clamp(1.4rem, 3.4vw, 2.2rem);
+      font-weight: 900;
+      font-style: italic;
+      color: #162447;
+      text-transform: uppercase;
+      margin: 10px 0 4px;
+      line-height: 1.1
+    }
+
+    .rp-sub {
+      font-size: .8rem;
+      color: #334155
+    }
+
+    .rp-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 14px 0
+    }
+
+    .rp-chips span {
+      border: 1.5px solid #162447;
+      border-radius: 8px;
+      padding: 5px 10px;
+      font-size: .68rem;
+      font-weight: 800;
+      color: #162447
+    }
+
+    .rp-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 16px;
+      border-top: 1.5px solid #e2e8f0;
+      margin-bottom: 18px
+    }
+
+    .rp-actions>div {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center
+    }
+
+    .wz-btn.sm {
+      padding: 8px 14px;
+      font-size: .68rem;
+      box-shadow: 2px 2px 0 #162447
+    }
+
+    .rp-kpis {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 14px
+    }
+
+    .rp-hero {
+      background: #162447;
+      color: #fff;
+      border-radius: 14px;
+      padding: 20px;
+      border: 2px solid #0F1D38;
+      box-shadow: 3px 3px 0 #94A3B8;
+      display: flex;
+      flex-direction: column;
+      gap: 8px
+    }
+
+    .rp-hero small {
+      font-size: .65rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #fbbf24
+    }
+
+    .rp-hero b {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 900
+    }
+
+    .rp-hero p {
+      font-size: .72rem;
+      color: #cbd5e1;
+      line-height: 1.5
+    }
+
+    .rp-hero div {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      font-size: .7rem;
+      font-weight: 800;
+      color: #fbbf24;
+      border-top: 1px solid rgba(255, 255, 255, .2);
+      padding-top: 10px
+    }
+
+    .rp-k {
+      border: 2px solid #162447;
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      background: #FAF8F2
+    }
+
+    .rp-k small {
+      font-size: .62rem;
+      font-weight: 900;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: #64748b
+    }
+
+    .rp-k b {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: #162447
+    }
+
+    .rp-k em {
+      font-style: normal;
+      font-size: .7rem;
+      color: #475569;
+      font-weight: 600;
+      margin-top: auto
+    }
+
+    .rp-two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px
+    }
+
+    .rp-h {
+      font-size: .8rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #162447
+    }
+
+    .rp-p {
+      font-size: .7rem;
+      color: #64748b;
+      margin: 2px 0 14px
+    }
+
+    .rp-comp {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      flex-wrap: wrap
+    }
+
+    .rp-comp svg {
+      width: 150px;
+      flex: none
+    }
+
+    .rp-leg {
+      display: grid;
+      gap: 8px;
+      font-size: .72rem;
+      flex: 1;
+      min-width: 200px
+    }
+
+    .rp-leg div {
+      display: grid;
+      grid-template-columns: 12px 1fr auto auto;
+      gap: 8px;
+      align-items: center;
+      color: #334155
+    }
+
+    .rp-leg i {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%
+    }
+
+    .rp-leg b {
+      color: #162447
+    }
+
+    .rp-bars svg {
+      width: 100%;
+      height: auto
+    }
+
+    .rp-bleg {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 14px;
+      justify-content: center;
+      font-size: .65rem;
+      color: #475569;
+      margin-top: 8px
+    }
+
+    .rp-bleg i {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 5px
+    }
+
+    .rp-tw {
+      overflow-x: auto
+    }
+
+    .rp-t {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .74rem;
+      min-width: 760px
+    }
+
+    .rp-t th {
+      background: #162447;
+      color: #fff;
+      font-weight: 900;
+      font-size: .62rem;
+      text-transform: uppercase;
+      padding: 10px 8px;
+      text-align: right
+    }
+
+    .rp-t th:first-child,
+    .rp-t td:first-child {
+      text-align: left
+    }
+
+    .rp-t td {
+      padding: 11px 8px;
+      text-align: right;
+      border-bottom: 1px solid #e2e8f0;
+      color: #334155
+    }
+
+    .rp-t td:first-child {
+      font-weight: 900;
+      color: #162447
+    }
+
+    .rp-t tr.tot td {
+      font-weight: 900;
+      color: #162447;
+      border-top: 2px solid #162447;
+      background: #FAF8F2
+    }
+
+    .rp-t td.hl {
+      background: #e8f0ff;
+      font-weight: 900;
+      color: #162447
+    }
+
+    .rp-basis {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 12px
+    }
+
+    .rp-basis div {
+      border: 1.5px solid #162447;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: .72rem;
+      line-height: 1.55;
+      color: #475569
+    }
+
+    .rp-basis b {
+      display: block;
+      color: #162447;
+      text-transform: uppercase;
+      font-size: .68rem;
+      margin-bottom: 4px
+    }
+
+    @media (max-width:900px) {
+      .rp-kpis {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .rp-hero {
+        grid-column: 1/-1
+      }
+
+      .rp-two,
+      .rp-basis {
+        grid-template-columns: 1fr
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+
+      .wz-panel.enter,
+      .wz-line i {
+        animation: none;
+        transition: none
+      }
+    }
+
+    @media print {
+
+      header,
+      .wz-steps,
+      .wz-actions,
+      .rp-actions,
+      #panel-1,
+      #panel-2 {
+        display: none !important
+      }
+
+      #panel-3 {
+        display: block !important
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="ravenmille-calc min-h-screen bg-[#FDFBF7] text-slate-900 pb-16 halftone-bg">
+
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-[#FDFBF7]/95 backdrop-blur-md border-b-2 border-[#162447] shadow-sm mb-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3">
+          <div
+            class="w-12 h-12 bg-[#162447] rounded-xl border-2 border-[#162447] shadow-[2px_2px_0px_#94A3B8] flex items-center justify-center text-amber-400 font-black text-2xl">
+            R
+          </div>
+          <span class="font-black text-xl tracking-tight text-[#162447] uppercase hidden sm:inline">RAVENMILLE</span>
+        </a>
+
+        <nav class="flex items-center gap-2 overflow-x-auto">
+          <a href="kalkulator.html"
+            class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl bg-[#162447] text-white border-2 border-[#162447] shadow-[2px_2px_0px_#94A3B8]">Kalkulator</a>
+          <a href="risiko.html"
+            class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Risiko</a>
+          <a href="komparasi.html"
+            class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Komparasi</a>
+          <a href="berita.html"
+            class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Berita</a>
+          <a href="bengkel.html"
+            class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Bengkel</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+      <!-- ===== STEPPER ===== -->
+      <nav class="wz-steps" aria-label="Langkah kalkulator">
+        <button type="button" class="wz-step is-active" data-step="1">
+          <span class="wz-dot">1</span>
+          <span class="wz-txt"><small>Langkah 1</small><b>Pilih Kendaraan</b></span>
+        </button>
+        <div class="wz-line"><i></i></div>
+        <button type="button" class="wz-step" data-step="2">
+          <span class="wz-dot">2</span>
+          <span class="wz-txt"><small>Langkah 2</small><b>Input Parameter</b></span>
+        </button>
+        <div class="wz-line"><i></i></div>
+        <button type="button" class="wz-step" data-step="3" disabled>
+          <span class="wz-dot">3</span>
+          <span class="wz-txt"><small>Langkah 3</small><b>Laporan &amp; Unduh</b></span>
+        </button>
+      </nav>
+
+      <!-- ===== LANGKAH 1: PILIH KENDARAAN ===== -->
+      <section id="panel-1"
+        class="wz-panel bg-white border-2 border-[#162447] rounded-2xl p-6 sm:p-8 shadow-[6px_6px_0px_#162447]">
+        <span class="wz-tag">Featured tool</span>
+        <h1 class="text-3xl sm:text-5xl font-black italic text-[#162447] uppercase tracking-tight mt-4 max-w-3xl">
+          TOTAL COST OF OWNERSHIP (TCO) CALCULATOR
+        </h1>
+        <p class="text-sm sm:text-base text-slate-700 font-medium leading-relaxed mt-3 max-w-2xl">
+          Pilih salah satu mobil populer di Indonesia berikut untuk langsung memuat data estimasi harga dan
+          spesifikasinya, atau klik opsi kustom untuk memasukkan jenis kendaraan Anda sendiri.
+        </p>
+
+        <div class="rail-head">
+          <span class="text-xs sm:text-sm font-black uppercase text-[#162447]">✨ Pilih kendaraan populer atau input
+            sendiri
+            <small class="font-medium normal-case text-slate-500">(geser untuk melihat pilihan)</small></span>
+          <div class="rail-nav">
+            <button type="button" id="rail-prev" aria-label="Geser kiri">‹</button>
+            <button type="button" id="rail-next" aria-label="Geser kanan">›</button>
+          </div>
+        </div>
+
+        <!-- Kartu dirender dinamis dari Supabase -->
+        <div id="presets-grid" class="rail"></div>
+
+        <div class="wz-note">
+          <strong class="text-[#162447] uppercase">Panduan Ravenmille:</strong>
+          Setelah memilih kendaraan, Anda akan diarahkan ke langkah pengisian parameter (harga, skema tunai/kredit, dan
+          jarak tempuh). Anda tetap dapat mengubah harga sesuai penawaran dealer.
+        </div>
+      </section>
+
+      <!-- ===== LANGKAH 2: INPUT PARAMETER ===== -->
+      <section id="panel-2"
+        class="wz-panel bg-white border-2 border-[#162447] rounded-2xl p-6 sm:p-8 shadow-[6px_6px_0px_#162447] flex flex-col gap-5"
+        hidden>
+        <div class="w-full">
+          <span class="wz-tag">Langkah 2 dari 3</span>
+          <h2 id="step2-title" class="text-2xl sm:text-4xl font-black text-[#162447] uppercase tracking-tight mt-3">
+            PARAMETER KENDARAAN
+          </h2>
+          <p class="text-sm sm:text-base text-slate-700 font-medium leading-relaxed mt-1 max-w-4xl">
+            Lengkapi profil kendaraan, skema pembiayaan tunai atau kredit, konsumsi bahan bakar, dan estimasi pemakaian
+            tahunan untuk menghitung total biaya kepemilikan (TCO).
+          </p>
+        </div>
+
+        <div
+          class="flex flex-wrap items-center justify-between gap-4 bg-[#FAF8F2] p-4 rounded-xl border border-slate-200">
+          <span class="text-xs sm:text-sm font-black uppercase text-[#162447] tracking-wider">📅 Periode Proyeksi
+            Kepemilikan:</span>
+          <div class="flex items-center gap-2">
+            <button type="button" class="pbtn" data-period="1">1 Tahun</button>
+            <button type="button" class="pbtn is-on" data-period="3">3 Tahun</button>
+            <button type="button" class="pbtn" data-period="5">5 Tahun</button>
+          </div>
+        </div>
+
+        <form id="tco-form" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-2" onsubmit="return false">
+          <div>
+            <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1.5">Harga Beli Kendaraan
+              (Rp)</label>
+            <input type="number" id="inp-price" value="275000000"
+              class="w-full p-3 text-sm sm:text-base font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447] focus:bg-blue-50/20">
+          </div>
+          <div>
+            <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1.5">Metode Pembayaran</label>
+            <select id="inp-method"
+              class="w-full p-3 text-sm sm:text-base font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447] bg-white">
+              <option value="kredit">Kredit Leasing</option>
+              <option value="tunai">Tunai Keras (Cash)</option>
+            </select>
+          </div>
+          <div id="col-dp">
+            <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1.5">Uang Muka / DP
+              (%)</label>
+            <input type="number" id="inp-dp" value="20"
+              class="w-full p-3 text-sm sm:text-base font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+          </div>
+          <div id="col-rate">
+            <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1.5">Bunga Kredit Flat (% /
+              tahun)</label>
+            <input type="number" step="0.1" id="inp-rate" value="6.5"
+              class="w-full p-3 text-sm sm:text-base font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+          </div>
+          <div>
+            <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1.5">Konsumsi BBM
+              (km/liter)</label>
+            <input type="number" step="0.1" id="inp-fuel-eff" value="13.5"
+              class="w-full p-3 text-sm sm:text-base font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+          </div>
+          <div>
+            <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1.5">Harga Bahan Bakar per
+              Liter (Rp)</label>
+            <input type="number" id="inp-fuel-price" value="13300"
+              class="w-full p-3 text-sm sm:text-base font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+          </div>
+          <div>
+            <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1.5">Jarak Tempuh Tahunan
+              (km/tahun)</label>
+            <input type="number" id="inp-km-year" value="15000"
+              class="w-full p-3 text-sm sm:text-base font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+          </div>
+          <div>
+            <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1.5">Estimasi Servis Rutin per
+              Tahun (Rp)</label>
+            <input type="number" id="inp-service" value="3500000"
+              class="w-full p-3 text-sm sm:text-base font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+          </div>
+          <div>
+            <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1.5">Premi Asuransi per Tahun
+              (Rp)</label>
+            <input type="number" id="inp-insurance" value="4800000"
+              class="w-full p-3 text-sm sm:text-base font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+          </div>
+          <div>
+            <label class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1.5">Pajak Kendaraan (PKB) per
+              Tahun (Rp)</label>
+            <input type="number" id="inp-tax" value="4200000"
+              class="w-full p-3 text-sm sm:text-base font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+          </div>
+        </form>
+
+        <div class="wz-actions pt-2">
+          <button type="button" class="wz-btn" data-go="1">← Ganti Kendaraan</button>
+          <button type="button" class="wz-btn primary" id="btn-analyze">Analisis Data →</button>
+        </div>
+      </section>
+
+      <!-- ===== LANGKAH 3: LAPORAN & UNDUH ===== -->
+      <section id="panel-3" class="wz-panel rp" hidden>
+        <div class="rp-card">
+          <div class="rp-meta"><span class="wz-tag" style="font-size:.6rem;padding:3px 10px">Laporan audit
+              resmi</span><span id="rp-id"></span><span id="rp-date"></span></div>
+          <h2 class="rp-title">Vehicle Ownership Financial Audit Report</h2>
+          <p class="rp-sub" id="rp-sub"></p>
+          <div class="rp-chips" id="rp-chips"></div>
+          <div class="rp-actions">
+            <div>
+              <button type="button" class="wz-btn sm" data-go="2">← Ubah Data</button>
+              <button type="button" class="wz-btn sm" data-go="1">Pilih Mobil Lain</button>
+              <button type="button" class="wz-btn sm" id="btn-copy">Salin Ringkasan</button>
+            </div>
+            <div>
+              <button type="button" class="pbtn" data-period="1">1 Thn</button>
+              <button type="button" class="pbtn is-on" data-period="3">3 Thn</button>
+              <button type="button" class="pbtn" data-period="5">5 Thn</button>
+              <button type="button" class="wz-btn sm" id="btn-csv">Unduh CSV</button>
+              <button type="button" class="wz-btn sm primary" onclick="window.print()">Unduh Laporan PDF</button>
+            </div>
+          </div>
+          <div class="rp-kpis">
+            <div class="rp-hero">
+              <small>Total Cost of Ownership · <span id="k-years"></span></small>
+              <b id="k-total"></b>
+              <p>Total beban ekonomi riil selama masa kepemilikan: penyusutan nilai, bunga pembiayaan, pajak, asuransi,
+                energi, dan biaya perawatan.</p>
+              <div><span>Penyusutan nilai aset</span><span id="k-deppct"></span></div>
+            </div>
+            <div class="rp-k"><small>Beban / bulan</small><b id="k-month"></b><em>Setara 100% kas bulanan</em></div>
+            <div class="rp-k"><small>Biaya riil / km</small><b id="k-km"></b><em id="k-kmtot"></em></div>
+            <div class="rp-k"><small>Sisa nilai jual</small><b id="k-resid"></b><em id="k-ret"></em></div>
+          </div>
+        </div>
+
+        <div class="rp-two">
+          <div class="rp-card">
+            <div class="rp-h">Komposisi beban biaya</div>
+            <div class="rp-p">Proporsi pengeluaran selama periode proyeksi</div>
+            <div class="rp-comp">
+              <div id="rp-donut"></div>
+              <div class="rp-leg" id="rp-leg"></div>
+            </div>
+          </div>
+          <div class="rp-card rp-bars">
+            <div class="rp-h">Tren beban tahunan</div>
+            <div class="rp-p">Total beban per tahun berdasarkan komponen</div>
+            <div id="rp-bars"></div>
+            <div class="rp-bleg" id="rp-bleg"></div>
+          </div>
+        </div>
+
+        <div class="rp-card">
+          <div class="rp-h">Buku proyeksi finansial tahunan</div>
+          <div class="rp-p">Rincian pengeluaran dan penyusutan nilai aset kendaraan · Satuan: Rupiah</div>
+          <div class="rp-tw">
+            <table class="rp-t" id="rp-table"></table>
+          </div>
+        </div>
+
+        <div class="rp-card">
+          <div class="rp-h">Dasar perhitungan &amp; metodologi Ravenmille</div>
+          <div class="rp-basis">
+            <div><b>Pajak &amp; asuransi</b>Nilai PKB dan premi mengikuti angka yang Anda isi di Langkah 2 dan dianggap
+              tetap tiap tahun. Cek tarif resmi di Samsat dan penawaran perusahaan asuransi.</div>
+            <div><b>Depresiasi</b>Kurva asumsi Ravenmille: nilai jual turun 15% (1 tahun), 32% (3 tahun), dan 46% (5
+              tahun) dari harga beli. Harga pasar aktual dapat berbeda.</div>
+            <div><b>Pembiayaan &amp; servis</b>Bunga dihitung flat per tahun dari pokok pinjaman (harga dikurangi DP).
+              BBM dan servis dianggap konstan tiap tahun. Laporan ini estimasi, bukan penawaran resmi.</div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    let currentPeriodYears = 3;
+    let vehicleName = 'Kendaraan Kustom';
+    let vehicleList = [];        // data hanya dari Supabase
+    let selectedId = null;
+    let analyzed = false;
+    let loading = true;
+
+    const $ = id => document.getElementById(id);
+    const formatIDR = val => 'Rp ' + Math.round(val).toLocaleString('id-ID');
+
+    /* ---------- Wizard ---------- */
+    function goStep(n) {
+      if (n === 3 && !analyzed) return;
+      if (n === 3) calculateTCO();
+      for (let i = 1; i <= 3; i++) {
+        const p = $('panel-' + i);
+        p.hidden = i !== n;
+        if (i === n) { p.classList.remove('enter'); void p.offsetWidth; p.classList.add('enter'); }
+      }
+      document.querySelectorAll('.wz-step').forEach(b => {
+        const s = +b.dataset.step;
+        b.classList.toggle('is-active', s === n);
+        b.classList.toggle('is-done', s < n);
+        b.querySelector('.wz-dot').textContent = s < n ? '✓' : s;
+        b.disabled = s === 3 && !analyzed;
+      });
+      document.querySelectorAll('.wz-line').forEach((l, i) => l.classList.toggle('on', n >= i + 2));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ---------- Katalog kendaraan ---------- */
+    function renderPresetCards() {
+      const grid = $('presets-grid');
+      const custom = `
+        <article class="vc vc-custom${selectedId === 'custom' ? ' is-sel' : ''}" data-id="custom">
+          <div>
+            <div class="plus">+</div>
+            <span class="wz-tag" style="font-size:.6rem;padding:3px 9px">Kustom / Bebas</span>
+            <h3 style="margin-top:10px;font-weight:900;font-size:.95rem;color:#162447;text-transform:uppercase">Masukkan mobil sendiri</h3>
+            <p>Ketik nama mobil, tipe, atau motor impian Anda secara manual dan tentukan harga sesuai kebutuhan.</p>
+          </div>
+          <button type="button" class="vc-btn">Mulai input data →</button>
+        </article>`;
+      let body = '';
+      if (loading) body = '<p class="text-sm font-bold text-slate-500 p-4">⏳ Memuat katalog kendaraan…</p>';
+      else if (!vehicleList.length) body = '<p class="text-sm font-bold text-slate-500 p-4">Belum ada kendaraan di katalog.</p>';
+      else body = vehicleList.map(v => {
+        const id = v.id || v.key;
+        return `
+        <article class="vc${id === selectedId ? ' is-sel' : ''}" data-id="${id}">
+          <div class="vc-img">
+            ${v.imageUrl ? `<img src="${v.imageUrl}" alt="${v.name}" loading="lazy">` : '<div class="vc-ph">🚗</div>'}
+            <span class="vc-tag">${(v.category || 'KATALOG').toUpperCase()}</span>
+            <span class="vc-eff">⛽ ${v.fuelEff} km/L</span>
+          </div>
+          <div class="vc-body">
+            <h3>${v.name}</h3>
+            <p class="vc-price">${formatIDR(v.price)}</p>
+            <button type="button" class="vc-btn">Pilih unit →</button>
+          </div>
+        </article>`;
+      }).join('');
+      grid.innerHTML = custom + body;
+    }
+
+    function selectPreset(key) {
+      selectedId = key;
+      analyzed = false;
+      if (key === 'custom') {
+        vehicleName = 'Kendaraan Kustom';
+        $('step2-title').textContent = 'PARAMETER KENDARAAN: INPUT KUSTOM';
+      } else {
+        const v = vehicleList.find(x => (x.id || x.key) === key);
+        if (!v) return;
+        vehicleName = v.name;
+        $('step2-title').textContent = 'PARAMETER KENDARAAN: ' + v.name.toUpperCase();
+        $('inp-price').value = v.price;
+        $('inp-fuel-eff').value = v.fuelEff;
+        $('inp-fuel-price').value = v.fuelPrice || 13300;
+        $('inp-km-year').value = v.kmYear || 15000;
+        $('inp-service').value = v.service;
+        $('inp-insurance').value = v.insurance;
+        $('inp-tax').value = v.tax;
+      }
+      renderPresetCards();
+      goStep(2);
+    }
+    window.__dynamicSelectPreset = selectPreset;
+
+    async function loadVehiclesFromSupabase() {
+      if (window.RAVENMILLE_SUPABASE) {
+        try {
+          const { data, error } = await window.RAVENMILLE_SUPABASE
+            .from('vehicles').select('*')
+            .eq('is_active', true)
+            .order('sort_order').order('created_at');
+          if (error) throw error;
+          if (data && data.length > 0) {
+            vehicleList = data.map(v => ({
+              id: v.id, name: v.name, category: v.category,
+              price: Number(v.price), fuelEff: Number(v.fuel_eff),
+              fuelPrice: Number(v.fuel_price) || 13300, kmYear: Number(v.km_year) || 15000,
+              service: Number(v.service) || 0, insurance: Number(v.insurance) || 0,
+              tax: Number(v.tax) || 0, imageUrl: v.image_url
+            }));
+          }
+        } catch (e) {
+          console.warn('[Ravenmille] Gagal memuat kendaraan dari Supabase.', e);
+        }
+      }
+      loading = false;
+      renderPresetCards();
+    }
+
+    /* ---------- Kalkulasi ---------- */
+    function setPeriod(years) {
+      currentPeriodYears = years;
+      document.querySelectorAll('.pbtn').forEach(b =>
+        b.classList.toggle('is-on', +b.dataset.period === years));
+      calculateTCO();
+    }
+
+    function toggleCreditInputs() {
+      const d = $('inp-method').value === 'kredit' ? 'block' : 'none';
+      $('col-dp').style.display = d; $('col-rate').style.display = d;
+    }
+
+    const CUM = [0, .15, .245, .32, .39, .46];   // kumulatif depresiasi per tahun (1/3/5 th = 15/32/46%)
+    const COL = { dep: '#94a3b8', fuel: '#4f6ef7', svc: '#f5a524', tax: '#3a9d6b', ins: '#8b5cf6', int: '#c0392b' };
+    const KEYS = [['dep', 'Depresiasi Nilai'], ['fuel', 'BBM / Energi'], ['svc', 'Servis & Sparepart'],
+    ['tax', 'Pajak (PKB)'], ['ins', 'Asuransi'], ['int', 'Bunga Pembiayaan']];
+    let model = null, reportBase = 'RVM-' + Math.floor(1000 + Math.random() * 9000);
+    const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+    function computeModel() {
+      const n = id => parseFloat($(id).value) || 0;
+      const N = currentPeriodYears, price = n('inp-price');
+      const eff = n('inp-fuel-eff') || 12, fp = n('inp-fuel-price') || 13300, km = n('inp-km-year') || 15000;
+      const credit = $('inp-method').value === 'kredit', dp = n('inp-dp'), rate = n('inp-rate');
+      const intY = credit ? price * (1 - dp / 100) * rate / 100 : 0;
+      const rows = [], t = { dep: 0, fuel: 0, svc: 0, tax: 0, ins: 0, int: 0, total: 0 };
+      for (let y = 1; y <= N; y++) {
+        const r = {
+          y, odo: km * y, dep: price * (CUM[y] - CUM[y - 1]), fuel: km / eff * fp,
+          svc: n('inp-service'), tax: n('inp-tax'), ins: n('inp-insurance'), int: intY, resid: price * (1 - CUM[y])
+        };
+        r.total = r.dep + r.fuel + r.svc + r.tax + r.ins + r.int;
+        KEYS.forEach(([k]) => t[k] += r[k]); t.total += r.total;
+        rows.push(r);
+      }
+      return { N, price, km, credit, dp, rows, t, resid: price * (1 - CUM[N]) };
+    }
+
+    function calculateTCO() {
+      const m = model = computeModel(), N = m.N, T = m.t, f = formatIDR;
+      $('rp-id').textContent = 'ID: ' + reportBase + '-' + N + 'Y';
+      $('rp-date').textContent = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+      $('rp-sub').innerHTML = 'Analisis Total Cost of Ownership (TCO) Proyeksi ' + N + ' Tahun: <b>' + esc(vehicleName) + '</b>';
+      $('rp-chips').innerHTML = ['Harga: ' + f(m.price), 'Skema: ' + (m.credit ? 'Kredit ' + N * 12 + ' Bulan · DP ' + m.dp + '%' : 'Tunai'),
+      'Jarak: ' + m.km.toLocaleString('id-ID') + ' km/thn'].map(x => '<span>' + x + '</span>').join('');
+      $('k-years').textContent = N + ' tahun';
+      $('k-total').textContent = f(T.total);
+      $('k-deppct').textContent = Math.round(T.dep / T.total * 100) + '% dari total beban';
+      $('k-month').textContent = f(T.total / (N * 12));
+      $('k-km').textContent = f(T.total / (m.km * N || 1));
+      $('k-kmtot').textContent = (m.km * N).toLocaleString('id-ID') + ' km total';
+      $('k-resid').textContent = f(m.resid);
+      $('k-ret').textContent = 'Retensi ' + Math.round((1 - CUM[N]) * 100) + '% dari harga beli';
+
+      // Donut komposisi
+      const R = 44, CI = 2 * Math.PI * R; let off = 0;
+      const arcs = KEYS.map(([k]) => {
+        const len = T[k] / T.total * CI;
+        const c = `<circle cx="60" cy="60" r="${R}" fill="none" stroke="${COL[k]}" stroke-width="18" stroke-dasharray="${len} ${CI - len}" stroke-dashoffset="${-off}" transform="rotate(-90 60 60)"/>`;
+        off += len; return c;
+      }).join('');
+      $('rp-donut').innerHTML = `<svg viewBox="0 0 120 120">${arcs}<text x="60" y="57" text-anchor="middle" font-size="7" font-weight="800" fill="#64748b">TOTAL BIAYA</text><text x="60" y="69" text-anchor="middle" font-size="9.5" font-weight="900" fill="#162447">Rp ${(T.total / 1e6).toFixed(1)} jt</text></svg>`;
+      $('rp-leg').innerHTML = KEYS.map(([k, l]) => `<div><i style="background:${COL[k]}"></i><span>${l}</span><span>${(T[k] / T.total * 100).toFixed(1)}%</span><b>${f(T[k])}</b></div>`).join('');
+
+      // Bar tren tahunan
+      const W = 380, base = 150, top = 14, max = Math.max(...m.rows.map(r => r.total)) || 1;
+      const stepW = (W - 20) / N, bw = Math.min(64, stepW - 24);
+      const bars = m.rows.map((r, i) => {
+        const x = 10 + stepW * i + (stepW - bw) / 2; let y = base;
+        const segs = ['fuel', 'svc', 'tax', 'ins', 'int', 'dep'].map(k => {
+          const h = r[k] / max * (base - top); y -= h;
+          return `<rect x="${x}" y="${y}" width="${bw}" height="${h}" fill="${COL[k]}"/>`;
+        }).join('');
+        const cx = x + bw / 2;
+        return segs + `<text x="${cx}" y="${base + 14}" text-anchor="middle" font-size="9" font-weight="800" fill="#162447">Thn ${r.y}</text><text x="${cx}" y="${base + 26}" text-anchor="middle" font-size="7.5" fill="#64748b">${r.odo.toLocaleString('id-ID')} km</text>`;
+      }).join('');
+      $('rp-bars').innerHTML = `<svg viewBox="0 0 ${W} 185"><line x1="0" x2="${W}" y1="${base}" y2="${base}" stroke="#cbd5e1"/>${bars}</svg>`;
+      $('rp-bleg').innerHTML = KEYS.map(([k, l]) => `<span><i style="background:${COL[k]}"></i>${l}</span>`).join('');
+
+      // Tabel proyeksi
+      const n = v => Math.round(v).toLocaleString('id-ID');
+      $('rp-table').innerHTML = '<thead><tr>' + ['Periode', 'Odometer', 'Bunga', 'Pajak (PKB)', 'Asuransi', 'BBM / Energi', 'Servis', 'Depresiasi', 'Total Beban', 'Nilai Sisa Aset']
+        .map(h => '<th>' + h + '</th>').join('') + '</tr></thead><tbody>' +
+        m.rows.map(r => `<tr><td>Tahun ke-${r.y}</td><td>${r.odo.toLocaleString('id-ID')} km</td><td>${n(r.int)}</td><td>${n(r.tax)}</td><td>${n(r.ins)}</td><td>${n(r.fuel)}</td><td>${n(r.svc)}</td><td>${n(r.dep)}</td><td class="hl">${n(r.total)}</td><td>${n(r.resid)}</td></tr>`).join('') +
+        `<tr class="tot"><td>Total akumulasi</td><td>${(m.km * N).toLocaleString('id-ID')} km</td><td>${n(T.int)}</td><td>${n(T.tax)}</td><td>${n(T.ins)}</td><td>${n(T.fuel)}</td><td>${n(T.svc)}</td><td>${n(T.dep)}</td><td class="hl">${n(T.total)}</td><td>${n(m.resid)}</td></tr></tbody>`;
+    }
+
+    function summaryText() {
+      const m = model, T = m.t, f = formatIDR;
+      return `Ravenmille – Ringkasan TCO ${m.N} Tahun\n${vehicleName}\nTotal TCO: ${f(T.total)}\nBeban/bulan: ${f(T.total / (m.N * 12))}\nBiaya/km: ${f(T.total / (m.km * m.N || 1))}\nSisa nilai jual: ${f(m.resid)}`;
+    }
+    function copySummary() {
+      const b = $('btn-copy'), old = b.textContent;
+      (navigator.clipboard ? navigator.clipboard.writeText(summaryText()) : Promise.reject()).then(() => b.textContent = 'Tersalin ✓').catch(() => b.textContent = 'Gagal menyalin')
+        .finally(() => setTimeout(() => b.textContent = old, 1800));
+    }
+    function downloadCSV() {
+      const m = model, q = v => '"' + String(v).replace(/"/g, '""') + '"';
+      const head = ['Periode', 'Odometer (km)', 'Bunga', 'Pajak', 'Asuransi', 'BBM', 'Servis', 'Depresiasi', 'Total Beban', 'Nilai Sisa Aset'];
+      const lines = [head.map(q).join(',')].concat(m.rows.map(r => ['Tahun ' + r.y, r.odo, r.int, r.tax, r.ins, r.fuel, r.svc, r.dep, r.total, r.resid].map(v => typeof v === 'number' ? Math.round(v) : q(v)).join(',')));
+      lines.push(['Total', m.km * m.N, m.t.int, m.t.tax, m.t.ins, m.t.fuel, m.t.svc, m.t.dep, m.t.total, m.resid].map(v => typeof v === 'number' ? Math.round(v) : q(v)).join(','));
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob(['\ufeff' + lines.join('\n')], { type: 'text/csv;charset=utf-8' }));
+      a.download = 'ravenmille-tco-' + m.N + 'tahun.csv'; a.click();
+    }
+
+    function analyze() {
+      if (!(parseFloat($('inp-price').value) > 0)) {
+        $('inp-price').focus();
+        $('inp-price').style.borderColor = '#e11d48';
+        return;
+      }
+      $('inp-price').style.borderColor = '';
+      analyzed = true;
+      reportBase = 'RVM-' + Math.floor(1000 + Math.random() * 9000);
+      goStep(3);
+    }
+
+    /* ---------- Event ---------- */
+    window.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.wz-step').forEach(b => b.addEventListener('click', () => goStep(+b.dataset.step)));
+      document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => goStep(+b.dataset.go)));
+      document.querySelectorAll('.pbtn').forEach(b => b.addEventListener('click', () => setPeriod(+b.dataset.period)));
+      $('btn-analyze').addEventListener('click', analyze);
+      $('btn-copy').addEventListener('click', copySummary);
+      $('btn-csv').addEventListener('click', downloadCSV);
+      $('inp-method').addEventListener('change', toggleCreditInputs);
+      $('presets-grid').addEventListener('click', e => {
+        const card = e.target.closest('[data-id]');
+        if (card) selectPreset(card.dataset.id);
+      });
+      $('rail-prev').addEventListener('click', () => $('presets-grid').scrollBy({ left: -260, behavior: 'smooth' }));
+      $('rail-next').addEventListener('click', () => $('presets-grid').scrollBy({ left: 260, behavior: 'smooth' }));
+      renderPresetCards();
+      calculateTCO();
+      loadVehiclesFromSupabase();
+    });
+  </script>
+
+  <script src="ravenmille.js"></script>
+  <script src="ravenmille-supabase.js"></script>
+  <script>if (window.__dynamicSelectPreset) window.selectPreset = window.__dynamicSelectPreset;</script>
+</body>
+
+</html>

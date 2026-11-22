@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Detail Berita – Ravenmille</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,800;0,900;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="ravenmille.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <base target="_blank">
+</head>
+
+<body>
+    <div class="min-h-screen bg-[#FDFBF7] text-slate-900 pb-16 halftone-bg">
+
+        <!-- Header Navigation -->
+        <header class="sticky top-0 z-40 bg-[#FDFBF7]/95 backdrop-blur-md border-b-2 border-[#162447] shadow-sm mb-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div
+                        class="w-12 h-12 bg-[#162447] rounded-xl border-2 border-[#162447] shadow-[2px_2px_0px_#94A3B8] flex items-center justify-center text-amber-400 font-black text-2xl">
+                        R</div>
+                    <span
+                        class="font-black text-xl tracking-tight text-[#162447] uppercase hidden sm:inline">RAVENMILLE</span>
+                </a>
+                <nav class="flex items-center gap-2 overflow-x-auto">
+                    <a href="kalkulator.html"
+                        class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Kalkulator</a>
+                    <a href="risiko.html"
+                        class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Risiko</a>
+                    <a href="komparasi.html"
+                        class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Komparasi</a>
+                    <a href="berita.html"
+                        class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl bg-[#162447] text-white border-2 border-[#162447] shadow-[2px_2px_0px_#94A3B8]">Berita</a>
+                    <a href="bengkel.html"
+                        class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Bengkel</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+            <!-- Konten Berita (diisi via JS) -->
+            <article id="news-detail" class="space-y-6">
+                <div
+                    class="bg-white border-2 border-[#162447] rounded-2xl p-10 shadow-[6px_6px_0px_#162447] text-center font-bold text-slate-500">
+                    ⏳ Memuat berita…</div>
+            </article>
+
+            <!-- CTA Internal Linking -->
+            <section
+                class="bg-[#162447] text-white border-2 border-[#0F1D38] rounded-2xl p-6 sm:p-8 shadow-[6px_6px_0px_#94A3B8] space-y-5">
+                <div class="space-y-2">
+                    <span
+                        class="inline-flex items-center gap-2 px-3.5 py-1 bg-amber-400 text-[#162447] rounded-md text-xs font-black uppercase tracking-wider">
+                        ⭐ Ravenmille Smart Tools
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-black uppercase tracking-tight leading-tight">
+                        SUDAH BACA, SAATNYA HITUNG!
+                    </h2>
+                    <p class="text-sm sm:text-base text-blue-100 leading-relaxed font-medium">
+                        Jangan cuma baca beritanya — bukti sendiri berapa biaya riil kepemilahan mobil impianmu selama
+                        1, 3, atau 5 tahun ke depan.
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row flex-wrap gap-3 pt-1">
+                    <a href="kalkulator.html"
+                        class="flex-1 min-w-[220px] inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-amber-400 hover:bg-amber-300 text-[#162447] font-black uppercase text-sm sm:text-base tracking-wider border-2 border-amber-500 shadow-[4px_4px_0px_#94A3B8] hover:-translate-y-0.5 transition-all">
+                        📊 Kalkulasi TCO Sekarang →
+                    </a>
+                    <a href="komparasi.html"
+                        class="flex-1 min-w-[220px] inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-white hover:bg-[#FAF8F2] text-[#162447] font-black uppercase text-sm sm:text-base tracking-wider border-2 border-white shadow-[4px_4px_0px_#94A3B8] hover:-translate-y-0.5 transition-all">
+                        ⚖️ Bandingkan 2 Mobil
+                    </a>
+                    <a href="risiko.html"
+                        class="flex-1 min-w-[220px] inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-white/10 hover:bg-white/20 text-white font-black uppercase text-sm sm:text-base tracking-wider border-2 border-white/40 hover:-translate-y-0.5 transition-all">
+                        🛡️ Cek Risiko Unit
+                    </a>
+                </div>
+            </section>
+
+            <div class="text-center">
+                <a href="berita.html"
+                    class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white border-2 border-[#162447] text-[#162447] font-black uppercase text-sm shadow-[3px_3px_0px_#162447] hover:bg-[#FAF8F2] transition-all">
+                    ← Kembali ke Daftar Berita
+                </a>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        function formatDate(iso) {
+            try {
+                return new Date(iso).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+            } catch (e) { return ''; }
+        }
+
+        function renderNews(n) {
+            const paras = (n.content || '').split(/\n+/).map(p => p.trim()).filter(Boolean);
+            document.title = n.title + ' – Ravenmille';
+            document.getElementById('news-detail').innerHTML = `
+      <div class="bg-white border-2 border-[#162447] rounded-2xl overflow-hidden shadow-[6px_6px_0px_#162447]">
+        ${n.image_url
+                    ? `<img src="${n.image_url}" alt="${n.title}" class="w-full max-h-[420px] object-cover border-b-2 border-[#162447]">`
+                    : ''}
+        <div class="p-6 sm:p-10 space-y-4">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-[10px] sm:text-xs font-black uppercase px-2.5 py-0.5 rounded bg-purple-100 text-purple-900 border border-purple-300">${(n.category || 'BERITA').toUpperCase()}</span>
+            <span class="text-xs sm:text-sm font-bold text-slate-500">📅 ${formatDate(n.created_at)}</span>
+          </div>
+          <h1 class="text-2xl sm:text-4xl font-black text-[#162447] uppercase tracking-tight leading-tight">${n.title}</h1>
+          <div class="pt-2 space-y-4 text-sm sm:text-base text-slate-700 leading-relaxed font-medium">
+            ${paras.map(p => `<p>${p}</p>`).join('')}
+          </div>
+        </div>
+      </div>`;
+        }
+
+        async function loadDetail() {
+            const box = document.getElementById('news-detail');
+            const id = new URLSearchParams(location.search).get('id');
+            if (!id || !window.RAVENMILLE_SUPABASE) {
+                box.innerHTML = '<div class="bg-white border-2 border-[#162447] rounded-2xl p-10 shadow-[6px_6px_0px_#162447] text-center font-bold text-slate-500">Berita tidak ditemukan. <a href="berita.html" class="text-[#162447] underline">Kembali ke daftar berita</a>.</div>';
+                return;
+            }
+            try {
+                const { data, error } = await window.RAVENMILLE_SUPABASE
+                    .from('news').select('*').eq('id', id).eq('is_active', true).single();
+                if (error || !data) throw error || new Error('kosong');
+                renderNews(data);
+            } catch (e) {
+                box.innerHTML = '<div class="bg-white border-2 border-[#162447] rounded-2xl p-10 shadow-[6px_6px_0px_#162447] text-center font-bold text-slate-500">Berita tidak ditemukan atau sudah dihapus. <a href="berita.html" class="text-[#162447] underline">Kembali ke daftar berita</a>.</div>';
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', loadDetail);
+    </script>
+    <script src="ravenmille-supabase.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Berita Otomotif – Ravenmille</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,800;0,900;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="ravenmille.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <base target="_blank">
+</head>
+
+<body>
+    <div class="min-h-screen bg-[#FDFBF7] text-slate-900 pb-16 halftone-bg">
+
+        <!-- Header Navigation -->
+        <header class="sticky top-0 z-40 bg-[#FDFBF7]/95 backdrop-blur-md border-b-2 border-[#162447] shadow-sm mb-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div
+                        class="w-12 h-12 bg-[#162447] rounded-xl border-2 border-[#162447] shadow-[2px_2px_0px_#94A3B8] flex items-center justify-center text-amber-400 font-black text-2xl">
+                        R</div>
+                    <span
+                        class="font-black text-xl tracking-tight text-[#162447] uppercase hidden sm:inline">RAVENMILLE</span>
+                </a>
+                <nav class="flex items-center gap-2 overflow-x-auto">
+                    <a href="kalkulator.html"
+                        class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Kalkulator</a>
+                    <a href="risiko.html"
+                        class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Risiko</a>
+                    <a href="komparasi.html"
+                        class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Komparasi</a>
+                    <a href="berita.html"
+                        class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl bg-[#162447] text-white border-2 border-[#162447] shadow-[2px_2px_0px_#94A3B8]">Berita</a>
+                    <a href="bengkel.html"
+                        class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Bengkel</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+            <!-- Header Banner -->
+            <div
+                class="bg-white border-2 border-[#162447] rounded-2xl p-6 sm:p-8 shadow-[6px_6px_0px_#162447] flex flex-col gap-5">
+                <div>
+                    <span
+                        class="inline-block px-3 py-1 bg-purple-100 text-purple-900 border border-purple-300 rounded-lg text-xs font-black uppercase tracking-wider mb-2">
+                        AUTOMOTIVE NEWS
+                    </span>
+                    <h1 class="text-2xl sm:text-4xl font-black italic text-[#162447] uppercase tracking-tight">
+                        BERITA &amp; ARTIKEL OTOMOTIF TERKINI
+                    </h1>
+                    <p class="text-sm sm:text-base text-slate-700 max-w-4xl leading-relaxed font-medium mt-1">
+                        Kumpulan berita, tips, dan analisis seputar mobil bekas, biaya kepemilikan, serta tren otomotif
+                        Indonesia. Klik kartu untuk membaca selengkapnya.
+                    </p>
+                </div>
+
+                <!-- Search -->
+                <div class="pt-2">
+                    <input type="text" id="news-search" oninput="renderNews()"
+                        placeholder="Cari berita (misal: harga mobil, tips beli bekas)..."
+                        class="w-full p-3.5 text-sm sm:text-base font-semibold border-2 border-[#162447] rounded-xl shadow-[3px_3px_0px_#162447] focus:bg-blue-50/20 bg-white">
+                </div>
+            </div>
+
+            <!-- Grid Kartu Berita -->
+            <div id="news-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <p class="col-span-full text-center text-sm font-bold text-slate-500 py-6">⏳ Memuat berita…</p>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        let newsList = [];
+
+        function formatDate(iso) {
+            try {
+                return new Date(iso).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+            } catch (e) { return ''; }
+        }
+
+        function renderNews() {
+            const grid = document.getElementById('news-grid');
+            const q = (document.getElementById('news-search').value || '').toLowerCase();
+            const filtered = newsList.filter(n =>
+                !q || n.title.toLowerCase().includes(q) || (n.excerpt || '').toLowerCase().includes(q) || (n.category || '').toLowerCase().includes(q));
+
+            if (!filtered.length) {
+                grid.innerHTML = '<p class="col-span-full text-center text-sm font-bold text-slate-500 py-6">Belum ada berita. Tambahkan lewat halaman admin.html →</p>';
+                return;
+            }
+
+            grid.innerHTML = filtered.map(n => `
+      <article onclick="location.href='berita-detail.html?id=${n.id}'"
+        class="bg-white border-2 border-[#162447] rounded-2xl overflow-hidden shadow-[5px_5px_0px_#162447] hover:shadow-[7px_7px_0px_#162447] hover:-translate-y-1 transition-all cursor-pointer flex flex-col">
+        ${n.image_url
+                    ? `<img src="${n.image_url}" alt="${n.title}" class="w-full h-48 object-cover border-b-2 border-[#162447]">`
+                    : `<div class="w-full h-48 bg-[#162447] halftone-dark border-b-2 border-[#162447] flex items-center justify-center text-amber-400 font-black text-5xl">R</div>`}
+        <div class="p-5 sm:p-6 flex flex-col gap-2.5 flex-1">
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] sm:text-xs font-black uppercase px-2.5 py-0.5 rounded bg-purple-100 text-purple-900 border border-purple-300">${(n.category || 'BERITA').toUpperCase()}</span>
+            <span class="text-[10px] sm:text-xs font-bold text-slate-500">📅 ${formatDate(n.created_at)}</span>
+          </div>
+          <h3 class="text-lg sm:text-xl font-black text-[#162447] uppercase leading-snug">${n.title}</h3>
+          <p class="text-sm text-slate-600 leading-relaxed font-medium flex-1">${n.excerpt || ''}</p>
+          <span class="pt-2 mt-auto border-t-2 border-slate-100 font-black text-xs sm:text-sm uppercase text-[#162447] flex items-center justify-between">
+            Baca Selengkapnya <span>→</span>
+          </span>
+        </div>
+      </article>`).join('');
+        }
+
+        async function loadNews() {
+            if (!window.RAVENMILLE_SUPABASE) { renderNews(); return; }
+            try {
+                const { data, error } = await window.RAVENMILLE_SUPABASE
+                    .from('news').select('*')
+                    .eq('is_active', true)
+                    .order('created_at', { ascending: false });
+                if (error) throw error;
+                newsList = data || [];
+            } catch (e) {
+                console.warn('[Ravenmille] Gagal memuat berita.', e);
+            }
+            renderNews();
+        }
+
+        window.addEventListener('DOMContentLoaded', loadNews);
+    </script>
+    <script src="ravenmille-supabase.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hasil Komparasi – Ravenmille</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,800;0,900;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="ravenmille.css">
+</head>
+
+<body>
+  <div class="ravenmille-comp-result min-h-screen bg-[#FDFBF7] text-slate-900 pb-16 halftone-bg">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-40 bg-[#FDFBF7]/95 backdrop-blur-md border-b-2 border-[#162447] shadow-sm mb-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3">
+          <div
+            class="w-12 h-12 bg-[#162447] rounded-xl border-2 border-[#162447] shadow-[2px_2px_0px_#94A3B8] flex items-center justify-center text-amber-400 font-black text-2xl">
+            R</div>
+          <span class="font-black text-xl tracking-tight text-[#162447] uppercase hidden sm:inline">RAVENMILLE</span>
+        </a>
+
+        <div class="flex items-center gap-3">
+          <a href="komparasi.html"
+            class="px-4 py-2 text-xs sm:text-sm font-black uppercase rounded-xl border-2 border-[#162447] bg-white text-[#162447] shadow-[2px_2px_0px_#162447] hover:bg-slate-50">
+            ← Ubah Data Komparasi
+          </a>
+          <button type="button" onclick="window.print()"
+            class="px-4 py-2 text-xs sm:text-sm font-black uppercase rounded-xl bg-[#162447] text-white shadow-[2px_2px_0px_#94A3B8]">
+            🖨️ Cetak PDF
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+      <!-- 1. RAVENMILLE SMART VERDICT BANNER -->
+      <div
+        class="bg-[#162447] text-white border-2 border-[#0F1D38] rounded-2xl p-6 sm:p-8 shadow-[6px_6px_0px_#94A3B8] space-y-3">
+        <div
+          class="inline-flex items-center gap-2 px-3.5 py-1 bg-amber-400 text-[#162447] rounded-md text-xs font-black uppercase tracking-wider">
+          <span> RAVENMILLE SMART VERDICT </span>
+        </div>
+        <h1 id="verdict-title"
+          class="text-2xl sm:text-4xl font-black uppercase tracking-tight text-white leading-tight">
+          MEMUAT HASIL KOMPARASI...
+        </h1>
+        <p id="verdict-desc" class="text-sm sm:text-base text-blue-100 max-w-4xl leading-relaxed font-medium">
+          Kalkulasi TCO riil memproyeksikan seluruh aspek biaya bahan bakar, servis berkala, pajak, asuransi, dan
+          penurunan nilai jual kembali.
+        </p>
+      </div>
+
+      <!-- 2. TIGA KARTU INSIGHT UTAMA -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <div class="bg-white border-2 border-[#162447] rounded-xl p-6 shadow-[4px_4px_0px_#162447] space-y-2">
+          <span class="text-xs font-black uppercase text-slate-500">PENGHEMATAN BULANAN</span>
+          <div id="card-monthly-save" class="text-2xl sm:text-3xl font-black text-emerald-700">Rp 0 / bln</div>
+          <p id="card-monthly-desc" class="text-xs sm:text-sm text-slate-600 font-medium">Selisih pengeluaran
+            operasional per bulan.</p>
+        </div>
+
+        <div class="bg-white border-2 border-[#162447] rounded-xl p-6 shadow-[4px_4px_0px_#162447] space-y-2">
+          <span class="text-xs font-black uppercase text-slate-500">EFISIENSI BAHAN BAKAR</span>
+          <div id="card-fuel-save" class="text-2xl sm:text-3xl font-black text-[#162447]">0 Liter / Thn</div>
+          <p id="card-fuel-desc" class="text-xs sm:text-sm text-slate-600 font-medium">Hemat konsumsi bensin setiap
+            tahunnya.</p>
+        </div>
+
+        <div class="bg-white border-2 border-[#162447] rounded-xl p-6 shadow-[4px_4px_0px_#162447] space-y-2">
+          <span class="text-xs font-black uppercase text-slate-500">RETENSI NILAI / DEPRESIASI</span>
+          <div id="card-dep-diff" class="text-2xl sm:text-3xl font-black text-blue-700">Rp 0</div>
+          <p id="card-dep-desc" class="text-xs sm:text-sm text-slate-600 font-medium">Perbedaan sisa nilai aset jual
+            kembali.</p>
+        </div>
+
+      </div>
+
+      <!-- 3. MATRIKS PERBANDINGAN FINANSIAL TERPERINCI -->
+      <div class="bg-white border-2 border-[#162447] rounded-2xl p-6 sm:p-8 shadow-[6px_6px_0px_#162447] space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b-2 border-slate-100 pb-4">
+          <div>
+            <span
+              class="text-xs font-black uppercase text-amber-700 bg-amber-100 px-3 py-1 rounded-md border border-amber-300">HEAD-TO-HEAD
+              MATRIX</span>
+            <h2 class="text-xl sm:text-3xl font-black text-[#162447] uppercase mt-2">MATRIKS PERBANDINGAN FINANSIAL
+              TERPERINCI</h2>
+          </div>
+          <span id="matrix-period-badge"
+            class="px-4 py-2 bg-[#FAF8F2] border-2 border-[#162447] rounded-xl text-xs sm:text-sm font-black uppercase text-[#162447] self-start sm:self-center">
+            DURASI: 3 TAHUN
+          </span>
+        </div>
+
+        <!-- Tabel Head to Head Matrix -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs sm:text-sm">
+            <thead>
+              <tr class="border-b-2 border-[#162447] text-slate-700 font-black uppercase">
+                <th class="py-3 px-4">Komponen Finansial</th>
+                <th id="th-v1-name" class="py-3 px-4 text-[#162447] bg-blue-50/50">Kandidat 1</th>
+                <th id="th-v2-name" class="py-3 px-4 text-[#162447] bg-amber-50/50">Kandidat 2</th>
+                <th class="py-3 px-4 text-emerald-800">Selisih Finansial</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 font-semibold text-slate-800">
+              <tr>
+                <td class="py-3.5 px-4 font-bold">Harga Beli Kendaraan (OTR)</td>
+                <td id="m-v1-price" class="py-3.5 px-4 bg-blue-50/30">Rp 0</td>
+                <td id="m-v2-price" class="py-3.5 px-4 bg-amber-50/30">Rp 0</td>
+                <td id="m-diff-price" class="py-3.5 px-4 font-black">Rp 0</td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-4 font-bold">Depresiasi Nilai Jual</td>
+                <td id="m-v1-dep" class="py-3.5 px-4 bg-blue-50/30 text-rose-700">Rp 0</td>
+                <td id="m-v2-dep" class="py-3.5 px-4 bg-amber-50/30 text-rose-700">Rp 0</td>
+                <td id="m-diff-dep" class="py-3.5 px-4 font-black">Rp 0</td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-4 font-bold">Total Biaya Bahan Bakar (BBM)</td>
+                <td id="m-v1-fuel" class="py-3.5 px-4 bg-blue-50/30">Rp 0</td>
+                <td id="m-v2-fuel" class="py-3.5 px-4 bg-amber-50/30">Rp 0</td>
+                <td id="m-diff-fuel" class="py-3.5 px-4 font-black">Rp 0</td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-4 font-bold">Total Biaya Servis Berkala</td>
+                <td id="m-v1-service" class="py-3.5 px-4 bg-blue-50/30">Rp 0</td>
+                <td id="m-v2-service" class="py-3.5 px-4 bg-amber-50/30">Rp 0</td>
+                <td id="m-diff-service" class="py-3.5 px-4 font-black">Rp 0</td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-4 font-bold">Total Pajak Kendaraan (PKB)</td>
+                <td id="m-v1-tax" class="py-3.5 px-4 bg-blue-50/30">Rp 0</td>
+                <td id="m-v2-tax" class="py-3.5 px-4 bg-amber-50/30">Rp 0</td>
+                <td id="m-diff-tax" class="py-3.5 px-4 font-black">Rp 0</td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-4 font-bold">Total Biaya Asuransi</td>
+                <td id="m-v1-ins" class="py-3.5 px-4 bg-blue-50/30">Rp 0</td>
+                <td id="m-v2-ins" class="py-3.5 px-4 bg-amber-50/30">Rp 0</td>
+                <td id="m-diff-ins" class="py-3.5 px-4 font-black">Rp 0</td>
+              </tr>
+              <tr class="bg-amber-100/40 text-sm font-black border-t-2 border-b-2 border-[#162447]">
+                <td class="py-4 px-4 text-[#162447]">TOTAL BIAYA TCO RIIL</td>
+                <td id="m-v1-total" class="py-4 px-4 text-[#162447] bg-blue-100/50">Rp 0</td>
+                <td id="m-v2-total" class="py-4 px-4 text-[#162447] bg-amber-100/50">Rp 0</td>
+                <td id="m-diff-total" class="py-4 px-4 text-emerald-800">Rp 0 (Hemat)</td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-4 font-bold">Beban Biaya per Bulan</td>
+                <td id="m-v1-month" class="py-3.5 px-4 bg-blue-50/30">Rp 0</td>
+                <td id="m-v2-month" class="py-3.5 px-4 bg-amber-50/30">Rp 0</td>
+                <td id="m-diff-month" class="py-3.5 px-4 font-black">Rp 0 / bln</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    function formatIDR(val) {
+      return 'Rp ' + Math.round(Math.abs(val)).toLocaleString('id-ID');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // Ambil data yang dikirim dari /komparasi
+      let raw = localStorage.getItem('ravenmille_comparison_data');
+      let data;
+      if (raw) {
+        try { data = JSON.parse(raw); } catch (e) { }
+      }
+
+      // Default fallback jika dibuka langsung
+      if (!data) {
+        data = {
+          period: 3,
+          fuelPrice: 13300,
+          kmYear: 15000,
+          v1: { name: 'Toyota Avanza 1.5 G CVT', price: 275000000, fuelEff: 13.5, service: 3500000, tax: 4200000, insurance: 4800000 },
+          v2: { name: 'Mitsubishi Xpander Ultimate', price: 315000000, fuelEff: 12.0, service: 4200000, tax: 4800000, insurance: 5500000 }
+        };
+      }
+
+      const P = data.period || 3;
+      const depRate = P === 1 ? 0.15 : (P === 3 ? 0.32 : 0.46);
+
+      // Hitung Kendaraan 1
+      const v1_dep = data.v1.price * depRate;
+      const v1_fuel = (data.kmYear / (data.v1.fuelEff || 1)) * data.fuelPrice * P;
+      const v1_serv = data.v1.service * P;
+      const v1_tax = data.v1.tax * P;
+      const v1_ins = data.v1.insurance * P;
+      const v1_total = v1_dep + v1_fuel + v1_serv + v1_tax + v1_ins;
+      const v1_month = v1_total / (P * 12);
+
+      // Hitung Kendaraan 2
+      const v2_dep = data.v2.price * depRate;
+      const v2_fuel = (data.kmYear / (data.v2.fuelEff || 1)) * data.fuelPrice * P;
+      const v2_serv = data.v2.service * P;
+      const v2_tax = data.v2.tax * P;
+      const v2_ins = data.v2.insurance * P;
+      const v2_total = v2_dep + v2_fuel + v2_serv + v2_tax + v2_ins;
+      const v2_month = v2_total / (P * 12);
+
+      // Tentukan Pemenang (Lebih Hemat)
+      const isV1Winner = v1_total <= v2_total;
+      const winnerName = isV1Winner ? data.v1.name : data.v2.name;
+      const loserName = isV1Winner ? data.v2.name : data.v1.name;
+      const diffTotal = Math.abs(v1_total - v2_total);
+      const pct = Math.round((diffTotal / Math.max(v1_total, v2_total)) * 100);
+      const diffMonth = Math.abs(v1_month - v2_month);
+
+      // Update Verdict
+      document.getElementById('verdict-title').textContent = `${winnerName.toUpperCase()} LEBIH HEMAT ${formatIDR(diffTotal)} (${pct}%) DIBANDING ${loserName.toUpperCase()}`;
+      document.getElementById('verdict-desc').textContent = `Dalam proyeksi kepemilikan ${P} tahun, ${winnerName} menghasilkan efisiensi biaya kepemilikan riil yang signifikan dibandingkan ${loserName}.`;
+
+      // Update Cards
+      document.getElementById('card-monthly-save').textContent = formatIDR(diffMonth) + ' / bln';
+      document.getElementById('card-monthly-desc').textContent = `${winnerName} lebih ringan ${formatIDR(diffMonth)} per bulan.`;
+
+      const litersDiff = Math.round(Math.abs((data.kmYear / data.v1.fuelEff) - (data.kmYear / data.v2.fuelEff)));
+      document.getElementById('card-fuel-save').textContent = litersDiff + ' Liter / Thn';
+      document.getElementById('card-fuel-desc').textContent = `Selisih efisiensi konsumsi bahan bakar setiap 15.000 km.`;
+
+      const depDiff = Math.abs(v1_dep - v2_dep);
+      document.getElementById('card-dep-diff').textContent = formatIDR(depDiff);
+      document.getElementById('card-dep-desc').textContent = `Selisih beban penurunan harga aset selama ${P} tahun.`;
+
+      // Update Matriks Tabel
+      document.getElementById('matrix-period-badge').textContent = `DURASI: ${P} TAHUN`;
+      document.getElementById('th-v1-name').textContent = data.v1.name;
+      document.getElementById('th-v2-name').textContent = data.v2.name;
+
+      document.getElementById('m-v1-price').textContent = formatIDR(data.v1.price);
+      document.getElementById('m-v2-price').textContent = formatIDR(data.v2.price);
+      document.getElementById('m-diff-price').textContent = formatIDR(data.v1.price - data.v2.price);
+
+      document.getElementById('m-v1-dep').textContent = formatIDR(v1_dep);
+      document.getElementById('m-v2-dep').textContent = formatIDR(v2_dep);
+      document.getElementById('m-diff-dep').textContent = formatIDR(v1_dep - v2_dep);
+
+      document.getElementById('m-v1-fuel').textContent = formatIDR(v1_fuel);
+      document.getElementById('m-v2-fuel').textContent = formatIDR(v2_fuel);
+      document.getElementById('m-diff-fuel').textContent = formatIDR(v1_fuel - v2_fuel);
+
+      document.getElementById('m-v1-service').textContent = formatIDR(v1_serv);
+      document.getElementById('m-v2-service').textContent = formatIDR(v2_serv);
+      document.getElementById('m-diff-service').textContent = formatIDR(v1_serv - v2_serv);
+
+      document.getElementById('m-v1-tax').textContent = formatIDR(v1_tax);
+      document.getElementById('m-v2-tax').textContent = formatIDR(v2_tax);
+      document.getElementById('m-diff-tax').textContent = formatIDR(v1_tax - v2_tax);
+
+      document.getElementById('m-v1-ins').textContent = formatIDR(v1_ins);
+      document.getElementById('m-v2-ins').textContent = formatIDR(v2_ins);
+      document.getElementById('m-diff-ins').textContent = formatIDR(v1_ins - v2_ins);
+
+      document.getElementById('m-v1-total').textContent = formatIDR(v1_total);
+      document.getElementById('m-v2-total').textContent = formatIDR(v2_total);
+      document.getElementById('m-diff-total').textContent = formatIDR(diffTotal) + ` (${winnerName} Lebih Hemat)`;
+
+      document.getElementById('m-v1-month').textContent = formatIDR(v1_month);
+      document.getElementById('m-v2-month').textContent = formatIDR(v2_month);
+      document.getElementById('m-diff-month').textContent = formatIDR(diffMonth) + ' / bln';
+    });
+  </script>
+
+
+  <script src="ravenmille.js"></script>
+</body>
+
+</html>

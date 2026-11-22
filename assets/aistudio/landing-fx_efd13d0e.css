@@ -1,0 +1,327 @@
+/* ===== Ravenmille landing — versi elegan & ringan ===== */
+
+/* Lapisan dekorasi (di belakang konten) */
+.fx-section {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate
+}
+
+.fx-section>*:not(.fx-layer) {
+    position: relative;
+    z-index: 1
+}
+
+.fx-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden
+}
+
+.fx-shape {
+    position: absolute;
+    will-change: transform
+}
+
+.fx-in {
+    display: block;
+    width: 100%;
+    height: 100%;
+    animation: fxDrift var(--dur, 26s) ease-in-out var(--del, 0s) infinite alternate
+}
+
+@keyframes fxDrift {
+    from {
+        transform: translateY(0) rotate(var(--r, 0deg))
+    }
+
+    to {
+        transform: translateY(-18px) rotate(calc(var(--r, 0deg) + 12deg))
+    }
+}
+
+/* Krem: pola titik halus + beberapa bentuk garis tipis */
+.fx-light .fx-layer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(rgba(22, 36, 71, .13) 1px, transparent 1.6px) 0 0/28px 28px;
+    -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 15%, transparent 72%);
+    mask-image: radial-gradient(ellipse at 50% 40%, #000 15%, transparent 72%);
+}
+
+.fx-sq {
+    border: 1.5px solid #162447;
+    border-radius: 12px;
+    opacity: .11
+}
+
+.fx-ci {
+    border: 1.5px solid #162447;
+    border-radius: 50%;
+    opacity: .11
+}
+
+.fx-sq.fill {
+    background: #f59e0b;
+    border-color: transparent;
+    opacity: .13
+}
+
+.fx-ci.fill {
+    background: #3b82f6;
+    border-color: transparent;
+    opacity: .10
+}
+
+/* Biru tua: grid tipis + satu cahaya lembut yang bergerak pelan */
+.fx-dark .fx-layer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: .05;
+    background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse at center, #000 20%, transparent 75%);
+    mask-image: radial-gradient(ellipse at center, #000 20%, transparent 75%);
+}
+
+.fx-glow {
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: .22
+}
+
+.fx-glow .fx-in {
+    border-radius: 50%;
+    animation-name: fxGlow;
+    animation-duration: 30s
+}
+
+@keyframes fxGlow {
+    from {
+        transform: translate(0, 0) scale(1)
+    }
+
+    to {
+        transform: translate(60px, -30px) scale(1.12)
+    }
+}
+
+/* Animasi muncul saat scroll */
+.rv {
+    opacity: 0;
+    translate: 0 44px;
+    filter: blur(6px);
+    transition: opacity .9s cubic-bezier(.22, 1, .36, 1), translate .9s cubic-bezier(.22, 1, .36, 1), filter .9s ease;
+    transition-delay: calc(var(--i, 0) * 110ms);
+}
+
+.rv.in {
+    opacity: 1;
+    translate: 0 0;
+    filter: blur(0)
+}
+
+/* Hero: satu urutan masuk saat halaman dibuka */
+.hero-in {
+    animation: heroIn .9s cubic-bezier(.22, 1, .36, 1) both;
+    animation-delay: calc(var(--i, 0) * 120ms + 100ms)
+}
+
+@keyframes heroIn {
+    from {
+        opacity: 0;
+        translate: 0 24px
+    }
+
+    to {
+        opacity: 1;
+        translate: 0 0
+    }
+}
+
+/* Progress scroll tipis di atas halaman */
+#scroll-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background: #f59e0b;
+    z-index: 60;
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+    pointer-events: none
+}
+
+/* Footer */
+.f-title {
+    font-weight: 800;
+    font-size: .8rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #fbbf24;
+    margin-bottom: 1rem
+}
+
+.f-link {
+    position: relative;
+    display: inline-block;
+    color: #cbd5e1;
+    transition: color .2s ease
+}
+
+.f-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 2px;
+    width: 0;
+    background: #fbbf24;
+    transition: width .25s ease
+}
+
+.f-link:hover {
+    color: #fff
+}
+
+.f-link:hover::after {
+    width: 100%
+}
+
+@media (prefers-reduced-motion:reduce) {
+
+    .fx-in,
+    .hero-in {
+        animation: none !important
+    }
+
+    .rv {
+        translate: none;
+        filter: none
+    }
+}
+
+/* ===== Footer (layout mandiri, tidak bergantung Tailwind) ===== */
+.rm-footer {
+    background: #162447;
+    color: #fff;
+    border-top: 4px solid #0F1D38;
+    padding: 64px 0 28px
+}
+
+.rm-footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px
+}
+
+.rm-footer-grid {
+    display: grid;
+    grid-template-columns: 2.4fr 1fr 1fr;
+    gap: 56px
+}
+
+.rm-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px
+}
+
+.rm-logo {
+    width: 44px;
+    height: 44px;
+    flex: none;
+    background: #fbbf24;
+    color: #162447;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-weight: 900;
+    font-size: 1.25rem
+}
+
+.rm-brand-name {
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    font-size: 1.05rem
+}
+
+.rm-desc {
+    color: #bfdbfe;
+    font-size: .9rem;
+    line-height: 1.7;
+    max-width: 360px;
+    margin: 0
+}
+
+.rm-footer .f-title {
+    margin: 4px 0 18px
+}
+
+.rm-footer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 12px
+}
+
+.rm-footer ul a {
+    font-size: .92rem;
+    font-weight: 500;
+    text-decoration: none
+}
+
+.rm-bottom {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, .15);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: .8rem;
+    color: #bfdbfe
+}
+
+.rm-bottom p {
+    margin: 0
+}
+
+.rm-top {
+    color: #fbbf24;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    text-decoration: none
+}
+
+@media (max-width:768px) {
+    .rm-footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px 24px
+    }
+
+    .rm-footer-brand {
+        grid-column: 1 / -1
+    }
+}
+
+@media (max-width:420px) {
+    .rm-footer-grid {
+        grid-template-columns: 1fr
+    }
+
+    .rm-bottom {
+        flex-direction: column;
+        align-items: flex-start
+    }
+}

@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Komparasi Mobil – Ravenmille</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,800;0,900;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="ravenmille.css">
+  <style>
+    .ravenmille-comp *,
+    .ravenmille-comp *::before,
+    .ravenmille-comp *::after {
+      box-sizing: border-box;
+    }
+
+    .comp-presets-grid {
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: 0.875rem;
+    }
+
+    .comp-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .comp-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: 0.875rem;
+    }
+
+    .comp-cond-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.375rem;
+    }
+
+    .comp-input {
+      width: 100%;
+      padding: 0.75rem 0.875rem;
+      font-size: 0.875rem;
+      font-weight: 700;
+      border: 2px solid #162447;
+      border-radius: 0.75rem;
+      box-shadow: 2px 2px 0px #162447;
+      background-color: #ffffff;
+      color: #0f172a;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .comp-summary-card {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .comp-summary-info {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .comp-cta-btn {
+      width: 100%;
+      flex-shrink: 0;
+      padding: 1rem 2rem;
+      border-radius: 0.75rem;
+      background-color: #fbbf24;
+      color: #162447;
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+      border: 2px solid #162447;
+      box-shadow: 4px 4px 0px #162447;
+      cursor: pointer;
+      transition: transform 0.15s ease, background-color 0.15s ease;
+      text-align: center;
+    }
+
+    .comp-cta-btn:hover {
+      background-color: #fcd34d;
+      transform: translateY(-2px);
+    }
+
+    @media (min-width: 640px) {
+      .comp-presets-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .comp-grid-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .comp-grid-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 768px) {
+      .comp-summary-card {
+        flex-direction: row;
+        align-items: center;
+      }
+
+      .comp-cta-btn {
+        width: auto;
+        font-size: 1.05rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .comp-presets-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="ravenmille-comp min-h-screen bg-[#FDFBF7] text-slate-900 pb-16 halftone-bg">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-40 bg-[#FDFBF7]/95 backdrop-blur-md border-b-2 border-[#162447] shadow-sm mb-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3">
+          <div
+            class="w-12 h-12 bg-[#162447] rounded-xl border-2 border-[#162447] shadow-[2px_2px_0px_#94A3B8] flex items-center justify-center text-amber-400 font-black text-2xl">
+            R</div>
+          <span class="font-black text-xl tracking-tight text-[#162447] uppercase hidden sm:inline">RAVENMILLE</span>
+        </a>
+        <nav class="flex items-center gap-2 overflow-x-auto">
+          <a href="kalkulator.html"
+            class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Kalkulator</a>
+          <a href="risiko.html"
+            class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Risiko</a>
+          <a href="komparasi.html"
+            class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl bg-[#162447] text-white border-2 border-[#162447] shadow-[2px_2px_0px_#94A3B8]">Komparasi</a>
+          <a href="masalah.html"
+            class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Masalah</a>
+          <a href="bengkel.html"
+            class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Bengkel</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+      <!-- Header Banner: Periode & Preset Populer Ditaruh di Bawah Deskripsi -->
+      <div
+        class="bg-white border-2 border-[#162447] rounded-2xl p-6 sm:p-8 shadow-[6px_6px_0px_#162447] flex flex-col gap-5">
+        <div>
+          <span
+            class="inline-block px-3 py-1 bg-amber-100 text-amber-900 border border-amber-300 rounded-lg text-xs font-black uppercase tracking-wider mb-2">
+            HEAD-TO-HEAD COMPARISON
+          </span>
+          <h1 class="text-2xl sm:text-4xl font-black italic text-[#162447] uppercase tracking-tight">
+            KOMPARASI FINANSIAL MULTI-KENDARAAN
+          </h1>
+          <p class="text-sm sm:text-base text-slate-700 max-w-4xl leading-relaxed font-medium mt-1">
+            Bandingkan total biaya kepemilikan riil (TCO), selisih depresiasi harga jual, cicilan, beban servis, pajak,
+            dan efisiensi konsumsi BBM antara dua kandidat mobil secara langsung sebelum memutuskan pembelian.
+          </p>
+        </div>
+
+        <!-- Pemilih Periode Proyeksi Tepat di Bawah Deskripsi -->
+        <div
+          class="pt-4 border-t-2 border-slate-100 flex flex-wrap items-center justify-between gap-4 bg-[#FAF8F2] p-4 rounded-xl border border-slate-200">
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="text-xs sm:text-sm font-black uppercase text-[#162447] tracking-wider flex items-center gap-2">
+              <span>📅</span> Periode Komparasi:
+            </span>
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="setCompPeriod(1)"
+                class="comp-period-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-black uppercase border-2 border-[#162447] bg-white text-[#162447] cursor-pointer"
+                data-p="1">1 Tahun</button>
+              <button type="button" onclick="setCompPeriod(3)"
+                class="comp-period-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-black uppercase border-2 border-[#162447] bg-[#162447] text-white shadow-[2px_2px_0px_#94A3B8] cursor-pointer"
+                data-p="3">3 Tahun</button>
+              <button type="button" onclick="setCompPeriod(5)"
+                class="comp-period-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-black uppercase border-2 border-[#162447] bg-white text-[#162447] cursor-pointer"
+                data-p="5">5 Tahun</button>
+            </div>
+          </div>
+          <span class="text-xs text-slate-500 font-bold">
+            (Masa simulasi kalkulasi perbandingan kedua kendaraan)
+          </span>
+        </div>
+
+        <!-- Pilihan Komparasi Populer Indonesia -->
+        <div class="pt-2 border-t-2 border-slate-100">
+          <div
+            class="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-600 mb-3 flex items-center gap-1.5">
+            <span>⚡</span>
+            <span>Pilihan Komparasi Populer Indonesia:</span>
+          </div>
+          <div class="comp-presets-grid">
+            <button type="button" onclick="applyComparisonPair('avanza-vs-xpander')"
+              class="text-left p-4 rounded-xl border-2 border-[#162447] bg-white hover:bg-[#FAF8F2] shadow-[3px_3px_0px_#162447] transition-all text-xs sm:text-sm space-y-1 cursor-pointer">
+              <div class="font-black text-[#162447] uppercase text-sm">Avanza 1.5 G vs Xpander</div>
+              <div class="text-xs text-slate-600">Duel dua Low MPV keluarga terpopuler</div>
+            </button>
+            <button type="button" onclick="applyComparisonPair('brio-vs-wrv')"
+              class="text-left p-4 rounded-xl border-2 border-[#162447] bg-white hover:bg-[#FAF8F2] shadow-[3px_3px_0px_#162447] transition-all text-xs sm:text-sm space-y-1 cursor-pointer">
+              <div class="font-black text-[#162447] uppercase text-sm">Brio Satya E vs WR-V RS</div>
+              <div class="text-xs text-slate-600">City car ekonomis vs Compact SUV</div>
+            </button>
+            <button type="button" onclick="applyComparisonPair('zenix-vs-reborn')"
+              class="text-left p-4 rounded-xl border-2 border-[#162447] bg-white hover:bg-[#FAF8F2] shadow-[3px_3px_0px_#162447] transition-all text-xs sm:text-sm space-y-1 cursor-pointer">
+              <div class="font-black text-[#162447] uppercase text-sm">Zenix Hybrid vs Reborn Diesel</div>
+              <div class="text-xs text-slate-600">Teknologi Hybrid baru vs Diesel bekas</div>
+            </button>
+            <button type="button" onclick="applyComparisonPair('binguo-vs-wrv')"
+              class="text-left p-4 rounded-xl border-2 border-[#162447] bg-white hover:bg-[#FAF8F2] shadow-[3px_3px_0px_#162447] transition-all text-xs sm:text-sm space-y-1 cursor-pointer">
+              <div class="font-black text-[#162447] uppercase text-sm">BinguoEV vs Honda WR-V</div>
+              <div class="text-xs text-slate-600">Mobilitas listrik (EV) vs Bensin</div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dua Kolom Parameter Kendaraan: Slot A & Slot B -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+        <!-- KENDARAAN A -->
+        <div class="bg-white border-2 border-[#162447] rounded-2xl p-6 sm:p-7 shadow-[6px_6px_0px_#162447] space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b-2 border-slate-100 pb-3">
+            <div class="flex items-center gap-2">
+              <span
+                class="text-xs font-black uppercase px-3 py-1 bg-blue-100 text-blue-900 rounded-md border border-blue-300">KANDIDAT
+                1</span>
+              <span class="text-xs text-slate-500 font-bold uppercase">Kendaraan A</span>
+            </div>
+            <div style="width: 100%; max-width: 220px;">
+              <select id="v1-preset" onchange="selectPresetForSlot('v1', this.value)"
+                class="w-full px-3 py-2 text-xs font-bold border-2 border-[#162447] rounded-lg bg-[#FAF8F2]">
+                <option value="">Pilih Preset Acuan...</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label for="v1-name" class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Nama / Model
+              Kendaraan A</label>
+            <input type="text" id="v1-name" value="Toyota Avanza 1.5 G CVT" oninput="updateLiveSummary()"
+              placeholder="Contoh: Toyota Avanza 1.5 G CVT" class="comp-input">
+          </div>
+
+          <div class="comp-grid-2">
+            <div>
+              <label for="v1-price" class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Harga OTR
+                Pembelian (Rp)</label>
+              <input type="number" id="v1-price" step="1000000" value="276700000"
+                oninput="onSlotPriceOrConfigChange('v1')" class="comp-input">
+            </div>
+            <div>
+              <span class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Kondisi Unit</span>
+              <div class="comp-cond-grid border-2 border-[#162447] p-1 rounded-xl bg-[#FAF8F2]">
+                <button type="button" id="v1-cond-baru" onclick="setSlotCondition('v1', 'baru')"
+                  class="py-2 text-xs font-black uppercase rounded-lg bg-[#162447] text-white cursor-pointer">Baru</button>
+                <button type="button" id="v1-cond-bekas" onclick="setSlotCondition('v1', 'bekas')"
+                  class="py-2 text-xs font-black uppercase rounded-lg text-slate-600 cursor-pointer">Bekas</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="comp-grid-2">
+            <div>
+              <label for="v1-payment" class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Skema
+                Pembayaran</label>
+              <select id="v1-payment" onchange="updateLiveSummary()" class="comp-input">
+                <option value="kredit" selected>Kredit Leasing (DP &amp; Angsuran)</option>
+                <option value="tunai">Tunai Keras (Cash 100%)</option>
+              </select>
+            </div>
+            <div>
+              <label for="v1-fuel-type" class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Jenis
+                Bahan Bakar</label>
+              <select id="v1-fuel-type" onchange="onSlotFuelTypeChange('v1')" class="comp-input">
+                <option value="ron90">Pertalite (RON 90)</option>
+                <option value="ron92" selected>Pertamax (RON 92)</option>
+                <option value="solar_dex">Solar Dex / CN51</option>
+                <option value="listrik">Kendaraan Listrik (EV)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="comp-grid-2">
+            <div>
+              <label id="v1-fuel-label" for="v1-fuel-eff"
+                class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Efisiensi (km/L)</label>
+              <input type="number" step="0.5" id="v1-fuel-eff" value="12.5" class="comp-input">
+            </div>
+            <div>
+              <label for="v1-km" class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Jarak Tempuh
+                / Thn (km)</label>
+              <input type="number" step="1000" id="v1-km" value="15000" oninput="onSlotPriceOrConfigChange('v1')"
+                class="comp-input">
+            </div>
+          </div>
+
+          <div class="comp-grid-3 pt-3 border-t-2 border-slate-100">
+            <div>
+              <label for="v1-service" class="block text-xs font-black uppercase text-slate-600 mb-1">Servis/Thn
+                (Rp)</label>
+              <input type="number" id="v1-service" value="3600000" class="comp-input">
+            </div>
+            <div>
+              <label for="v1-tax" class="block text-xs font-black uppercase text-slate-600 mb-1">Pajak PKB/Thn
+                (Rp)</label>
+              <input type="number" id="v1-tax" value="4293500" class="comp-input">
+            </div>
+            <div>
+              <label for="v1-insurance" class="block text-xs font-black uppercase text-slate-600 mb-1">Asuransi/Thn
+                (Rp)</label>
+              <input type="number" id="v1-insurance" value="5755360" class="comp-input">
+            </div>
+          </div>
+        </div>
+
+        <!-- KENDARAAN B -->
+        <div class="bg-white border-2 border-[#162447] rounded-2xl p-6 sm:p-7 shadow-[6px_6px_0px_#162447] space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b-2 border-slate-100 pb-3">
+            <div class="flex items-center gap-2">
+              <span
+                class="text-xs font-black uppercase px-3 py-1 bg-amber-100 text-amber-900 rounded-md border border-amber-300">KANDIDAT
+                2</span>
+              <span class="text-xs text-slate-500 font-bold uppercase">Kendaraan B</span>
+            </div>
+            <div style="width: 100%; max-width: 220px;">
+              <select id="v2-preset" onchange="selectPresetForSlot('v2', this.value)"
+                class="w-full px-3 py-2 text-xs font-bold border-2 border-[#162447] rounded-lg bg-[#FAF8F2]">
+                <option value="">Pilih Preset Acuan...</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label for="v2-name" class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Nama / Model
+              Kendaraan B</label>
+            <input type="text" id="v2-name" value="Mitsubishi Xpander Ultimate CVT" oninput="updateLiveSummary()"
+              placeholder="Contoh: Mitsubishi Xpander Ultimate CVT" class="comp-input">
+          </div>
+
+          <div class="comp-grid-2">
+            <div>
+              <label for="v2-price" class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Harga OTR
+                Pembelian (Rp)</label>
+              <input type="number" id="v2-price" step="1000000" value="315900000"
+                oninput="onSlotPriceOrConfigChange('v2')" class="comp-input">
+            </div>
+            <div>
+              <span class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Kondisi Unit</span>
+              <div class="comp-cond-grid border-2 border-[#162447] p-1 rounded-xl bg-[#FAF8F2]">
+                <button type="button" id="v2-cond-baru" onclick="setSlotCondition('v2', 'baru')"
+                  class="py-2 text-xs font-black uppercase rounded-lg bg-[#162447] text-white cursor-pointer">Baru</button>
+                <button type="button" id="v2-cond-bekas" onclick="setSlotCondition('v2', 'bekas')"
+                  class="py-2 text-xs font-black uppercase rounded-lg text-slate-600 cursor-pointer">Bekas</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="comp-grid-2">
+            <div>
+              <label for="v2-payment" class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Skema
+                Pembayaran</label>
+              <select id="v2-payment" onchange="updateLiveSummary()" class="comp-input">
+                <option value="kredit" selected>Kredit Leasing (DP &amp; Angsuran)</option>
+                <option value="tunai">Tunai Keras (Cash 100%)</option>
+              </select>
+            </div>
+            <div>
+              <label for="v2-fuel-type" class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Jenis
+                Bahan Bakar</label>
+              <select id="v2-fuel-type" onchange="onSlotFuelTypeChange('v2')" class="comp-input">
+                <option value="ron90">Pertalite (RON 90)</option>
+                <option value="ron92" selected>Pertamax (RON 92)</option>
+                <option value="solar_dex">Solar Dex / CN51</option>
+                <option value="listrik">Kendaraan Listrik (EV)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="comp-grid-2">
+            <div>
+              <label id="v2-fuel-label" for="v2-fuel-eff"
+                class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Efisiensi (km/L)</label>
+              <input type="number" step="0.5" id="v2-fuel-eff" value="12.0" class="comp-input">
+            </div>
+            <div>
+              <label for="v2-km" class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">Jarak Tempuh
+                / Thn (km)</label>
+              <input type="number" step="1000" id="v2-km" value="15000" oninput="onSlotPriceOrConfigChange('v2')"
+                class="comp-input">
+            </div>
+          </div>
+
+          <div class="comp-grid-3 pt-3 border-t-2 border-slate-100">
+            <div>
+              <label for="v2-service" class="block text-xs font-black uppercase text-slate-600 mb-1">Servis/Thn
+                (Rp)</label>
+              <input type="number" id="v2-service" value="3600000" class="comp-input">
+            </div>
+            <div>
+              <label for="v2-tax" class="block text-xs font-black uppercase text-slate-600 mb-1">Pajak PKB/Thn
+                (Rp)</label>
+              <input type="number" id="v2-tax" value="4881500" class="comp-input">
+            </div>
+            <div>
+              <label for="v2-insurance" class="block text-xs font-black uppercase text-slate-600 mb-1">Asuransi/Thn
+                (Rp)</label>
+              <input type="number" id="v2-insurance" value="6570720" class="comp-input">
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Parameter Bersama & Tombol Proses ke Halaman Baru Hasil Komparasi -->
+      <div
+        class="bg-white border-2 border-[#162447] rounded-2xl p-6 sm:p-8 shadow-[6px_6px_0px_#162447] comp-summary-card">
+        <div class="comp-summary-info space-y-1">
+          <h3 class="text-lg font-black uppercase text-[#162447]">RINGKASAN PARAMETER KOMPARASI</h3>
+          <p id="comp-summary-text" class="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
+            Toyota Avanza 1.5 G CVT vs Mitsubishi Xpander Ultimate CVT · Durasi 3 Tahun · Kalkulasi TCO (Depresiasi,
+            BBM/EV, Servis, Pajak, Asuransi &amp; Bunga Kredit)
+          </p>
+        </div>
+
+        <!-- Tombol Trigger Navigasi ke Halaman Baru -->
+        <button type="button" onclick="submitComparisonAndNavigate()" class="comp-cta-btn">
+          Bandingkan &amp; Proses Analisis Komparasi →
+        </button>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    const VEHICLE_PRESETS = [
+      {
+        id: 'avanza-15-g-cvt',
+        name: 'Toyota Avanza 1.5 G CVT',
+        category: 'mpv',
+        defaultPrice: 276700000,
+        defaultYear: 2024,
+        condition: 'baru',
+        fuelType: 'ron92',
+        efficiencyKmPerUnit: 12.5
+      },
+      {
+        id: 'xpander-ultimate-cvt',
+        name: 'Mitsubishi Xpander Ultimate CVT',
+        category: 'mpv',
+        defaultPrice: 315900000,
+        defaultYear: 2024,
+        condition: 'baru',
+        fuelType: 'ron92',
+        efficiencyKmPerUnit: 12.0
+      },
+      {
+        id: 'brio-satya-e-cvt',
+        name: 'Honda Brio Satya E CVT',
+        category: 'lcgc',
+        defaultPrice: 198300000,
+        defaultYear: 2024,
+        condition: 'baru',
+        fuelType: 'ron90',
+        efficiencyKmPerUnit: 16.5
+      },
+      {
+        id: 'honda-wr-v-rs-honda-sensing',
+        name: 'Honda WR-V 1.5 RS Sensing',
+        category: 'suv',
+        defaultPrice: 324100000,
+        defaultYear: 2024,
+        condition: 'baru',
+        fuelType: 'ron92',
+        efficiencyKmPerUnit: 13.0
+      },
+      {
+        id: 'wuling-binguo-ev',
+        name: 'Wuling BinguoEV 410km Premium',
+        category: 'city_car',
+        defaultPrice: 372000000,
+        defaultYear: 2024,
+        condition: 'baru',
+        fuelType: 'listrik',
+        efficiencyKmPerUnit: 8.2
+      },
+      {
+        id: 'innova-zenix-hybrid-v',
+        name: 'Toyota Kijang Innova Zenix 2.0 V Hybrid',
+        category: 'mpv',
+        defaultPrice: 541750000,
+        defaultYear: 2024,
+        condition: 'baru',
+        fuelType: 'ron92',
+        efficiencyKmPerUnit: 17.5
+      },
+      {
+        id: 'avanza-veloz-2018-bekas',
+        name: 'Toyota Avanza Veloz 1.5 AT 2018 (Bekas)',
+        category: 'mpv',
+        defaultPrice: 165000000,
+        defaultYear: 2018,
+        condition: 'bekas',
+        fuelType: 'ron90',
+        efficiencyKmPerUnit: 11.5
+      },
+      {
+        id: 'innova-reborn-diesel-2019-bekas',
+        name: 'Toyota Innova Reborn 2.4 V Diesel AT 2019 (Bekas)',
+        category: 'mpv',
+        defaultPrice: 345000000,
+        defaultYear: 2019,
+        condition: 'bekas',
+        fuelType: 'solar_dex',
+        efficiencyKmPerUnit: 12.8
+      }
+    ];
+
+    const COMPARISON_PAIRS = {
+      'avanza-vs-xpander': ['avanza-15-g-cvt', 'xpander-ultimate-cvt'],
+      'brio-vs-wrv': ['brio-satya-e-cvt', 'honda-wr-v-rs-honda-sensing'],
+      'zenix-vs-reborn': ['innova-zenix-hybrid-v', 'innova-reborn-diesel-2019-bekas'],
+      'binguo-vs-wrv': ['wuling-binguo-ev', 'honda-wr-v-rs-honda-sensing']
+    };
+
+    const FUEL_PRICES = {
+      ron90: 10000,
+      ron92: 12950,
+      solar_dex: 13900,
+      listrik: 2000
+    };
+
+    let selectedCompPeriod = 3;
+    const slotState = {
+      v1: { condition: 'baru', category: 'mpv', vehicleYear: 2024 },
+      v2: { condition: 'baru', category: 'mpv', vehicleYear: 2024 }
+    };
+
+    function estimateAnnualCosts(slot) {
+      const price = parseFloat(document.getElementById(slot + '-price').value) || 0;
+      const fuelType = document.getElementById(slot + '-fuel-type').value;
+      const kmYear = parseFloat(document.getElementById(slot + '-km').value) || 15000;
+      const cond = slotState[slot].condition;
+      const isEV = fuelType === 'listrik';
+
+      const njkb = Math.max(20000000, Math.round(price * 0.75));
+      const estTax = isEV ? 0 : Math.round(njkb * 0.02 + 143000);
+
+      let insRate = 0.0208;
+      if (price <= 125000000) insRate = 0.0326;
+      else if (price <= 200000000) insRate = 0.0247;
+      else if (price <= 400000000) insRate = 0.0208;
+      else if (price <= 800000000) insRate = 0.0120;
+      else insRate = 0.0105;
+      const estIns = Math.round(price * insRate);
+
+      const baseService = Math.max(1, Math.round(kmYear / 10000)) * 1800000;
+      const ageMultiplier = cond === 'bekas' ? 1.25 : 1.0;
+      const evMultiplier = isEV ? 0.35 : 1.0;
+      const estService = Math.round(baseService * ageMultiplier * evMultiplier);
+
+      return { estTax, estIns, estService };
+    }
+
+    function onSlotPriceOrConfigChange(slot) {
+      const { estTax, estIns, estService } = estimateAnnualCosts(slot);
+      document.getElementById(slot + '-tax').value = estTax;
+      document.getElementById(slot + '-insurance').value = estIns;
+      document.getElementById(slot + '-service').value = estService;
+      updateLiveSummary();
+    }
+
+    function setSlotCondition(slot, cond) {
+      slotState[slot].condition = cond;
+      const btnBaru = document.getElementById(slot + '-cond-baru');
+      const btnBekas = document.getElementById(slot + '-cond-bekas');
+
+      if (cond === 'baru') {
+        btnBaru.className = 'py-2 text-xs font-black uppercase rounded-lg bg-[#162447] text-white cursor-pointer';
+        btnBekas.className = 'py-2 text-xs font-black uppercase rounded-lg text-slate-600 cursor-pointer';
+        slotState[slot].vehicleYear = new Date().getFullYear();
+      } else {
+        btnBaru.className = 'py-2 text-xs font-black uppercase rounded-lg text-slate-600 cursor-pointer';
+        btnBekas.className = 'py-2 text-xs font-black uppercase rounded-lg bg-[#162447] text-white cursor-pointer';
+        slotState[slot].vehicleYear = new Date().getFullYear() - 5;
+      }
+      onSlotPriceOrConfigChange(slot);
+    }
+
+    function onSlotFuelTypeChange(slot) {
+      const fuelType = document.getElementById(slot + '-fuel-type').value;
+      const label = document.getElementById(slot + '-fuel-label');
+      label.textContent = fuelType === 'listrik' ? 'Efisiensi (km/kWh)' : 'Efisiensi (km/L)';
+      onSlotPriceOrConfigChange(slot);
+    }
+
+    function populatePresetDropdowns() {
+      ['v1', 'v2'].forEach(slot => {
+        const select = document.getElementById(slot + '-preset');
+        VEHICLE_PRESETS.forEach(p => {
+          const opt = document.createElement('option');
+          opt.value = p.id;
+          opt.textContent = p.name;
+          select.appendChild(opt);
+        });
+      });
+      document.getElementById('v1-preset').value = 'avanza-15-g-cvt';
+      document.getElementById('v2-preset').value = 'xpander-ultimate-cvt';
+    }
+
+    function selectPresetForSlot(slot, presetId) {
+      const preset = VEHICLE_PRESETS.find(p => p.id === presetId);
+      if (!preset) return;
+
+      document.getElementById(slot + '-name').value = preset.name;
+      document.getElementById(slot + '-price').value = preset.defaultPrice;
+      document.getElementById(slot + '-fuel-type').value = preset.fuelType;
+      document.getElementById(slot + '-fuel-eff').value = preset.efficiencyKmPerUnit;
+      document.getElementById(slot + '-payment').value = 'kredit';
+
+      slotState[slot].category = preset.category;
+      slotState[slot].vehicleYear = preset.defaultYear;
+      setSlotCondition(slot, preset.condition);
+      onSlotFuelTypeChange(slot);
+    }
+
+    function applyComparisonPair(pairId) {
+      const pair = COMPARISON_PAIRS[pairId];
+      if (!pair) return;
+      document.getElementById('v1-preset').value = pair[0];
+      document.getElementById('v2-preset').value = pair[1];
+      selectPresetForSlot('v1', pair[0]);
+      selectPresetForSlot('v2', pair[1]);
+    }
+
+    function setCompPeriod(p) {
+      selectedCompPeriod = p;
+      document.querySelectorAll('.comp-period-btn').forEach(btn => {
+        const val = parseInt(btn.getAttribute('data-p'), 10);
+        if (val === p) {
+          btn.className = 'comp-period-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-black uppercase border-2 border-[#162447] bg-[#162447] text-white shadow-[2px_2px_0px_#94A3B8] cursor-pointer';
+        } else {
+          btn.className = 'comp-period-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-black uppercase border-2 border-[#162447] bg-white text-[#162447] cursor-pointer';
+        }
+      });
+      updateLiveSummary();
+    }
+
+    function updateLiveSummary() {
+      const n1 = document.getElementById('v1-name').value.trim() || 'Kendaraan A';
+      const n2 = document.getElementById('v2-name').value.trim() || 'Kendaraan B';
+      document.getElementById('comp-summary-text').textContent =
+        `${n1} vs ${n2} · Durasi ${selectedCompPeriod} Tahun · Kalkulasi TCO (Depresiasi, BBM/EV, Servis, Pajak, Asuransi & Bunga Kredit)`;
+    }
+
+    function collectSlotPayload(slot, fallbackName) {
+      const fuelType = document.getElementById(slot + '-fuel-type').value;
+      return {
+        name: document.getElementById(slot + '-name').value.trim() || fallbackName,
+        price: parseFloat(document.getElementById(slot + '-price').value) || 0,
+        condition: slotState[slot].condition,
+        vehicleType: slotState[slot].category,
+        vehicleYear: slotState[slot].vehicleYear,
+        paymentMethod: document.getElementById(slot + '-payment').value,
+        fuelType: fuelType,
+        fuelPrice: FUEL_PRICES[fuelType] || 12950,
+        fuelEff: parseFloat(document.getElementById(slot + '-fuel-eff').value) || 12,
+        kmYear: parseFloat(document.getElementById(slot + '-km').value) || 15000,
+        service: parseFloat(document.getElementById(slot + '-service').value) || 0,
+        tax: parseFloat(document.getElementById(slot + '-tax').value) || 0,
+        insurance: parseFloat(document.getElementById(slot + '-insurance').value) || 0
+      };
+    }
+
+    function submitComparisonAndNavigate() {
+      const v1 = collectSlotPayload('v1', 'Kendaraan A');
+      const v2 = collectSlotPayload('v2', 'Kendaraan B');
+
+      const data = {
+        period: selectedCompPeriod,
+        fuelPrice: v1.fuelPrice,
+        kmYear: v1.kmYear,
+        v1: v1,
+        v2: v2
+      };
+
+      localStorage.setItem('ravenmille_comparison_data', JSON.stringify(data));
+      window.location.href = 'hasil-komparasi.html';
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      populatePresetDropdowns();
+      onSlotPriceOrConfigChange('v1');
+      onSlotPriceOrConfigChange('v2');
+      updateLiveSummary();
+    });
+  </script>
+
+  <script src="ravenmille.js"></script>
+</body>
+
+</html>

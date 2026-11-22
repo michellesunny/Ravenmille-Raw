@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Analisis Risiko Unit – Ravenmille</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,800;0,900;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="ravenmille.css">
+  <style>
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+
+      body {
+        background: #ffffff !important;
+      }
+
+      .halftone-bg {
+        background-image: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="ravenmille-risk min-h-screen bg-[#FDFBF7] text-slate-900 pb-16 halftone-bg">
+
+    <!-- Header Navigation -->
+    <header
+      class="no-print sticky top-0 z-40 bg-[#FDFBF7]/95 backdrop-blur-md border-b-2 border-[#162447] shadow-sm mb-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3">
+          <div
+            class="w-12 h-12 bg-[#162447] rounded-xl border-2 border-[#162447] shadow-[2px_2px_0px_#94A3B8] flex items-center justify-center text-amber-400 font-black text-2xl">
+            R</div>
+          <span class="font-black text-xl tracking-tight text-[#162447] uppercase hidden sm:inline">RAVENMILLE</span>
+        </a>
+        <nav class="flex items-center gap-2 overflow-x-auto">
+          <a href="kalkulator.html"
+            class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Kalkulator</a>
+          <a href="risiko.html"
+            class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl bg-[#162447] text-white border-2 border-[#162447] shadow-[2px_2px_0px_#94A3B8]">Risiko</a>
+          <a href="komparasi.html"
+            class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Komparasi</a>
+          <a href="masalah.html"
+            class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Masalah</a>
+          <a href="bengkel.html"
+            class="px-3.5 py-2 text-xs sm:text-sm font-black uppercase rounded-xl text-slate-700 hover:bg-[#EFECE3]">Bengkel</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+      <!-- Header Banner: Tombol Cetak Lembar Checklist tepat di bawah "Sistem evaluasi..." -->
+      <div
+        class="bg-white border-2 border-[#162447] rounded-2xl p-6 sm:p-8 shadow-[6px_6px_0px_#162447] flex flex-col gap-4">
+        <div>
+          <span
+            class="inline-block px-3 py-1 bg-rose-100 text-rose-800 border border-rose-300 rounded-lg text-xs font-black uppercase tracking-wider mb-2">
+            INSPECTION INTELLIGENCE
+          </span>
+          <h1 class="text-2xl sm:text-4xl font-black italic text-[#162447] uppercase tracking-tight">
+            ANALISIS RISIKO KONDISI &amp; RIWAYAT UNIT
+          </h1>
+          <p class="text-sm sm:text-base text-slate-700 max-w-4xl leading-relaxed font-medium mt-1">
+            Sistem evaluasi rule-based untuk mendeteksi potensi manipulasi odometer, riwayat tabrak fatal pada sasis,
+            rekam jejak banjir rob, dan anomali riwayat servis bengkel sebelum Anda membayar uang muka (DP).
+          </p>
+
+          <!-- Tombol Cetak Lembar Tepat di Bawah Deskripsi -->
+          <div class="pt-4 mt-2 no-print">
+            <button type="button" onclick="window.print()"
+              class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#FAF8F2] hover:bg-[#162447] hover:text-white text-[#162447] font-black uppercase text-xs sm:text-sm tracking-wider border-2 border-[#162447] rounded-xl shadow-[3px_3px_0px_#162447] transition-all cursor-pointer">
+              <span>Cetak Lembar Checklist Fisik Mobil</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content: Left Form & Right Results (Conditional) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+        <!-- Sisi Kiri: Form Parameter Riwayat Unit -->
+        <div
+          class="lg:col-span-7 bg-white border-2 border-[#162447] rounded-2xl p-6 sm:p-8 shadow-[6px_6px_0px_#162447] space-y-5">
+          <h2 class="text-xl sm:text-2xl font-black text-[#162447] uppercase">PARAMETER DATA RIWAYAT UNIT</h2>
+          <p class="text-xs sm:text-sm text-slate-600 font-medium">
+            Input seluruh parameter di bawah ini secara lengkap untuk mengaktifkan diagnosis risiko di panel sebelah
+            kanan.
+          </p>
+
+          <form id="risk-form" class="space-y-4">
+            <div>
+              <label for="risk-name" class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">
+                Nama / Model Kendaraan *
+              </label>
+              <input type="text" id="risk-name" oninput="handleInputChange()"
+                placeholder="Contoh: Honda Brio Satya E CVT (Bekas)"
+                class="w-full p-3 text-sm font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="risk-year" class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">
+                  Tahun Perakitan *
+                </label>
+                <input type="number" id="risk-year" value="2019" min="1995" max="2026" oninput="handleInputChange()"
+                  class="w-full p-3 text-sm font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+              </div>
+              <div>
+                <label for="risk-km" class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">
+                  Angka Odometer Tercatat (km) *
+                </label>
+                <input type="number" id="risk-km" step="1000" min="0" oninput="handleInputChange()"
+                  placeholder="Contoh: 48000"
+                  class="w-full p-3 text-sm font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447]">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="risk-transmission"
+                  class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">
+                  Tipe Transmisi *
+                </label>
+                <select id="risk-transmission" onchange="handleInputChange()"
+                  class="w-full p-3 text-sm font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447] bg-white">
+                  <option value="matic_cvt">Matic CVT</option>
+                  <option value="matic_at">Matic Konvensional (AT)</option>
+                  <option value="manual">Manual (MT)</option>
+                  <option value="matic_dct">Dual-Clutch (DCT)</option>
+                </select>
+              </div>
+              <div>
+                <label for="risk-body" class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">
+                  Kategori Bodi *
+                </label>
+                <select id="risk-body" onchange="handleInputChange()"
+                  class="w-full p-3 text-sm font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447] bg-white">
+                  <option value="mpv">MPV (Avanza, Xpander, Innova)</option>
+                  <option value="suv">SUV / Crossover (HR-V, Fortuner, Pajero)</option>
+                  <option value="lcgc">LCGC (Brio, Calya, Sigra, Agya)</option>
+                  <option value="city_car">City Car / Hatchback</option>
+                  <option value="sedan">Sedan</option>
+                  <option value="motor">Sepeda Motor</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label for="risk-service" class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">
+                Ketersediaan Riwayat Servis *
+              </label>
+              <select id="risk-service" onchange="handleInputChange()"
+                class="w-full p-3 text-sm font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447] bg-white">
+                <option value="resmi_lengkap">Buku &amp; Faktur Bengkel Resmi Lengkap (Full Record ATPM)</option>
+                <option value="spesialis_rutin">Bengkel Spesialis Terpercaya dengan Faktur Rutin</option>
+                <option value="tidak_lengkap" selected>Hanya Buku Manual (Catatan Servis Tidak Lengkap)</option>
+                <option value="hilang">Buku Servis Hilang / Tanpa Riwayat Sama Sekali</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="risk-incident" class="block text-xs sm:text-sm font-black uppercase text-slate-700 mb-1">
+                Klaim Riwayat Insiden Penjual *
+              </label>
+              <select id="risk-incident" onchange="handleInputChange()"
+                class="w-full p-3 text-sm font-bold border-2 border-[#162447] rounded-xl shadow-[2px_2px_0px_#162447] bg-white">
+                <option value="bebas">Klaim Bebas Tabrak Fatal &amp; Bebas Banjir</option>
+                <option value="minor">Pernah Insiden Minor (Bumper/Baret Cat Ringan)</option>
+                <option value="sasis">Pernah Perbaikan Sasis / Rangka Depan</option>
+                <option value="banjir">Pernah Terendam Banjir / Genangan Tinggi</option>
+              </select>
+            </div>
+
+            <!-- Tombol Trigger Analisis -->
+            <div class="pt-4 border-t-2 border-slate-100 no-print">
+              <button type="button" id="btn-analyze" onclick="runRiskAnalysis()" disabled
+                class="w-full py-4 px-6 bg-slate-100 text-slate-400 font-black uppercase text-base tracking-wider rounded-xl border-2 border-slate-300 transition-all cursor-not-allowed">
+                Kalkulasi &amp; Analisis Risiko Unit →
+              </button>
+              <p id="form-helper-msg" class="text-xs text-slate-500 font-bold mt-2 text-center">
+                * Harap isi Nama/Model Kendaraan dan Angka Odometer terlebih dahulu.
+              </p>
+            </div>
+          </form>
+        </div>
+
+        <!-- Sisi Kanan: Hasil Analisis (Hanya Tampil Setelah Diinput Lengkap & Diproses) -->
+        <div class="lg:col-span-5">
+
+          <!-- State 1: Placeholder Sebelum Form Diproses -->
+          <div id="risk-placeholder"
+            class="bg-white border-2 border-dashed border-[#162447] rounded-2xl p-7 shadow-[4px_4px_0px_#162447] text-center space-y-4">
+            <div
+              class="w-16 h-16 bg-amber-100 text-amber-800 rounded-2xl border-2 border-[#162447] mx-auto flex items-center justify-center text-3xl font-black">
+              📋
+            </div>
+            <div>
+              <span
+                class="text-xs font-black uppercase px-3 py-1 bg-slate-100 text-slate-600 rounded-md border border-slate-300">
+                STATUS: MENUNGGU INPUT DATA
+              </span>
+              <h3 class="text-xl font-black text-[#162447] uppercase mt-2">HASIL DIAGNOSIS BELUM TERSEDIA</h3>
+              <p class="text-sm text-slate-600 leading-relaxed mt-2 font-medium">
+                Silakan lengkapi parameter riwayat unit kendaraan pada formulir di sebelah kiri, kemudian klik tombol
+                <strong>"Kalkulasi &amp; Analisis Risiko Unit"</strong> untuk melihat skor dan faktor risikonya.
+              </p>
+            </div>
+
+            <div
+              class="w-full bg-[#FAF8F2] p-4 rounded-xl border border-slate-200 text-left space-y-2 text-xs sm:text-sm">
+              <div class="font-black text-[#162447] uppercase tracking-wide">
+                Status Kelengkapan Parameter:
+              </div>
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-slate-600">Nama / Model Mobil:</span>
+                <span id="status-name" class="font-bold text-amber-700">○ Belum diisi</span>
+              </div>
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-slate-600">Odometer Saat Ini:</span>
+                <span id="status-km" class="font-bold text-amber-700">○ Belum diisi</span>
+              </div>
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-slate-600">Riwayat Servis &amp; Insiden:</span>
+                <span class="font-black text-emerald-700">✓ Terpilih</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- State 2: Hasil Analisis Aktif -->
+          <div id="risk-result"
+            class="hidden bg-[#162447] text-white rounded-2xl p-7 border-2 border-[#0F1D38] shadow-[6px_6px_0px_#94A3B8] space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-white/10 gap-2">
+              <div>
+                <span class="text-xs font-black text-amber-300 uppercase tracking-wider">HASIL EVALUASI UNIT</span>
+                <h3 id="res-unit-name" class="text-xl font-black uppercase mt-1">HONDA BRIO</h3>
+              </div>
+              <div id="res-badge"
+                class="px-3.5 py-1.5 rounded-lg text-xs font-black uppercase bg-emerald-500 text-white shrink-0">
+                AMAN
+              </div>
+            </div>
+
+            <!-- Skor Risiko -->
+            <div class="p-5 bg-white/5 rounded-xl border border-white/10 space-y-3">
+              <div class="flex items-center justify-between gap-2">
+                <div>
+                  <span class="text-xs text-blue-200 uppercase font-bold block">SKOR RISIKO KESELURUHAN</span>
+                  <div id="res-score" class="text-4xl font-black text-amber-400 mt-1">25 / 100</div>
+                  <span id="res-score-desc" class="text-xs text-blue-300">Risiko Rendah — Unit Layak Diinspeksi</span>
+                </div>
+                <div class="text-right">
+                  <span class="text-xs text-blue-300 block">Rata-rata km/tahun:</span>
+                  <span id="res-kmyear" class="text-lg font-black text-white">9.600 km</span>
+                </div>
+              </div>
+              <div class="w-full h-3.5 bg-white/10 rounded-full overflow-hidden p-0.5">
+                <div id="res-bar" class="h-full bg-emerald-400 transition-all duration-300 rounded-full"
+                  style="width: 25%"></div>
+              </div>
+            </div>
+
+            <!-- Faktor Risiko Terdeteksi -->
+            <div class="space-y-3">
+              <h4 class="text-xs font-black uppercase tracking-wider text-amber-300">CATATAN DIAGNOSIS TEKNIS:</h4>
+              <div id="res-factors" class="space-y-2 text-xs sm:text-sm">
+                <!-- Item diagnosis dinamis injected by JS -->
+              </div>
+            </div>
+
+            <!-- Rekomendasi Tindakan -->
+            <div class="pt-4 border-t border-white/10 no-print">
+              <a href="bengkel.html"
+                class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs sm:text-sm uppercase tracking-wider shadow-sm transition-all">
+                <span>Sewa Inspektor Profesional via WA</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Checklist Inspeksi Lapangan Interaktif -->
+      <div class="bg-white border-2 border-[#162447] rounded-2xl p-6 sm:p-8 shadow-[6px_6px_0px_#162447] space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-slate-100 pb-4">
+          <div>
+            <div class="text-xs sm:text-sm font-black text-[#162447] uppercase tracking-wider">
+              📋 Daftar Cek Lapangan Interaktif
+            </div>
+            <h2 id="checklist-title"
+              class="text-2xl sm:text-3xl font-black italic text-[#162447] uppercase tracking-tight mt-1">
+              CHECKLIST INSPEKSI KHUSUS UNIT
+            </h2>
+            <p class="text-sm text-slate-600 mt-1 font-medium">
+              Daftar pertanyaan dan langkah inspeksi fisik yang disesuaikan secara otomatis dengan profil risiko
+              kendaraan.
+            </p>
+          </div>
+
+          <div class="flex items-center gap-3 shrink-0">
+            <div class="text-right">
+              <div id="checklist-counter" class="text-sm sm:text-base font-black text-[#162447]">0 / 12 Selesai</div>
+              <div id="checklist-percent" class="text-xs sm:text-sm font-bold text-slate-500">0% Terverifikasi</div>
+            </div>
+            <div class="w-24 sm:w-32 h-3.5 bg-slate-100 rounded-full overflow-hidden border border-slate-300 p-0.5">
+              <div id="checklist-progress-bar" class="h-full bg-[#162447] rounded-full transition-all duration-300"
+                style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="checklist-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Checklist cards injected by JS -->
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Logika JS Evaluasi Risiko -->
+  <script>
+    const checkedItems = {};
+    let hasAnalyzed = false;
+
+    function getFormInput() {
+      return {
+        name: document.getElementById('risk-name').value.trim(),
+        year: parseInt(document.getElementById('risk-year').value, 10) || 2019,
+        km: parseFloat(document.getElementById('risk-km').value) || 0,
+        transmission: document.getElementById('risk-transmission').value,
+        body: document.getElementById('risk-body').value,
+        service: document.getElementById('risk-service').value,
+        incident: document.getElementById('risk-incident').value
+      };
+    }
+
+    function computeRisk(input) {
+      const currentYear = new Date().getFullYear();
+      const age = Math.max(1, currentYear - input.year);
+      const kmPerYear = input.km / age;
+
+      let score = 15;
+      const factors = [];
+      let isSuspiciousOdometer = false;
+
+      if (age >= 8 || input.km >= 120000) {
+        score += 25;
+        factors.push({
+          title: 'Usia Kendaraan / Jarak Tempuh Tinggi',
+          desc: `Mobil telah berusia ${age} tahun dengan akumulasi ${input.km.toLocaleString('id-ID')} km. Komponen slow-moving (radiator, engine mounting, kaki-kaki) memasuki masa pergantian besar.`,
+          cost: 'Rp 4.000.000 - Rp 10.000.000'
+        });
+      } else if (age >= 5 || input.km >= 75000) {
+        score += 15;
+        factors.push({
+          title: 'Melewati Ambang Batas 5 Tahun / 75.000 Km',
+          desc: 'Mobil mendekati jadwal servis besar 80.000 km. Kompresor AC, shockbreaker, dan kampas rem membutuhkan pengecekan fisik menyeluruh.',
+          cost: 'Rp 2.000.000 - Rp 5.000.000'
+        });
+      }
+
+      if (age >= 4 && kmPerYear < 4000) {
+        isSuspiciousOdometer = true;
+        score += 20;
+        factors.push({
+          title: 'Potensi Manipulasi Odometer (Reset)',
+          desc: `Jarak tempuh rata-rata hanya ${Math.round(kmPerYear).toLocaleString('id-ID')} km/tahun untuk mobil berusia ${age} tahun. Cek keausan pedal, setir, dan record bengkel resmi.`,
+          cost: 'Risiko manipulasi riwayat unit'
+        });
+      } else if (kmPerYear > 25000) {
+        score += 18;
+        factors.push({
+          title: 'Pemakaian Di Atas Rata-rata',
+          desc: `Mobil menempuh rata-rata ${Math.round(kmPerYear).toLocaleString('id-ID')} km/tahun (> 25.000 km/thn). Periksa keausan transmisi & kaki-kaki secara intensif.`,
+          cost: 'Rp 5.000.000 - Rp 12.000.000'
+        });
+      } else {
+        factors.push({
+          title: 'Rata-rata Odometer Wajar',
+          desc: 'Angka odometer proporsional dengan usia kendaraan tahunan.',
+          cost: ''
+        });
+      }
+
+      if (input.service === 'hilang') {
+        score += 25;
+        factors.push({
+          title: 'Tanpa Buku Servis',
+          desc: 'Tidak ada rekam jejak perawatan berkala. Risiko keterlambatan ganti oli transmisi matik & mesin.',
+          cost: 'Wajib kuras seluruh fluida (Rp 2.500.000 - Rp 4.500.000)'
+        });
+      } else if (input.service === 'tidak_lengkap') {
+        score += 12;
+        factors.push({
+          title: 'Riwayat Servis Tidak Lengkap',
+          desc: 'Catatan servis berhenti di tahun tertentu. Perlu verifikasi fisik oil sludge pada tutup oli mesin.',
+          cost: 'Perlu inspeksi ruang silinder'
+        });
+      } else if (input.service === 'resmi_lengkap') {
+        score = Math.max(5, score - 10);
+        factors.push({
+          title: 'Servis Record ATPM Terverifikasi',
+          desc: 'Buku servis lengkap mencatat perawatan rutin sesuai jadwal pabrik.',
+          cost: ''
+        });
+      }
+
+      if (input.transmission === 'matic_cvt' && (input.km > 70000 || age >= 5)) {
+        score += 12;
+        factors.push({
+          title: 'Transmisi CVT Usia > 5 Tahun / 70.000 Km',
+          desc: 'Transmisi CVT sensitif terhadap kualitas oli. Pastikan tidak ada gejala slip, dengung, atau jedug saat akselerasi.',
+          cost: 'Rp 6.000.000 - Rp 15.000.000'
+        });
+      } else if (input.transmission === 'matic_dct') {
+        score += 15;
+        factors.push({
+          title: 'Transmisi Dual Clutch (DCT) di Iklim Tropis',
+          desc: 'Kopling ganda kering rentan overheat pada kondisi macet stop-and-go. Periksa riwayat modul mekatronik.',
+          cost: 'Rp 8.000.000 - Rp 18.000.000'
+        });
+      }
+
+      if (input.incident === 'sasis') {
+        score += 40;
+        factors.push({
+          title: 'Pernah Perbaikan Sasis / Rangka',
+          desc: 'Kekuatan crumple zone berkurang dan kelurusan roda rawan sulit presisi 100%.',
+          cost: 'Nilai jual turun 25-40% & risiko keselamatan'
+        });
+      } else if (input.incident === 'banjir') {
+        score += 45;
+        factors.push({
+          title: 'Indikasi Riwayat Banjir Rob',
+          desc: 'Kelistrikan modul airbag, soket ECU, dan rel kursi berpotensi korosi jangka panjang.',
+          cost: 'Rp 5.000.000 - Rp 20.000.000'
+        });
+      }
+
+      score = Math.max(10, Math.min(95, score));
+
+      const checklist = [
+        {
+          id: 'doc-bpkb',
+          label: 'Kesesuaian Dokumen BPKB, STNK, dan Faktur Pembelian',
+          howToCheck: 'Cocokkan nomor mesin dan nomor rangka fisik dengan yang tertulis di STNK & BPKB. Pastikan bukan STNK duplikat.',
+          flagged: false
+        },
+        {
+          id: 'doc-etle',
+          label: 'Cek Blokir Tilang ETLE & Pajak Tahunan',
+          howToCheck: 'Buka aplikasi Samsat Online provinsi terkait untuk mengecek apakah ada blokir tilang elektronik atau tunggakan PKB.',
+          flagged: false
+        },
+        {
+          id: 'engine-oil',
+          label: 'Cek Bawah Tutup Pengisian Oli Mesin (Indikasi Oil Sludge)',
+          howToCheck: 'Buka tutup oli saat mesin dingin. Jika ada kerak hitam lengket pekat atau busa seperti susu kopi, mobil jarang diganti oli.',
+          flagged: input.service !== 'resmi_lengkap'
+        },
+        {
+          id: 'engine-dipstick',
+          label: 'Cek Dipstick & Asap Knalpot',
+          howToCheck: 'Tarik dipstick saat mesin menyala. Pastikan tidak ada tiupan asap putih/kebocoran kompresi keluar dari lubang dipstick.',
+          flagged: input.km > 80000
+        },
+        {
+          id: 'radiator-coolant',
+          label: 'Kondisi Radiator & Cairan Pendingin (Coolant)',
+          howToCheck: 'Pastikan tabung reservoir menggunakan coolant asli, bukan air keran yang berwarna karat kecokelatan.',
+          flagged: age >= 5
+        },
+        input.transmission !== 'manual'
+          ? {
+            id: 'trans-delay',
+            label: 'Respons Perpindahan Tuas Transmisi (P ke R dan N ke D)',
+            howToCheck: 'Injak rem, geser tuas N ke D dan N ke R. Waktu respons perpindahan maksimal 1 detik tanpa hentakan keras (jedug).',
+            flagged: true
+          }
+          : {
+            id: 'trans-clutch',
+            label: 'Ketinggian Pedal Kopling & Gigitan Plat Kopling Manual',
+            howToCheck: 'Tarik rem tangan, masukkan gigi 2, lepas kopling perlahan. Mesin harus langsung mati jika plat kopling masih tebal.',
+            flagged: input.km > 60000
+          },
+        {
+          id: 'susp-speedbump',
+          label: 'Uji Jalan di Speed Bump / Jalan Keriting (Bunyi Glodakan)',
+          howToCheck: 'Matikan audio dan tutup jendela, lewati jalan tidak rata. Dengarkan bunyi ketukan di kaki depan (rack end, link stabilizer).',
+          flagged: input.km > 50000 || age >= 4
+        },
+        {
+          id: 'steering-rack',
+          label: 'Pengecekan Boot As Roda & Steering Rack',
+          howToCheck: 'Intip kolong roda depan, pastikan karet boot as roda tidak sobek dan tidak ada rembesan gemuk hitam pekat.',
+          flagged: age >= 5
+        },
+        {
+          id: 'ac-cold',
+          label: 'Uji Suhu Hembusan AC di Kondisi Macet Idle',
+          howToCheck: 'Nyalakan AC suhu paling dingin selama 10 menit saat berhenti. Pastikan kompresor tidak kasar dan angin tetap dingin.',
+          flagged: age >= 4
+        },
+        {
+          id: 'dash-mid',
+          label: 'Pemeriksaan Seluruh Lampu Malfungsi di Speedometer (MID)',
+          howToCheck: 'Putar kontak ke posisi ON. Lampu Check Engine, ABS, Airbag, EPS wajib menyala lalu mati otomatis 3 detik setelah mesin hidup.',
+          flagged: isSuspiciousOdometer || input.incident !== 'bebas'
+        },
+        {
+          id: 'flood-rail',
+          label: 'Inspeksi Rel Bawah Kursi & Soket Kabel Dashboard',
+          howToCheck: 'Gunakan senter HP melihat rel besi kursi dan braket pedal gas. Kerak lumpur kering atau karat merata ciri bekas banjir.',
+          flagged: input.incident === 'banjir' || score >= 45
+        },
+        {
+          id: 'frame-sealant',
+          label: 'Cek Baut Engsel Kap Mesin & Kerapian Lem Sealant Pintu',
+          howToCheck: 'Tekan sealant pinggir daun pintu dan kap mesin dengan kuku. Sealant pabrikan lentur; jika keras seperti dempul mobil pernah dibongkar.',
+          flagged: input.incident === 'sasis' || input.incident === 'minor'
+        }
+      ];
+
+      return { score, kmPerYear, factors, checklist };
+    }
+
+    function updateValidationUI() {
+      const input = getFormInput();
+      const isReady = Boolean(input.name && input.km > 0);
+      const btn = document.getElementById('btn-analyze');
+      const helper = document.getElementById('form-helper-msg');
+      const statusName = document.getElementById('status-name');
+      const statusKm = document.getElementById('status-km');
+
+      if (input.name) {
+        statusName.textContent = `✓ ${input.name}`;
+        statusName.className = 'font-black text-emerald-700';
+      } else {
+        statusName.textContent = '○ Belum diisi';
+        statusName.className = 'font-bold text-amber-700';
+      }
+
+      if (input.km > 0) {
+        statusKm.textContent = `✓ ${input.km.toLocaleString('id-ID')} km`;
+        statusKm.className = 'font-black text-emerald-700';
+      } else {
+        statusKm.textContent = '○ Belum diisi';
+        statusKm.className = 'font-bold text-amber-700';
+      }
+
+      if (isReady) {
+        btn.disabled = false;
+        btn.className = 'w-full py-4 px-6 bg-amber-400 hover:bg-amber-300 text-[#162447] font-black uppercase text-base tracking-wider rounded-xl border-2 border-[#162447] shadow-[4px_4px_0px_#162447] transition-all cursor-pointer';
+        helper.classList.add('hidden');
+      } else {
+        btn.disabled = true;
+        btn.className = 'w-full py-4 px-6 bg-slate-100 text-slate-400 font-black uppercase text-base tracking-wider rounded-xl border-2 border-slate-300 transition-all cursor-not-allowed';
+        helper.classList.remove('hidden');
+      }
+    }
+
+    function renderChecklist() {
+      const input = getFormInput();
+      const { checklist } = computeRisk(input);
+
+      document.getElementById('checklist-title').textContent = input.name
+        ? `CHECKLIST INSPEKSI KHUSUS UNIT ${input.name}`
+        : 'CHECKLIST INSPEKSI KHUSUS UNIT';
+
+      const grid = document.getElementById('checklist-grid');
+      grid.innerHTML = '';
+
+      let completed = 0;
+      checklist.forEach((item, idx) => {
+        const isChecked = Boolean(checkedItems[item.id]);
+        if (isChecked) completed++;
+
+        const card = document.createElement('div');
+        card.onclick = () => {
+          checkedItems[item.id] = !checkedItems[item.id];
+          renderChecklist();
+        };
+
+        card.className = `p-4 sm:p-5 rounded-xl border-2 transition-all cursor-pointer select-none flex items-start gap-3.5 ${isChecked
+            ? 'border-emerald-600 bg-emerald-50 text-slate-900 shadow-[3px_3px_0px_#059669]'
+            : item.flagged
+              ? 'border-[#162447] bg-[#FAF8F2] shadow-[3px_3px_0px_#162447]'
+              : 'border-[#162447] bg-white shadow-[3px_3px_0px_#162447]'
+          }`;
+
+        card.innerHTML = `
+          <div class="w-6 h-6 rounded-md border-2 border-[#162447] flex items-center justify-center shrink-0 mt-0.5 ${isChecked ? 'bg-emerald-600 text-white' : 'bg-white'
+          }">
+            ${isChecked ? '<span class="font-black text-sm">✓</span>' : ''}
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="text-sm sm:text-base font-black text-[#162447] leading-tight">${idx + 1}. ${item.label}</span>
+              ${item.flagged ? '<span class="text-xs text-amber-900 bg-amber-100 font-black uppercase px-2 py-0.5 rounded border border-amber-300 shrink-0">Penting!</span>' : ''}
+            </div>
+            <p class="text-xs sm:text-sm text-slate-700 mt-2 leading-relaxed">
+              <strong class="text-slate-900">Cara Cek: </strong>${item.howToCheck}
+            </p>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      const pct = Math.round((completed / checklist.length) * 100);
+      document.getElementById('checklist-counter').textContent = `${completed} / ${checklist.length} Selesai`;
+      document.getElementById('checklist-percent').textContent = `${pct}% Terverifikasi`;
+      document.getElementById('checklist-progress-bar').style.width = `${pct}%`;
+    }
+
+    function runRiskAnalysis() {
+      const input = getFormInput();
+      if (!input.name || input.km <= 0) return;
+
+      hasAnalyzed = true;
+      const { score, kmPerYear, factors } = computeRisk(input);
+
+      document.getElementById('risk-placeholder').classList.add('hidden');
+      document.getElementById('risk-result').classList.remove('hidden');
+
+      document.getElementById('res-unit-name').textContent = input.name;
+      document.getElementById('res-score').textContent = score + ' / 100';
+      document.getElementById('res-kmyear').textContent = Math.round(kmPerYear).toLocaleString('id-ID') + ' km';
+
+      const badge = document.getElementById('res-badge');
+      const scoreDesc = document.getElementById('res-score-desc');
+      const bar = document.getElementById('res-bar');
+      bar.style.width = score + '%';
+
+      if (score <= 35) {
+        badge.textContent = 'STATUS: AMAN';
+        badge.className = 'px-3.5 py-1.5 rounded-lg text-xs font-black uppercase bg-emerald-600 text-white shrink-0';
+        scoreDesc.textContent = 'Risiko Rendah — Unit Layak Diinspeksi';
+        bar.className = 'h-full bg-emerald-400 transition-all duration-300 rounded-full';
+      } else if (score <= 65) {
+        badge.textContent = 'STATUS: WASPADA';
+        badge.className = 'px-3.5 py-1.5 rounded-lg text-xs font-black uppercase bg-amber-400 text-[#162447] shrink-0';
+        scoreDesc.textContent = 'Risiko Sedang — Wajib Inspeksi Mendalam';
+        bar.className = 'h-full bg-amber-400 transition-all duration-300 rounded-full';
+      } else {
+        badge.textContent = 'STATUS: RISIKO TINGGI';
+        badge.className = 'px-3.5 py-1.5 rounded-lg text-xs font-black uppercase bg-rose-600 text-white shrink-0';
+        scoreDesc.textContent = 'Risiko Tinggi — Berpotensi Membutuhkan Biaya Perbaikan Besar';
+        bar.className = 'h-full bg-rose-500 transition-all duration-300 rounded-full';
+      }
+
+      const container = document.getElementById('res-factors');
+      container.innerHTML = '';
+      factors.forEach(f => {
+        const div = document.createElement('div');
+        div.className = 'p-3 rounded-lg bg-white/5 border border-white/10 space-y-1';
+        div.innerHTML = `
+          <strong class="text-white block font-bold">${f.title}</strong>
+          <p class="text-blue-200 text-xs">${f.desc}</p>
+          ${f.cost ? `<div class="text-amber-300 text-xs font-bold pt-1">Potensi Biaya: ${f.cost}</div>` : ''}
+        `;
+        container.appendChild(div);
+      });
+
+      renderChecklist();
+    }
+
+    function handleInputChange() {
+      updateValidationUI();
+      renderChecklist();
+      if (hasAnalyzed) {
+        const input = getFormInput();
+        if (input.name && input.km > 0) {
+          runRiskAnalysis();
+        }
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      updateValidationUI();
+      renderChecklist();
+    });
+  </script>
+
+  <script src="ravenmille.js"></script>
+</body>
+
+</html>
