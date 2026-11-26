@@ -6,9 +6,24 @@
   'use strict';
 
   document.addEventListener('DOMContentLoaded', function () {
+    // 0. Pastikan video latar hero berjalan mulus & menghormati preferensi reduced-motion
+    var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var heroVideo = document.querySelector('.hero-bg-video');
+    if (heroVideo) {
+      if (prefersReduced) {
+        heroVideo.pause();
+      } else {
+        heroVideo.muted = true;
+        heroVideo.defaultMuted = true;
+        var playPromise = heroVideo.play();
+        if (playPromise && typeof playPromise.catch === 'function') {
+          playPromise.catch(function () {});
+        }
+      }
+    }
+
     // 1. Animasi angka pengguna aktif bulanan (progress bar & scroll reveal ditangani oleh common-ui.js)
     var userCountEl = document.getElementById('monthly-users-count');
-    var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (userCountEl && !prefersReduced && 'IntersectionObserver' in window) {
       var targetNum = 120;
       userCountEl.textContent = '0+';
