@@ -148,6 +148,8 @@
       '.section-header-block',
       '.fitur-card',
       '.step-card-dark',
+      '.tentang-showcase-split > *',
+      '.konsultasi-showcase-split > *',
       '.report-preview-split > *',
       '.proof-header-row',
       '.faq-item',

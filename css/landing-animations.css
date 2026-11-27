@@ -397,14 +397,14 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 20px;
-  background-color: rgba(255, 255, 255, 0.66);
+  gap: 18px;
+  background-color: rgba(255, 255, 255, 0.68);
   backdrop-filter: blur(22px) saturate(185%);
   -webkit-backdrop-filter: blur(22px) saturate(185%);
   border: 1px solid rgba(255, 255, 255, 0.84);
   border-radius: 24px;
   box-shadow: 0 12px 34px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(15, 23, 42, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.92);
-  padding: 28px;
+  padding: 22px 24px 24px;
   transition:
     transform var(--transition-glide),
     box-shadow var(--transition-glide),
@@ -413,10 +413,80 @@
 }
 
 .fitur-card:hover {
-  background-color: rgba(255, 255, 255, 0.86);
+  background-color: rgba(255, 255, 255, 0.88);
   border-color: #ffffff;
   transform: translateY(-6px);
   box-shadow: 0 22px 48px rgba(15, 23, 42, 0.10), 0 0 0 1px rgba(15, 23, 42, 0.08), inset 0 1px 0 #ffffff;
+}
+
+.fitur-card-media {
+  position: relative;
+  width: 100%;
+  height: 168px;
+  max-height: 168px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+  padding: 4px;
+  margin-bottom: 14px;
+}
+
+.fitur-card-media img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 10px 20px rgba(15, 23, 42, 0.10));
+  transition: transform var(--transition-glide), filter var(--transition-glide);
+}
+
+.fitur-card:hover .fitur-card-media img {
+  transform: scale(1.04) translateY(-2px);
+  filter: drop-shadow(0 16px 26px rgba(15, 23, 42, 0.15));
+}
+
+.fitur-card-head-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fitur-card-head-row .fitur-card-title {
+  margin-top: 0;
+}
+
+.fitur-card-wide-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 24px;
+  align-items: center;
+  flex: 1;
+}
+
+.fitur-card-wide-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.fitur-card-wide-copy .fitur-card-desc {
+  margin-top: 2px;
+}
+
+.fitur-card-wide-media {
+  margin-bottom: 0;
+  height: 240px;
+  max-height: 240px;
+  min-height: 0;
+  padding: 4px;
 }
 
 .fitur-card-link span[aria-hidden="true"] {
@@ -433,9 +503,10 @@
 }
 
 .fitur-icon-box {
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  flex-shrink: 0;
   background-color: rgba(255, 255, 255, 0.78);
   border: 1px solid rgba(15, 23, 42, 0.09);
   box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05), inset 0 1px 0 #ffffff;
@@ -458,18 +529,18 @@
 }
 
 .fitur-card-title {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 800;
   color: var(--color-navy);
-  margin-top: 14px;
+  margin-top: 12px;
   transition: color var(--transition-smooth);
 }
 
 .fitur-card-desc {
-  font-size: 0.9375rem;
-  line-height: 1.65;
+  font-size: 0.925rem;
+  line-height: 1.62;
   color: var(--color-ink-secondary);
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 .fitur-card-link {
@@ -497,12 +568,79 @@
   }
 }
 
+@media (max-width: 720px) {
+  .fitur-card-wide-layout {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .fitur-card-wide-media {
+    order: -1;
+    height: 168px;
+    max-height: 168px;
+  }
+}
+
 @media (max-width: 640px) {
   .fitur-bento-grid {
     grid-template-columns: 1fr;
   }
   .fitur-card.is-wide {
     grid-column: span 1;
+  }
+}
+
+/* Split Editorial Showcase (Tentang Kami & Konsultasi) */
+.tentang-showcase-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 40px;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.konsultasi-showcase-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: 36px;
+  align-items: center;
+}
+
+.editorial-floating-media {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+.editorial-floating-media img {
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  max-height: 360px;
+  object-fit: contain;
+  display: block;
+  background: transparent;
+  border-radius: 0;
+  border: 0;
+  filter: drop-shadow(0 20px 36px rgba(15, 23, 42, 0.14));
+  transition: transform var(--transition-glide), filter var(--transition-glide);
+}
+
+.editorial-floating-media:hover img {
+  transform: translateY(-4px) scale(1.02);
+  filter: drop-shadow(0 28px 44px rgba(15, 23, 42, 0.18));
+}
+
+@media (max-width: 960px) {
+  .tentang-showcase-split,
+  .konsultasi-showcase-split {
+    grid-template-columns: 1fr;
+    gap: 28px;
   }
 }
 
